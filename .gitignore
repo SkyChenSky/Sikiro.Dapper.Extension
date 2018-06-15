@@ -3,3 +3,5 @@
 ################################################################################
 
 /Sikiro.DapperLambdaExtension.MsSql.Samples/obj/Debug
+/packages
+/.vs/Sikiro.DapperLambdaExtension.MsSql/v15

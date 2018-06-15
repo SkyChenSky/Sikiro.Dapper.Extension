@@ -1,0 +1,15 @@
+C:\Users\chengong\source\Research\Sikiro\Sikiro.DapperLambdaExtension.MsSql\bin\Debug\Sikiro.DapperLambdaExtension.MsSql.dll
+C:\Users\chengong\source\Research\Sikiro\Sikiro.DapperLambdaExtension.MsSql\bin\Debug\Sikiro.DapperLambdaExtension.MsSql.pdb
+C:\Users\chengong\source\Research\Sikiro\Sikiro.DapperLambdaExtension.MsSql\bin\Debug\Dapper.dll
+C:\Users\chengong\source\Research\Sikiro\Sikiro.DapperLambdaExtension.MsSql\bin\Debug\Sikiro.Tookits.dll
+C:\Users\chengong\source\Research\Sikiro\Sikiro.DapperLambdaExtension.MsSql\bin\Debug\log4net.dll
+C:\Users\chengong\source\Research\Sikiro\Sikiro.DapperLambdaExtension.MsSql\bin\Debug\EmitMapper.dll
+C:\Users\chengong\source\Research\Sikiro\Sikiro.DapperLambdaExtension.MsSql\bin\Debug\Newtonsoft.Json.dll
+C:\Users\chengong\source\Research\Sikiro\Sikiro.DapperLambdaExtension.MsSql\bin\Debug\Sikiro.Tookits.pdb
+C:\Users\chengong\source\Research\Sikiro\Sikiro.DapperLambdaExtension.MsSql\bin\Debug\Dapper.xml
+C:\Users\chengong\source\Research\Sikiro\Sikiro.DapperLambdaExtension.MsSql\bin\Debug\log4net.xml
+C:\Users\chengong\source\Research\Sikiro\Sikiro.DapperLambdaExtension.MsSql\bin\Debug\Newtonsoft.Json.xml
+C:\Users\chengong\source\Research\Sikiro\Sikiro.DapperLambdaExtension.MsSql\obj\Debug\Sikiro.DapperLambdaExtension.MsSql.csprojResolveAssemblyReference.cache
+C:\Users\chengong\source\Research\Sikiro\Sikiro.DapperLambdaExtension.MsSql\obj\Debug\Sikiro.DapperLambdaExtension.MsSql.csproj.CoreCompileInputs.cache
+C:\Users\chengong\source\Research\Sikiro\Sikiro.DapperLambdaExtension.MsSql\obj\Debug\Sikiro.DapperLambdaExtension.MsSql.dll
+C:\Users\chengong\source\Research\Sikiro\Sikiro.DapperLambdaExtension.MsSql\obj\Debug\Sikiro.DapperLambdaExtension.MsSql.pdb
