@@ -1,4 +1,4 @@
-# Sikiro.DapperLambdaExtension.MsSql
+# Sikiro.DapperLambdaExtension.MsSql#
 这是针对dapper的一个扩展，支持lambda表达式的写法，链式风格让开发者使用起来更加优雅、直观。
 
 ## 开始
@@ -111,6 +111,37 @@ db.Set<SysUser>().Where(a => a.Email == "287245177@qq.com")
                  .OrderBy(a => a.CreateDatetime)
                  .Select(a => new SysUser { Email = a.Email, CreateDatetime = a.CreateDatetime, SysUserid = a.SysUserid })
                  .PageList(1, 10);
+```
+
+### SQL
+sql的查询方案仍然开放
+
+```c#
+using Dapper;
+.....
+db.GetConnection().QuerySingle<SysUser>("SELECT * FROM SYS_USER");
+```
+
+### 最后来一个完整的DEMO
+
+```c#
+using (var db = new DataBase(new SqlConnection("Data Source=192.168.13.46;Initial Catalog=SkyChen;Persist Security Info=True;User ID=sa;Password=123456789")))
+{
+    db.Set<SysUser>().Insert(new SysUser
+    {
+        CreateDatetime = DateTime.Now,
+        Email = "287245177@qq.com",
+        SysUserid = Guid.NewGuid().ToString("N"),
+        UserName = "chengong",
+    });
+
+    var model = db.Set<SysUser>().Where(a => a.Email == "287245177@qq.com").Get();
+
+    db.Set<SysUser>().Where(a => a.SysUserid == model.SysUserid)
+        .Update(a => new SysUser { Email = "2548987@qq.com" });
+
+    db.Set<SysUser>().Where(a => a.SysUserid == model.SysUserid).Delete();
+}
 ```
 
 ### 其他
