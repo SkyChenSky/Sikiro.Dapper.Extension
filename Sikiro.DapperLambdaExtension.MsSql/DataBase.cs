@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Data;
-using Sikiro.DapperLambdaExtension.MsSql.Core;
 using Sikiro.DapperLambdaExtension.MsSql.Core.Interfaces;
+using Sikiro.DapperLambdaExtension.MsSql.Core.SetC;
+using Sikiro.DapperLambdaExtension.MsSql.Core.SetQ;
 
 namespace Sikiro.DapperLambdaExtension.MsSql
 {
@@ -13,9 +14,14 @@ namespace Sikiro.DapperLambdaExtension.MsSql
         {
             Conn = con;
         }
-        public Set<T> Set<T>()
+        public QuerySet<T> QuerySet<T>()
         {
-            return new Set<T>(Conn, new SqlProvider<T>());
+            return new QuerySet<T>(Conn, new SqlProvider<T>());
+        }
+
+        public CommandSet<T> CommandSet<T>()
+        {
+            return new CommandSet<T>(Conn, new SqlProvider<T>());
         }
 
         public IDbConnection GetConnection()

@@ -60,9 +60,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\Aggregation.cs" />
-    <Compile Include="Core\Command.cs" />
-    <Compile Include="Core\EOrderBy.cs" />
+    <Compile Include="Core\Interfaces\ISet.cs" />
+    <Compile Include="Core\SetQ\Aggregation.cs" />
+    <Compile Include="Core\SetC\CommandSet.cs" />
+    <Compile Include="Core\SetC\Command.cs" />
+    <Compile Include="Model\EOrderBy.cs" />
     <Compile Include="Core\Expression\UpdateExpression.cs" />
     <Compile Include="Core\Expression\WhereExpression.cs" />
     <Compile Include="Core\Interfaces\IAggregation.cs" />
@@ -70,10 +72,10 @@
     <Compile Include="Core\Interfaces\IDatabase.cs" />
     <Compile Include="Core\Interfaces\IQuery.cs" />
     <Compile Include="Core\Interfaces\IUpdateSelect.cs" />
-    <Compile Include="Core\Option.cs" />
-    <Compile Include="Core\Order.cs" />
-    <Compile Include="Core\Query.cs" />
-    <Compile Include="Core\Set.cs" />
+    <Compile Include="Core\SetQ\Option.cs" />
+    <Compile Include="Core\SetQ\Order.cs" />
+    <Compile Include="Core\SetQ\Query.cs" />
+    <Compile Include="Core\SetQ\QuerySet.cs" />
     <Compile Include="DataBase.cs" />
     <Compile Include="Helper\ExpressionBuilder.cs" />
     <Compile Include="Helper\ExpressionExtension.cs" />
@@ -84,6 +86,7 @@
     <Compile Include="Helper\TrimExpression.cs" />
     <Compile Include="Helper\TypeHelper.cs" />
     <Compile Include="Model\DataBaseContext.cs" />
+    <Compile Include="Model\EOperateType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlProvider.cs" />
   </ItemGroup>

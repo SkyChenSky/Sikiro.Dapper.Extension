@@ -1,0 +1,54 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq.Expressions;
+using Sikiro.DapperLambdaExtension.MsSql.Helper;
+using Sikiro.DapperLambdaExtension.MsSql.Model;
+
+namespace Sikiro.DapperLambdaExtension.MsSql.Core.SetC
+{
+    public class CommandSet<T> : Command<T>, Interfaces.ISet<T>
+    {
+        internal Type TableType { get; set; }
+
+        internal LambdaExpression WhereExpression { get; set; }
+
+        public CommandSet(IDbConnection conn, SqlProvider<T> sqlProvider) : base(conn, sqlProvider)
+        {
+            TableType = typeof(T);
+            SetContext = new DataBaseContext<T>
+            {
+                Set = this,
+                OperateType = EOperateType.Command
+            };
+
+            sqlProvider.Context = SetContext;
+        }
+
+        internal CommandSet(IDbConnection conn, SqlProvider<T> sqlProvider, Type tableType, LambdaExpression whereExpression, LambdaExpression selectExpression, int? topNum, Dictionary<EOrderBy, LambdaExpression> orderbyExpressionList) : base(conn, sqlProvider)
+        {
+            TableType = tableType;
+            WhereExpression = whereExpression;
+
+            SetContext = new DataBaseContext<T>
+            {
+                Set = this,
+                OperateType = EOperateType.Command
+            };
+
+            sqlProvider.Context = SetContext;
+        }
+
+        public CommandSet<T> Where(Expression<Func<T, bool>> predicate)
+        {
+            WhereExpression = WhereExpression == null ? predicate : ((Expression<Func<T, bool>>)WhereExpression).And(predicate);
+
+            return this;
+        }
+
+        public void BatchInsert(IEnumerable<T> entities, int timeout = 120)
+        {
+            SqlHelper.BulkCopy(DbCon, entities);
+        }
+    }
+}
