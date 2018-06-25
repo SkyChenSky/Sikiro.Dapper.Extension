@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
 [assembly: AssemblyTitle("Sikiro.DapperLambdaExtension.MsSql")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Use Lambda with Dapper")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("陈珙")]
 [assembly: AssemblyProduct("Sikiro.DapperLambdaExtension.MsSql")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]

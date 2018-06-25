@@ -22,17 +22,17 @@ namespace Sikiro.DapperLambdaExtension.MsSql
 
         public SqlProvider<T> FormatGet()
         {
-            var selectSql = ResolveExpression.ResolveSelect(typeof(T).GetProperties(), Context.Set.SelectExpression, 1);
+            var selectSql = ResolveExpression.ResolveSelect(typeof(T).GetProperties(), Context.QuerySet.SelectExpression, 1);
 
             var fromTableSql = FormatTableName();
 
-            var whereParams = ResolveExpression.ResolveWhere(Context.Set.WhereExpression);
+            var whereParams = ResolveExpression.ResolveWhere(Context.QuerySet.WhereExpression);
 
             var whereSql = whereParams.SqlCmd;
 
             Params = whereParams.Param;
 
-            var orderbySql = ResolveExpression.ResolveOrderBy(Context.Set.OrderbyExpressionList);
+            var orderbySql = ResolveExpression.ResolveOrderBy(Context.QuerySet.OrderbyExpressionList);
 
             SqlString = $"{selectSql} {fromTableSql} {whereSql} {orderbySql}";
 
@@ -41,17 +41,17 @@ namespace Sikiro.DapperLambdaExtension.MsSql
 
         public SqlProvider<T> FormatToList()
         {
-            var selectSql = ResolveExpression.ResolveSelect(typeof(T).GetProperties(), Context.Set.SelectExpression, Context.Set.TopNum);
+            var selectSql = ResolveExpression.ResolveSelect(typeof(T).GetProperties(), Context.QuerySet.SelectExpression, Context.QuerySet.TopNum);
 
             var fromTableSql = FormatTableName();
 
-            var whereParams = ResolveExpression.ResolveWhere(Context.Set.WhereExpression);
+            var whereParams = ResolveExpression.ResolveWhere(Context.QuerySet.WhereExpression);
 
             var whereSql = whereParams.SqlCmd;
 
             Params = whereParams.Param;
 
-            var orderbySql = ResolveExpression.ResolveOrderBy(Context.Set.OrderbyExpressionList);
+            var orderbySql = ResolveExpression.ResolveOrderBy(Context.QuerySet.OrderbyExpressionList);
 
             SqlString = $"{selectSql} {fromTableSql} {whereSql} {orderbySql}";
 
@@ -60,15 +60,15 @@ namespace Sikiro.DapperLambdaExtension.MsSql
 
         public SqlProvider<T> FormatToPageList(int pageIndex, int pageSize)
         {
-            var orderbySql = ResolveExpression.ResolveOrderBy(Context.Set.OrderbyExpressionList);
+            var orderbySql = ResolveExpression.ResolveOrderBy(Context.QuerySet.OrderbyExpressionList);
             if (string.IsNullOrEmpty(orderbySql))
                 throw new Exception("分页查询需要排序条件");
 
-            var selectSql = ResolveExpression.ResolveSelect(typeof(T).GetProperties(), Context.Set.SelectExpression, pageSize);
+            var selectSql = ResolveExpression.ResolveSelect(typeof(T).GetProperties(), Context.QuerySet.SelectExpression, pageSize);
 
             var fromTableSql = FormatTableName();
 
-            var whereParams = ResolveExpression.ResolveWhere(Context.Set.WhereExpression);
+            var whereParams = ResolveExpression.ResolveWhere(Context.QuerySet.WhereExpression);
 
             var whereSql = whereParams.SqlCmd;
 
@@ -93,7 +93,7 @@ namespace Sikiro.DapperLambdaExtension.MsSql
 
             var fromTableSql = FormatTableName();
 
-            var whereParams = ResolveExpression.ResolveWhere(Context.Set.WhereExpression);
+            var whereParams = ResolveExpression.ResolveWhere(Context.QuerySet.WhereExpression);
 
             var whereSql = whereParams.SqlCmd;
 
@@ -110,7 +110,7 @@ namespace Sikiro.DapperLambdaExtension.MsSql
 
             var fromTableSql = FormatTableName();
 
-            var whereParams = ResolveExpression.ResolveWhere(Context.Set.WhereExpression);
+            var whereParams = ResolveExpression.ResolveWhere(Context.QuerySet.WhereExpression);
 
             var whereSql = whereParams.SqlCmd;
 
@@ -123,17 +123,15 @@ namespace Sikiro.DapperLambdaExtension.MsSql
 
         public SqlProvider<T> FormatDelete()
         {
-            var deleteSql = Context.Set.TopNum.HasValue ? $"DELETE TOP ({Context.Set.TopNum.Value})" : "DELETE";
-
             var fromTableSql = FormatTableName();
 
-            var whereParams = ResolveExpression.ResolveWhere(Context.Set.WhereExpression);
+            var whereParams = ResolveExpression.ResolveWhere(Context.CommandSet.WhereExpression);
 
             var whereSql = whereParams.SqlCmd;
 
             Params = whereParams.Param;
 
-            SqlString = $"{deleteSql} {fromTableSql} {whereSql }";
+            SqlString = $"DELETE {fromTableSql} {whereSql }";
 
             return this;
         }
@@ -150,7 +148,7 @@ namespace Sikiro.DapperLambdaExtension.MsSql
         {
             var update = ResolveExpression.ResolveUpdate(updateExpression);
 
-            var where = ResolveExpression.ResolveWhere(Context.Set.WhereExpression);
+            var where = ResolveExpression.ResolveWhere(Context.CommandSet.WhereExpression);
 
             var whereSql = where.SqlCmd;
 
@@ -168,7 +166,7 @@ namespace Sikiro.DapperLambdaExtension.MsSql
 
             var fromTableSql = FormatTableName();
 
-            var whereParams = ResolveExpression.ResolveWhere(Context.Set.WhereExpression);
+            var whereParams = ResolveExpression.ResolveWhere(Context.QuerySet.WhereExpression);
 
             var whereSql = whereParams.SqlCmd;
 
@@ -183,16 +181,16 @@ namespace Sikiro.DapperLambdaExtension.MsSql
         {
             var update = ResolveExpression.ResolveUpdate(updator);
 
-            var selectSql = ResolveExpression.ResolveSelectOfUpdate(typeof(T).GetProperties(), Context.Set.SelectExpression);
+            var selectSql = ResolveExpression.ResolveSelectOfUpdate(typeof(T).GetProperties(), Context.QuerySet.SelectExpression);
 
-            var where = ResolveExpression.ResolveWhere(Context.Set.WhereExpression);
+            var where = ResolveExpression.ResolveWhere(Context.QuerySet.WhereExpression);
 
             var whereSql = where.SqlCmd;
 
             Params = where.Param;
             Params.AddDynamicParams(update.Param);
 
-            var topSql = Context.Set.TopNum.HasValue ? " TOP " + Context.Set.TopNum.Value : "";
+            var topSql = Context.QuerySet.TopNum.HasValue ? " TOP " + Context.QuerySet.TopNum.Value : "";
             SqlString = $"UPDATE {topSql} {FormatTableName(false)} WITH ( UPDLOCK, READPAST ) {update.SqlCmd} {selectSql} {whereSql}";
 
             return this;
@@ -200,7 +198,18 @@ namespace Sikiro.DapperLambdaExtension.MsSql
 
         private string FormatTableName(bool isNeedFrom = true)
         {
-            var typeOfTableClass = Context.Set.TableType;
+            Type typeOfTableClass;
+            switch (Context.OperateType)
+            {
+                case EOperateType.Query:
+                    typeOfTableClass = Context.QuerySet.TableType;
+                    break;
+                case EOperateType.Command:
+                    typeOfTableClass = Context.CommandSet.TableType;
+                    break;
+                default:
+                    throw new Exception("error EOperateType");
+            }
 
             var tableName = typeOfTableClass.GetTableAttributeName();
 

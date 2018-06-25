@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using Sikiro.DapperLambdaExtension.MsSql.Core;
 using Sikiro.DapperLambdaExtension.MsSql.Core.Expression;
+using Sikiro.DapperLambdaExtension.MsSql.Model;
 
 namespace Sikiro.DapperLambdaExtension.MsSql.Helper
 {
