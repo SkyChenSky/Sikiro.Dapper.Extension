@@ -65,17 +65,18 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Samples
 
             var updateResult4 = db.QuerySet<SysUser>().Sum(a => a.UserStatus);
 
-            var updateResult5 = db.QuerySet<SysUser>().Where(a => a.Email == "456465asd@qq.com")
-                .Select(a => new SysUser { Email = a.Email, Mobile = a.Mobile, Password = a.Password })
-                .UpdateSelect(a => new SysUser { Email = "456465asd@qq.com" });
+            var updateResult5 = db.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com")
+                .Select(a => new SysUser { Email = a.Email })
+                .UpdateSelect(a => new SysUser { Email = "2530665632@qq.com" });
 
             var updateResult6 = db.QuerySet<SysUser>().Where(a => a.Email == "456465asd@qq.com")
                 .OrderBy(a => a.CreateDatetime)
                 .Select(a => new SysUser { Email = a.Email, Mobile = a.Mobile, Password = a.Password }).PageList(1, 10);
 
-            var updateResult7 = db.QuerySet<SysUser>().Where(a => a.Email == "456465asd@qq.com")
+            var updateResult7 = db.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com")
                 .OrderBy(a => a.CreateDatetime)
-                .Select(a => new SysUser { Email = a.Email }).UpdateSelect(a => new SysUser { Mobile = "10086" });
+                .Select(a => new SysUser { Email = a.Email })
+                .UpdateSelect(a => new SysUser { Email = "2530665632@qq.com" });
 
             db.Dispose();
         }
