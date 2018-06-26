@@ -1,4 +1,6 @@
-﻿using System.Linq.Expressions;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using Dapper;
 using Sikiro.DapperLambdaExtension.MsSql.Helper;
@@ -47,6 +49,9 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Expression
 
             foreach (var item in properties)
             {
+                if (item.CustomAttributes.Any(b => b.AttributeType == typeof(KeyAttribute)))
+                    continue;
+
                 if (_sqlCmd.Length > 0)
                     _sqlCmd.Append(",");
 

@@ -16,6 +16,19 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Samples
 
             Console.WriteLine("删除数{0}", deleteResult);
 
+            var insertResult2 = db.CommandSet<SysUser>().IfNotExists(a => a.Mobile == "18988563330").Insert(new SysUser
+            {
+                CreateDatetime = DateTime.Now,
+                Email = "287245177@qq.com",
+                Mobile = "18988563330",
+                RealName = "陈珙",
+                SysUserid = Guid.NewGuid().ToString("N"),
+                UserName = "chengong",
+                UserStatus = 1,
+                UserType = 1,
+                Password = "asdasdad"
+            });
+
             var insertResult = db.CommandSet<SysUser>().Insert(new SysUser
             {
                 CreateDatetime = DateTime.Now,
@@ -48,6 +61,8 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Samples
             var updateResult3 = db.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com").OrderBy(b => b.Email)
                 .Top(10).Select(a => a.Email).ToList();
 
+            var updateResult8 = db.QuerySet<SysUser>().OrderBy(b => b.Email).Top(10).ToList();
+
             var updateResult4 = db.QuerySet<SysUser>().Sum(a => a.UserStatus);
 
             var updateResult5 = db.QuerySet<SysUser>().Where(a => a.Email == "456465asd@qq.com")
@@ -57,6 +72,10 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Samples
             var updateResult6 = db.QuerySet<SysUser>().Where(a => a.Email == "456465asd@qq.com")
                 .OrderBy(a => a.CreateDatetime)
                 .Select(a => new SysUser { Email = a.Email, Mobile = a.Mobile, Password = a.Password }).PageList(1, 10);
+
+            var updateResult7 = db.QuerySet<SysUser>().Where(a => a.Email == "456465asd@qq.com")
+                .OrderBy(a => a.CreateDatetime)
+                .Select(a => new SysUser { Email = a.Email }).UpdateSelect(a => new SysUser { Mobile = "10086" });
 
             db.Dispose();
         }
