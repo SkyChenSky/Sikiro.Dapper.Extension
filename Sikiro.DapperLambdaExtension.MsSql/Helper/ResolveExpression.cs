@@ -26,9 +26,9 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Helper
             return "ORDER BY " + string.Join(",", orderByList);
         }
 
-        public static WhereExpression ResolveWhere(LambdaExpression whereExpression)
+        public static WhereExpression ResolveWhere(LambdaExpression whereExpression, string prefix = null)
         {
-            var where = new WhereExpression(whereExpression);
+            var where = new WhereExpression(whereExpression, prefix);
 
             return where;
         }

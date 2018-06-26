@@ -20,21 +20,32 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Expression
 
         public DynamicParameters Param { get; }
 
-        private string TempFileName { get; set; }
+        private string _tempFileName;
+
+        private string TempFileName
+        {
+            get => _prefix + _tempFileName;
+            set => _tempFileName = value;
+        }
+
+        private readonly string _prefix;
 
         #endregion
 
         #region 执行解析
+
         /// <inheritdoc />
         /// <summary>
         /// 执行解析
         /// </summary>
         /// <param name="expression"></param>
+        /// <param name="prefix">字段前缀</param>
         /// <returns></returns>
-        public WhereExpression(LambdaExpression expression)
+        public WhereExpression(LambdaExpression expression, string prefix)
         {
             _sqlCmd = new StringBuilder(100);
             Param = new DynamicParameters();
+            _prefix = prefix;
 
             var exp = TrimExpression.Trim(expression);
             Visit(exp);

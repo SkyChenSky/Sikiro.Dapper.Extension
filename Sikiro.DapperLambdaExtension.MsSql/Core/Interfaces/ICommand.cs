@@ -8,6 +8,5 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Interfaces
         int Update(T entity);
         int Update(Expression<Func<T, T>> updateExpression);
         int Delete();
-        int Insert(T entity);
     }
 }

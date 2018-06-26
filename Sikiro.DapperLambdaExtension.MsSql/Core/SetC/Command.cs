@@ -11,7 +11,7 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.SetC
     /// 指令
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public abstract class Command<T> : ICommand<T>
+    public abstract class Command<T> : ICommand<T>, IInsert<T>
     {
         protected readonly SqlProvider<T> SqlProvider;
         protected readonly IDbConnection DbCon;

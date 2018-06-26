@@ -60,6 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Interfaces\IInsert.cs" />
     <Compile Include="Core\Interfaces\ISet.cs" />
     <Compile Include="Core\SetQ\Aggregation.cs" />
     <Compile Include="Core\SetC\CommandSet.cs" />

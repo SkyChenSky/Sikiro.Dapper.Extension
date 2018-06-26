@@ -140,7 +140,11 @@ namespace Sikiro.DapperLambdaExtension.MsSql
         {
             var paramsAndValuesSql = FormatInsertParamsAndValues(entity);
 
-            SqlString = $"INSERT INTO {FormatTableName(false)} {paramsAndValuesSql}";
+            var ifnotexistsWhere = ResolveExpression.ResolveWhere(Context.CommandSet.IfNotExistsExpression,"INE_");
+
+            Params.AddDynamicParams(ifnotexistsWhere.Param);
+
+            SqlString = Context.CommandSet.IfNotExistsExpression != null ? $"IF NOT EXISTS ( SELECT  1 FROM {FormatTableName(false)} {ifnotexistsWhere.SqlCmd} ) INSERT INTO {FormatTableName(false)} {paramsAndValuesSql}" : $"INSERT INTO {FormatTableName(false)} {paramsAndValuesSql}";
             return this;
         }
 
