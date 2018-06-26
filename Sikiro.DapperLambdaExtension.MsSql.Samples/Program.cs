@@ -10,13 +10,11 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Samples
             var con = new SqlConnection(
                 " Data Source=192.168.13.50;Initial Catalog=SkyChen;Persist Security Info=True;User ID=sa;Password=123456789");
 
-            var db = new DataBase(con);
-
-            var deleteResult = db.CommandSet<SysUser>().Where(a => a.UserName == "chengong").Delete() > 0;
+            var deleteResult = con.CommandSet<SysUser>().Where(a => a.UserName == "chengong").Delete() > 0;
 
             Console.WriteLine("删除数{0}", deleteResult);
 
-            var insertResult2 = db.CommandSet<SysUser>().IfNotExists(a => a.Mobile == "18988563330").Insert(new SysUser
+            var insertResult2 = con.CommandSet<SysUser>().IfNotExists(a => a.Mobile == "18988563330").Insert(new SysUser
             {
                 CreateDatetime = DateTime.Now,
                 Email = "287245177@qq.com",
@@ -29,7 +27,7 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Samples
                 Password = "asdasdad"
             });
 
-            var insertResult = db.CommandSet<SysUser>().Insert(new SysUser
+            var insertResult = con.CommandSet<SysUser>().Insert(new SysUser
             {
                 CreateDatetime = DateTime.Now,
                 Email = "287245177@qq.com",
@@ -43,42 +41,42 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Samples
             });
             Console.WriteLine("添加数{0}", insertResult);
 
-            var countResult = db.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com").Count();
+            var countResult = con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com").Count();
             Console.WriteLine("查询个数{0}", insertResult);
 
-            var getResult = db.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com").Get();
+            var getResult = con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com").Get();
 
-            var listResult = db.QuerySet<SysUser>().OrderBy(a => a.CreateDatetime).Select(a => a.Email).ToList();
+            var listResult = con.QuerySet<SysUser>().OrderBy(a => a.CreateDatetime).Select(a => a.Email).ToList();
 
-            var listResult2 = db.QuerySet<SysUser>().OrderBy(a => a.CreateDatetime).Top(2).Select(a => a.Email).ToList();
+            var listResult2 = con.QuerySet<SysUser>().OrderBy(a => a.CreateDatetime).Top(2).Select(a => a.Email).ToList();
 
-            var updateResult = db.CommandSet<SysUser>().Where(a => a.Email == "287245177@qq.com")
+            var updateResult = con.CommandSet<SysUser>().Where(a => a.Email == "287245177@qq.com")
                 .Update(a => new SysUser { UserStatus = 1 });
 
             getResult.Email = "287245145666@qq.com";
-            var updateResult2 = db.CommandSet<SysUser>().Where(a => a.Email == "287245177@qq.com").Update(getResult);
+            var updateResult2 = con.CommandSet<SysUser>().Where(a => a.Email == "287245177@qq.com").Update(getResult);
 
-            var updateResult3 = db.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com").OrderBy(b => b.Email)
+            var updateResult3 = con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com").OrderBy(b => b.Email)
                 .Top(10).Select(a => a.Email).ToList();
 
-            var updateResult8 = db.QuerySet<SysUser>().OrderBy(b => b.Email).Top(10).ToList();
+            var updateResult8 = con.QuerySet<SysUser>().OrderBy(b => b.Email).Top(10).ToList();
 
-            var updateResult4 = db.QuerySet<SysUser>().Sum(a => a.UserStatus);
+            var updateResult4 = con.QuerySet<SysUser>().Sum(a => a.UserStatus);
 
-            var updateResult5 = db.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com")
+            var updateResult5 = con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com")
                 .Select(a => new SysUser { Email = a.Email })
                 .UpdateSelect(a => new SysUser { Email = "2530665632@qq.com" });
 
-            var updateResult6 = db.QuerySet<SysUser>().Where(a => a.Email == "456465asd@qq.com")
+            var updateResult6 = con.QuerySet<SysUser>().Where(a => a.Email == "456465asd@qq.com")
                 .OrderBy(a => a.CreateDatetime)
                 .Select(a => new SysUser { Email = a.Email, Mobile = a.Mobile, Password = a.Password }).PageList(1, 10);
 
-            var updateResult7 = db.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com")
+            var updateResult7 = con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com")
                 .OrderBy(a => a.CreateDatetime)
                 .Select(a => new SysUser { Email = a.Email })
                 .UpdateSelect(a => new SysUser { Email = "2530665632@qq.com" });
 
-            db.Dispose();
+            con.Dispose();
         }
     }
 }
