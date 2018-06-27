@@ -2,7 +2,7 @@
 
 namespace Sikiro.DapperLambdaExtension.MsSql.Helper
 {
-    public class ExpressionModifier : ExpressionVisitor
+    internal class ExpressionModifier : ExpressionVisitor
     {
         public ExpressionModifier(Expression newExpression, Expression oldExpression)
         {

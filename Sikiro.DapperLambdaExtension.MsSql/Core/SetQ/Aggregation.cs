@@ -17,6 +17,11 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.SetQ
 
         }
 
+        protected Aggregation(IDbConnection conn, SqlProvider<T> sqlProvider, IDbTransaction dbTransaction) : base(conn, sqlProvider, dbTransaction)
+        {
+
+        }
+
         public int Count()
         {
             SqlProvider.FormatCount();

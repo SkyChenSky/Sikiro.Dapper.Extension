@@ -25,7 +25,19 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.SetQ
             sqlProvider.Context = SetContext;
         }
 
-        internal QuerySet(IDbConnection conn, SqlProvider<T> sqlProvider, Type tableType, LambdaExpression whereExpression, LambdaExpression selectExpression, int? topNum, Dictionary<EOrderBy, LambdaExpression> orderbyExpressionList) : base(conn, sqlProvider)
+        public QuerySet(IDbConnection conn, SqlProvider<T> sqlProvider, IDbTransaction dbTransaction) : base(conn, sqlProvider, dbTransaction)
+        {
+            TableType = typeof(T);
+            SetContext = new DataBaseContext<T>
+            {
+                Set = this,
+                OperateType = EOperateType.Query
+            };
+
+            sqlProvider.Context = SetContext;
+        }
+
+        internal QuerySet(IDbConnection conn, SqlProvider<T> sqlProvider, Type tableType, LambdaExpression whereExpression, LambdaExpression selectExpression, int? topNum, Dictionary<EOrderBy, LambdaExpression> orderbyExpressionList, IDbTransaction dbTransaction) : base(conn, sqlProvider, dbTransaction)
         {
             TableType = tableType;
             WhereExpression = whereExpression;
