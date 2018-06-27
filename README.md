@@ -136,7 +136,7 @@ con.Transaction(tc =>
 {
     var sysUserid = tc.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com").Select(a => a.SysUserid).Get();
 
-    tc.CommandSet<SysUser>().Where(a => a.SysUserid == sysUserid2).Delete();
+    tc.CommandSet<SysUser>().Where(a => a.SysUserid == sysUserid).Delete();
 
     tc.CommandSet<SysUser>().Insert(new SysUser
     {
