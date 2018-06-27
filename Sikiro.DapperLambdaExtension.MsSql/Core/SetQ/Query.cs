@@ -18,6 +18,8 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.SetQ
     {
         protected readonly SqlProvider<T> SqlProvider;
         protected readonly IDbConnection DbCon;
+        protected readonly IDbTransaction DbTransaction;
+
         protected DataBaseContext<T> SetContext { get; set; }
 
         protected Query(IDbConnection conn, SqlProvider<T> sqlProvider)
@@ -26,25 +28,32 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.SetQ
             DbCon = conn;
         }
 
+        protected Query(IDbConnection conn, SqlProvider<T> sqlProvider, IDbTransaction dbTransaction)
+        {
+            SqlProvider = sqlProvider;
+            DbCon = conn;
+            DbTransaction = dbTransaction;
+        }
+
         public T Get()
         {
             SqlProvider.FormatGet();
 
-            return DbCon.QuerySingle<T>(SqlProvider.SqlString, SqlProvider.Params);
+            return DbCon.QueryFirstOrDefault<T>(SqlProvider.SqlString, SqlProvider.Params, DbTransaction);
         }
 
         public List<T> ToList()
         {
             SqlProvider.FormatToList();
 
-            return DbCon.Query<T>(SqlProvider.SqlString, SqlProvider.Params).ToList();
+            return DbCon.Query<T>(SqlProvider.SqlString, SqlProvider.Params, DbTransaction).ToList();
         }
 
         public PageList<T> PageList(int pageIndex, int pageSize)
         {
             SqlProvider.FormatToPageList(pageIndex, pageSize);
 
-            using (var queryResult = DbCon.QueryMultiple(SqlProvider.SqlString, SqlProvider.Params))
+            using (var queryResult = DbCon.QueryMultiple(SqlProvider.SqlString, SqlProvider.Params, DbTransaction))
             {
                 var pageTotal = queryResult.ReadFirst<int>();
 
@@ -58,7 +67,7 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.SetQ
         {
             SqlProvider.FormatUpdateSelect(updator);
 
-            return DbCon.Query<T>(SqlProvider.SqlString, SqlProvider.Params).ToList();
+            return DbCon.Query<T>(SqlProvider.SqlString, SqlProvider.Params, DbTransaction).ToList();
         }
     }
 }

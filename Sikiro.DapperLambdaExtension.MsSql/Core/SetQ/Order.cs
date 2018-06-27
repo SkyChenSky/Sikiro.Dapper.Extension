@@ -20,6 +20,10 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.SetQ
             OrderbyExpressionList = new Dictionary<EOrderBy, LambdaExpression>();
         }
 
+        protected Order(IDbConnection conn, SqlProvider<T> sqlProvider, IDbTransaction dbTransaction) : base(conn, sqlProvider, dbTransaction)
+        {
+            OrderbyExpressionList = new Dictionary<EOrderBy, LambdaExpression>();
+        }
 
         /// <summary>
         /// 顺序

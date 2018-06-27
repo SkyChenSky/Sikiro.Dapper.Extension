@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace Sikiro.DapperLambdaExtension.MsSql.Samples
 {
@@ -75,6 +76,30 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Samples
                 .OrderBy(a => a.CreateDatetime)
                 .Select(a => new SysUser { Email = a.Email })
                 .UpdateSelect(a => new SysUser { Email = "2530665632@qq.com" });
+
+            con.Transaction(tc =>
+            {
+                var SysUserid1 = tc.QuerySet<SysUser>().Where(a => a.Mobile == "18988561110").Select(a => a.SysUserid).Get();
+
+                var SysUserid2 = tc.QuerySet<SysUser>().Where(a => a.Mobile == "18988561111").Select(a => a.SysUserid).Get();
+
+                tc.CommandSet<SysUser>().Where(a => a.SysUserid == SysUserid1).Delete();
+
+                tc.CommandSet<SysUser>().Where(a => a.SysUserid == SysUserid2).Delete();
+
+                tc.CommandSet<SysUser>().Insert(new SysUser
+                {
+                    CreateDatetime = DateTime.Now,
+                    Email = "287245177@qq.com",
+                    Mobile = "13536059332",
+                    RealName = "大笨贞",
+                    SysUserid = Guid.NewGuid().ToString("N"),
+                    UserName = "fengshuzhen",
+                    UserStatus = 1,
+                    UserType = 1,
+                    Password = "asdasdad"
+                });
+            });
 
             con.Dispose();
         }

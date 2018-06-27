@@ -7,7 +7,7 @@ using Sikiro.DapperLambdaExtension.MsSql.Helper;
 
 namespace Sikiro.DapperLambdaExtension.MsSql.Core.Expression
 {
-    public sealed class UpdateExpression : ExpressionVisitor
+    internal sealed class UpdateExpression : ExpressionVisitor
     {
         #region sql指令
 

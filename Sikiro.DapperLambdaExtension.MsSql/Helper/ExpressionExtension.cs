@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace Sikiro.DapperLambdaExtension.MsSql.Helper
 {
-    public static class ExpressionExtension
+    internal static class ExpressionExtension
     {
         private static readonly ConcurrentDictionary<string, Func<object, object[], object>> Cache = new ConcurrentDictionary<string, Func<object, object[], object>>();
 

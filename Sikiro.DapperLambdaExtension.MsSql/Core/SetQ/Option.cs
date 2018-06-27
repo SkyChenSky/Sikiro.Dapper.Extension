@@ -15,6 +15,11 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.SetQ
 
         }
 
+        protected Option(IDbConnection conn, SqlProvider<T> sqlProvider, IDbTransaction dbTransaction) : base(conn, sqlProvider, dbTransaction)
+        {
+
+        }
+
         internal int? TopNum { get; set; }
 
         internal LambdaExpression SelectExpression { get; set; }
@@ -25,13 +30,13 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.SetQ
 
             var thisObject = (QuerySet<T>)this;
 
-            return new QuerySet<TResult>(DbCon, new SqlProvider<TResult>(), typeof(T), thisObject.WhereExpression, thisObject.SelectExpression, thisObject.TopNum, thisObject.OrderbyExpressionList);
+            return new QuerySet<TResult>(DbCon, new SqlProvider<TResult>(), typeof(T), thisObject.WhereExpression, thisObject.SelectExpression, thisObject.TopNum, thisObject.OrderbyExpressionList, DbTransaction);
         }
 
-        public virtual Option<T> Top(int num)
-        {
-            TopNum = num;
-            return this;
-        }
+    public virtual Option<T> Top(int num)
+    {
+        TopNum = num;
+        return this;
     }
+}
 }

@@ -28,7 +28,19 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.SetC
             sqlProvider.Context = SetContext;
         }
 
-        internal CommandSet(IDbConnection conn, SqlProvider<T> sqlProvider, Type tableType, LambdaExpression whereExpression, LambdaExpression selectExpression, int? topNum, Dictionary<EOrderBy, LambdaExpression> orderbyExpressionList) : base(conn, sqlProvider)
+        public CommandSet(IDbConnection conn, SqlProvider<T> sqlProvider, IDbTransaction dbTransaction) : base(conn, sqlProvider, dbTransaction)
+        {
+            TableType = typeof(T);
+            SetContext = new DataBaseContext<T>
+            {
+                Set = this,
+                OperateType = EOperateType.Command
+            };
+
+            sqlProvider.Context = SetContext;
+        }
+
+        internal CommandSet(IDbConnection conn, SqlProvider<T> sqlProvider, Type tableType, LambdaExpression whereExpression) : base(conn, sqlProvider)
         {
             TableType = tableType;
             WhereExpression = whereExpression;
