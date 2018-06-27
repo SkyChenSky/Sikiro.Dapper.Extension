@@ -63,7 +63,7 @@ public class SysUser
 
 ### Insert
 ```c#
- con.CommandSet<SysUser>().Insert(new SysUser
+con.CommandSet<SysUser>().Insert(new SysUser
 {
     CreateDatetime = DateTime.Now,
     Email = "287245177@qq.com",
@@ -73,7 +73,7 @@ public class SysUser
 ```
 当不存在某条件记录Insert
 ```c#
- con.CommandSet<SysUser>().IfNotExists(a => a.Email == "287245177@qq.com").Insert(new SysUser
+con.CommandSet<SysUser>().IfNotExists(a => a.Email == "287245177@qq.com").Insert(new SysUser
 {
     CreateDatetime = DateTime.Now,
     Email = "287245177@qq.com",
@@ -127,6 +127,30 @@ con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com")
                 .OrderBy(a => a.CreateDatetime)
                 .Select(a => new SysUser { Email = a.Email })
                 .UpdateSelect(a => new SysUser { Email = "2530665632@qq.com" });
+```
+
+### 事务功能
+
+```c#
+con.Transaction(tc =>
+{
+    var sysUserid = tc.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com").Select(a => a.SysUserid).Get();
+
+    tc.CommandSet<SysUser>().Where(a => a.SysUserid == sysUserid2).Delete();
+
+    tc.CommandSet<SysUser>().Insert(new SysUser
+    {
+        CreateDatetime = DateTime.Now,
+        Email = "287245177@qq.com",
+        Mobile = "13536059332",
+        RealName = "大笨贞",
+        SysUserid = Guid.NewGuid().ToString("N"),
+        UserName = "fengshuzhen",
+        UserStatus = 1,
+        UserType = 1,
+        Password = "asdasdad"
+    });
+});
 ```
 
 ### SQL
