@@ -11,8 +11,6 @@
 PM> Install-Package Sikiro.DapperLambdaExtension.MsSql
 ```
 
-现在暂时只有MsSql的扩展，也没有实现事务的写法，将会在后续的版本补充
-
 ### SqlConnection
 
 ```c#
@@ -136,4 +134,43 @@ con.Transaction(tc =>
 {
     var sysUserid = tc.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com").Select(a => a.SysUserid).Get();
 
-    
+    tc.CommandSet<SysUser>().Where(a => a.SysUserid == sysUserid).Delete();
+
+    tc.CommandSet<SysUser>().Insert(new SysUser
+    {
+         CreateDatetime = DateTime.Now,
+         Email = "2530665632@qq.com",
+         SysUserid = Guid.NewGuid().ToString("N"),
+         UserName = "xiaobenzhen",
+    });
+});
+```
+
+### 最后来一个完整的DEMO
+
+```c#
+using (var con = new SqlConnection("Data Source=192.168.13.46;Initial Catalog=SkyChen;Persist Security Info=True;User ID=sa;Password=123456789"))
+{
+    con.CommandSet<SysUser>().Insert(new SysUser
+    {
+        CreateDatetime = DateTime.Now,
+        Email = "287245177@qq.com",
+        SysUserid = Guid.NewGuid().ToString("N"),
+        UserName = "chengong",
+    });
+
+    var model = con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com").Get();
+
+    con.CommandSet<SysUser>().Where(a => a.SysUserid == model.SysUserid)
+        .Update(a => new SysUser { Email = "2548987@qq.com" });
+
+    con.CommandSet<SysUser>().Where(a => a.SysUserid == model.SysUserid).Delete();
+}
+```
+
+### 其他
+除了简单的CURD还有Count、Sum、Exists
+
+## 结束
+第一个版本有未完善的地方，如果大家有很好的建议欢迎随时向我提
+
