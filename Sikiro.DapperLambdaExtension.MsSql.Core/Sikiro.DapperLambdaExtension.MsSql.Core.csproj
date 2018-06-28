@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>陈珙</Authors>
+    <Company>陈珙</Company>
+    <PackageId>Sikiro.DapperLambdaExtension.MsSql</PackageId>
+    <Product>Sikiro.DapperLambdaExtension.MsSql</Product>
+    <Description>This is an lambda extension of dapper, Chain style makes developers more elegant and intuitive.</Description>
+    <PackageLicenseUrl>https://github.com/SkyChenSky/Sikiro.DapperLambdaExtension.MsSql/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/SkyChenSky/Sikiro.DapperLambdaExtension.MsSql</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/SkyChenSky/Sikiro.DapperLambdaExtension.MsSql</RepositoryUrl>
+    <AssemblyVersion>1.2.1.0</AssemblyVersion>
+    <FileVersion>1.2.1.0</FileVersion>
+    <PackageReleaseNotes>Porting to.Net standard Dapper lambda sql</PackageReleaseNotes>
+    <PackageTags>Sikiro Extension</PackageTags>
+    <Version>1.2.1</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="1.50.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.ComponentModel.DataAnnotations.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

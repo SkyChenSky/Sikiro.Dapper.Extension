@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Data.SqlClient;
-using Sikiro.DapperLambdaExtension.MsSql.Core;
 
-namespace Sikiro.DapperLambdaExtension.MsSql.Samples
+namespace Sikiro.DapperLambdaExtension.MsSql.Core.Samples
 {
     class Program
     {

@@ -10,3 +10,6 @@
 /Sikiro.DapperLambdaExtension.MsSql/bin/Debug
 /Sikiro.DapperLambdaExtension.MsSql/obj/Release
 /Sikiro.DapperLambdaExtension.MsSql/obj/Debug
+/Sikiro.DapperLambdaExtension.MsSql.Core.Samples/obj
+/Sikiro.DapperLambdaExtension.MsSql.Core/obj
+/Sikiro.DapperLambdaExtension.MsSql.Core/bin

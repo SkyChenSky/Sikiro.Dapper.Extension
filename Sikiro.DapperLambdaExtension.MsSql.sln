@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sikiro.DapperLambdaExtension.MsSql", "Sikiro.DapperLambdaExtension.MsSql\Sikiro.DapperLambdaExtension.MsSql.csproj", "{FE9C3696-88D4-49D5-812C-366FFC45FDA6}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{D4EB24AD-027C-4488-B759-F6DDCC1B6B37}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sikiro.DapperLambdaExtension.MsSql.Samples", "Sikiro.DapperLambdaExtension.MsSql.Samples\Sikiro.DapperLambdaExtension.MsSql.Samples.csproj", "{F2DB5B6F-9525-4877-9824-8D191B36FAA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sikiro.DapperLambdaExtension.MsSql.Core", "Sikiro.DapperLambdaExtension.MsSql.Core\Sikiro.DapperLambdaExtension.MsSql.Core.csproj", "{D2ABD0E9-582E-4E89-8EF1-0167D519FB64}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sikiro.DapperLambdaExtension.MsSql.Core.Samples", "Sikiro.DapperLambdaExtension.MsSql.Core.Samples\Sikiro.DapperLambdaExtension.MsSql.Core.Samples.csproj", "{47C7D524-53A5-4ECF-9721-3D6CEA24145A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,20 +17,25 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FE9C3696-88D4-49D5-812C-366FFC45FDA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FE9C3696-88D4-49D5-812C-366FFC45FDA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FE9C3696-88D4-49D5-812C-366FFC45FDA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FE9C3696-88D4-49D5-812C-366FFC45FDA6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F2DB5B6F-9525-4877-9824-8D191B36FAA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F2DB5B6F-9525-4877-9824-8D191B36FAA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2DB5B6F-9525-4877-9824-8D191B36FAA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2DB5B6F-9525-4877-9824-8D191B36FAA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2ABD0E9-582E-4E89-8EF1-0167D519FB64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2ABD0E9-582E-4E89-8EF1-0167D519FB64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2ABD0E9-582E-4E89-8EF1-0167D519FB64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2ABD0E9-582E-4E89-8EF1-0167D519FB64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47C7D524-53A5-4ECF-9721-3D6CEA24145A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47C7D524-53A5-4ECF-9721-3D6CEA24145A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47C7D524-53A5-4ECF-9721-3D6CEA24145A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47C7D524-53A5-4ECF-9721-3D6CEA24145A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F2DB5B6F-9525-4877-9824-8D191B36FAA3} = {D4EB24AD-027C-4488-B759-F6DDCC1B6B37}
+		{47C7D524-53A5-4ECF-9721-3D6CEA24145A} = {D4EB24AD-027C-4488-B759-F6DDCC1B6B37}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {227769BC-3B0D-496D-9C39-FA16BD236A02}
