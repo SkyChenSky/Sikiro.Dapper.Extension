@@ -140,15 +140,10 @@ con.Transaction(tc =>
 
     tc.CommandSet<SysUser>().Insert(new SysUser
     {
-        CreateDatetime = DateTime.Now,
-        Email = "287245177@qq.com",
-        Mobile = "13536059332",
-        RealName = "大笨贞",
-        SysUserid = Guid.NewGuid().ToString("N"),
-        UserName = "fengshuzhen",
-        UserStatus = 1,
-        UserType = 1,
-        Password = "asdasdad"
+         CreateDatetime = DateTime.Now,
+         Email = "2530665632@qq.com",
+         SysUserid = Guid.NewGuid().ToString("N"),
+         UserName = "xiaobenzhen",
     });
 });
 ```
