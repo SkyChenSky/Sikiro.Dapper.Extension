@@ -1,11 +1,11 @@
-# Sikiro.DapperLambdaExtension.MsSql                                         [中文](https://github.com/SkyChenSky/Sikiro.DapperLambdaExtension.MsSql/blob/master/README.zh-cn.md)
-This is an lambda extension of dapper, Chain style makes developers more elegant and intuitive.
+# Sikiro.DapperLambdaExtension.MsSql [English](https://github.com/SkyChenSky/Sikiro.DapperLambdaExtension.MsSql/blob/master/README.md)
+这是针对dapper的一个扩展，支持lambda表达式的写法，链式风格让开发者使用起来更加优雅、直观。
 
-## Getting Started
+## 开始
 
 ### Nuget
 
-You can run the following command to install the Sikiro.DapperLambdaExtension.MsSql in your project。
+你可以运行以下下命令在你的项目中安装 Sikiro.DapperLambdaExtension.MsSql。
 
 ```
 PM> Install-Package Sikiro.DapperLambdaExtension.MsSql
@@ -17,7 +17,7 @@ PM> Install-Package Sikiro.DapperLambdaExtension.MsSql
 var con = new SqlConnection("Data Source=192.168.13.46;Initial Catalog=SkyChen;Persist Security Info=True;User ID=sa;Password=123456789");
 ```
 
-### Defining User Entity
+### 定义User
 ```c#
 [Table("SYS_USER")]
 public class SysUser
@@ -69,7 +69,7 @@ con.CommandSet<SysUser>().Insert(new SysUser
     UserName = "chengong",
 });
 ```
-If not exists...insert...
+当不存在某条件记录Insert
 ```c#
 con.CommandSet<SysUser>().IfNotExists(a => a.Email == "287245177@qq.com").Insert(new SysUser
 {
@@ -81,20 +81,19 @@ con.CommandSet<SysUser>().IfNotExists(a => a.Email == "287245177@qq.com").Insert
 ```
 
 ### UPDATE
-Update according to the condition part field
+您可以根据某个条件把指定字段更新
 ```c#
 con.CommandSet<SysUser>().Where(a => a.Email == "287245177@qq.com").Update(a => new SysUser { Email = "123456789@qq.com" });
 ```
 
-You can also update the entity field information based on the primary key 
+也可以根据主键来更新整个实体字段信息
 ```c#
 User.Email = "123456789@qq.com";
 condb.CommandSet<SysUser>().Update(User);
 ```
 
 ### DELETE
-Delete according to the condition
-
+您可以根据条件来删除数据
 ```c#
 con.CommandSet<SysUser>().Where(a => a.Email == "287245177@qq.com").Delete()
 ```
@@ -102,17 +101,17 @@ con.CommandSet<SysUser>().Where(a => a.Email == "287245177@qq.com").Delete()
 ### QUERY
 
 #### GET
-Get the first data by filtering condition
-
+获取过滤条件的一条数据（第一条）
 ```c#
 con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com").Get()
 ```
 #### TOLIST
-You can also query qualified data list.
+当然我们也可以查询出符合条件的数据集
 ```c#
 con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com").OrderBy(b => b.Email).Top(10).Select(a => a.Email).ToList();
 ```
 ### PAGELIST
+还有分页
 ```c#
 con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com")
                  .OrderBy(a => a.CreateDatetime)
@@ -120,7 +119,7 @@ con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com")
                  .PageList(1, 10);
 ```
 ### UPDATESELECT
-First update then select
+先更新再把结果查询出来
 ```c#
 con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com")
                 .OrderBy(a => a.CreateDatetime)
@@ -128,7 +127,7 @@ con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com")
                 .UpdateSelect(a => new SysUser { Email = "2530665632@qq.com" });
 ```
 
-### Transaction
+### 事务功能
 
 ```c#
 con.Transaction(tc =>
@@ -147,7 +146,7 @@ con.Transaction(tc =>
 });
 ```
 
-### Finally a complete Demo
+### 最后来一个完整的DEMO
 
 ```c#
 using (var con = new SqlConnection("Data Source=192.168.13.46;Initial Catalog=SkyChen;Persist Security Info=True;User ID=sa;Password=123456789"))
@@ -169,9 +168,9 @@ using (var con = new SqlConnection("Data Source=192.168.13.46;Initial Catalog=Sk
 }
 ```
 
-### Others
-In addition to the above functions, there are aggregated queries.Such as Count、Sum、Exists
+### 其他
+除了简单的CURD还有Count、Sum、Exists
 
-## End
-If you have good suggestions, please feel free to mention to me.
+## 结束
+第一个版本有未完善的地方，如果大家有很好的建议欢迎随时向我提
 
