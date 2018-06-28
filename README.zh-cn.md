@@ -1,4 +1,4 @@
-# Sikiro.DapperLambdaExtension.MsSql
+# Sikiro.DapperLambdaExtension.MsSql [English](https://github.com/SkyChenSky/Sikiro.DapperLambdaExtension.MsSql/blob/master/README.md)
 这是针对dapper的一个扩展，支持lambda表达式的写法，链式风格让开发者使用起来更加优雅、直观。
 
 ## 开始
