@@ -1,4 +1,4 @@
-# Sikiro.DapperLambdaExtension.MsSql                [中文](https://github.com/SkyChenSky/Sikiro.DapperLambdaExtension.MsSql/blob/master/README.zh-cn.md)
+# Sikiro.DapperLambdaExtension.MsSql                                         [中文](https://github.com/SkyChenSky/Sikiro.DapperLambdaExtension.MsSql/blob/master/README.zh-cn.md)
 This is an lambda extension of dapper, Chain style makes developers more elegant and intuitive.
 
 ## Getting Started
