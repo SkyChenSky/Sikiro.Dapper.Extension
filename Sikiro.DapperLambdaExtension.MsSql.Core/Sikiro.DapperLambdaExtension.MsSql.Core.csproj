@@ -10,11 +10,11 @@
     <PackageLicenseUrl>https://github.com/SkyChenSky/Sikiro.DapperLambdaExtension.MsSql/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/SkyChenSky/Sikiro.DapperLambdaExtension.MsSql</PackageProjectUrl>
     <RepositoryUrl>https://github.com/SkyChenSky/Sikiro.DapperLambdaExtension.MsSql</RepositoryUrl>
-    <AssemblyVersion>1.2.1.0</AssemblyVersion>
-    <FileVersion>1.2.1.0</FileVersion>
+    <AssemblyVersion>1.2.1.1</AssemblyVersion>
+    <FileVersion>1.2.1.1</FileVersion>
     <PackageReleaseNotes>Porting to.Net standard Dapper lambda sql</PackageReleaseNotes>
-    <PackageTags>Sikiro Extension</PackageTags>
-    <Version>1.2.1</Version>
+    <PackageTags>Sikiro Extension dapper orm lambda</PackageTags>
+    <Version>1.2.1.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
