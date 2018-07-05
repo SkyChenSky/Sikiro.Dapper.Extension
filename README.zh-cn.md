@@ -127,6 +127,19 @@ con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com")
                 .UpdateSelect(a => new SysUser { Email = "2530665632@qq.com" });
 ```
 
+### ExpressionBuilder
+```c#
+var where = ExpressionBuilder.Init<SysUser>();
+
+if (string.IsNullOrWhiteSpace(param.Email))
+    where = where.And(a => a.Email == "287245177@qq.com");
+
+if (string.IsNullOrWhiteSpace(param.Mobile))
+    where = where.And(a => a.Mobile == "18988565556");
+
+con.QuerySet<SysUser>().Where(where).OrderBy(b => b.Email).Top(10).Select(a => a.Email).ToList();
+```
+
 ### 事务功能
 
 ```c#
