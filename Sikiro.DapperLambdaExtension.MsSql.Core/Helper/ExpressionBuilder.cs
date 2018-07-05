@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Sikiro.DapperLambdaExtension.MsSql.Core.Helper
@@ -10,14 +11,7 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Helper
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static Expression<Func<T, bool>> True<T>() { return expression => true; }
-
-        /// <summary>
-        /// 默认False条件
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static Expression<Func<T, bool>> False<T>() { return expression => false; }
+        public static Expression<Func<T, bool>> Init<T>() { return expression => true; }
 
         /// <summary>
         /// 拼接or条件
@@ -28,8 +22,9 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Helper
         /// <returns></returns>
         public static Expression<Func<T, bool>> Or<T>(this Expression<Func<T, bool>> oldExpression, Expression<Func<T, bool>> newExpression)
         {
-            var inv = Expression.Invoke(newExpression, oldExpression.Parameters);
-            return Expression.Lambda<Func<T, bool>>(Expression.Or(oldExpression.Body, inv), oldExpression.Parameters);
+            var parameter = Expression.Parameter(typeof(T));
+            var body = Expression.Or(oldExpression.Body, newExpression.Body);
+            return Expression.Lambda<Func<T, bool>>(body, parameter);
         }
 
         /// <summary>
@@ -41,8 +36,9 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Helper
         /// <returns></returns>
         public static Expression<Func<T, bool>> And<T>(this Expression<Func<T, bool>> oldExpression, Expression<Func<T, bool>> newExpression)
         {
-            var inv = Expression.Invoke(newExpression, oldExpression.Parameters);
-            return Expression.Lambda<Func<T, bool>>(Expression.And(oldExpression.Body, inv), oldExpression.Parameters);
+            var parameter = Expression.Parameter(typeof(T));
+            var body = Expression.AndAlso(oldExpression.Body, newExpression.Body);
+            return Expression.Lambda<Func<T, bool>>(body, parameter);
         }
     }
 }

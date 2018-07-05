@@ -17,22 +17,6 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Helper
         private Expression Sub(Expression expression)
         {
             var type = expression.Type;
-            if (expression.NodeType == ExpressionType.Convert)
-            {
-                var u = (UnaryExpression)expression;
-                if (TypeHelper.GetNonNullableType(u.Operand.Type) == TypeHelper.GetNonNullableType(type))
-                {
-                    expression = u.Operand;
-                    return expression;
-                }
-
-                if (u.Operand.Type.IsEnum && u.Operand.NodeType == ExpressionType.MemberAccess)
-                {
-                    var value = Convert.ChangeType((u.Operand as MemberExpression).MemberToValue(), type);
-                    return Expression.Constant(value, type);
-                }
-            }
-
             switch (expression.NodeType)
             {
                 case ExpressionType.Constant:
@@ -51,6 +35,28 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Helper
                         return Expression.Constant(value, type);
                     }
                     return mExpression;
+
+                case ExpressionType.Convert:
+                    var u = (UnaryExpression)expression;
+                    if (TypeHelper.GetNonNullableType(u.Operand.Type) == TypeHelper.GetNonNullableType(type))
+                    {
+                        expression = u.Operand;
+                        return expression;
+                    }
+
+                    if (u.Operand.Type.IsEnum && u.Operand.NodeType == ExpressionType.MemberAccess)
+                    {
+                        var value = Convert.ChangeType((u.Operand as MemberExpression).MemberToValue(), type);
+                        return Expression.Constant(value, type);
+                    }
+                    break;
+                case ExpressionType.AndAlso:
+                    var b = (BinaryExpression)expression;
+                    if (b.Left.NodeType == ExpressionType.Constant)
+                        return b.Right;
+                    if (b.Right.NodeType == ExpressionType.Constant)
+                        return b.Left;
+                    break;
             }
 
             return expression;

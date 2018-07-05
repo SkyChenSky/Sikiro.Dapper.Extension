@@ -13,3 +13,12 @@
 /Sikiro.DapperLambdaExtension.MsSql.Core.Samples/obj
 /Sikiro.DapperLambdaExtension.MsSql.Core/obj
 /Sikiro.DapperLambdaExtension.MsSql.Core/bin
+/Sikiro.DapperLambdaExtension.MsSql.Samples/bin/Release
+/Sikiro.DapperLambdaExtension.MsSql.Core.Samples/bin/Debug/netcoreapp2.0
+/Sikiro.DapperLambdaExtension.MsSql.Core.Samples/bin/Release/netcoreapp2.0/Sikiro.DapperLambdaExtension.MsSql.Core.Samples.runtimeconfig.json
+/Sikiro.DapperLambdaExtension.MsSql.Core.Samples/bin/Release/netcoreapp2.0/Sikiro.DapperLambdaExtension.MsSql.Core.Samples.runtimeconfig.dev.json
+/Sikiro.DapperLambdaExtension.MsSql.Core.Samples/bin/Release/netcoreapp2.0/Sikiro.DapperLambdaExtension.MsSql.Core.Samples.pdb
+/Sikiro.DapperLambdaExtension.MsSql.Core.Samples/bin/Release/netcoreapp2.0/Sikiro.DapperLambdaExtension.MsSql.Core.Samples.dll
+/Sikiro.DapperLambdaExtension.MsSql.Core.Samples/bin/Release/netcoreapp2.0/Sikiro.DapperLambdaExtension.MsSql.Core.Samples.deps.json
+/Sikiro.DapperLambdaExtension.MsSql.Core.Samples/bin/Release/netcoreapp2.0/Sikiro.DapperLambdaExtension.MsSql.Core.pdb
+/Sikiro.DapperLambdaExtension.MsSql.Core.Samples/bin/Release/netcoreapp2.0/Sikiro.DapperLambdaExtension.MsSql.Core.dll

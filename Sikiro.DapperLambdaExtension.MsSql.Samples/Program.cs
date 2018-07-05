@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.SqlClient;
 using Sikiro.DapperLambdaExtension.MsSql.Core;
+using Sikiro.DapperLambdaExtension.MsSql.Core.Helper;
 
 namespace Sikiro.DapperLambdaExtension.MsSql.Samples
 {
@@ -9,11 +10,15 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Samples
         static void Main(string[] args)
         {
             var con = new SqlConnection(
-                " Data Source=192.168.13.50;Initial Catalog=SkyChen;Persist Security Info=True;User ID=sa;Password=123456789");
+                " Data Source=192.168.13.55;Initial Catalog=SkyChen;Persist Security Info=True;User ID=sa;Password=123456789");
 
             var deleteResult = con.CommandSet<SysUser>().Where(a => a.UserName == "chengong").Delete() > 0;
 
             Console.WriteLine("删除数{0}", deleteResult);
+
+
+            var where = ExpressionBuilder.Init<SysUser>();
+            con.QuerySet<SysUser>().Where(where).OrderBy(b => b.Email).Top(10).Select(a => a.Email).ToList();
 
             var insertResult2 = con.CommandSet<SysUser>().IfNotExists(a => a.Mobile == "18988563330").Insert(new SysUser
             {
