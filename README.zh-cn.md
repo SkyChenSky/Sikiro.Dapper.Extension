@@ -127,6 +127,21 @@ con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com")
                 .UpdateSelect(a => new SysUser { Email = "2530665632@qq.com" });
 ```
 
+### Like
+
+#### StartsWith
+```c#
+con.QuerySet<SysUser>().Where(a => a.Mobile.StartsWith("59332")).ToList();
+```
+#### EndWith
+```c#
+con.QuerySet<SysUser>().Where(a => a.Mobile.EndWith("59332")).ToList();
+```
+#### Contains
+```c#
+con.QuerySet<SysUser>().Where(a => a.Mobile.Contains("59332")).ToList();
+```
+
 ### ExpressionBuilder
 ```c#
 var where = ExpressionBuilder.Init<SysUser>();
