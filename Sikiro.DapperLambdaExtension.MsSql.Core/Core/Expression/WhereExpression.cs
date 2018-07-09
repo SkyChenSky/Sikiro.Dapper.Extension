@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -106,21 +107,6 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Core.Expression
         }
         #endregion
 
-        #region 访问一元表达式
-        /// <inheritdoc />
-        /// <summary>
-        /// 访问一元表达式
-        /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns>
-        protected override System.Linq.Expressions.Expression VisitUnary(UnaryExpression node)
-        {
-            ///todo 从这里开始恒真恒假
-
-            return node;
-        }
-        #endregion
-
         #region 访问方法表达式
         /// <inheritdoc />
         /// <summary>
@@ -130,19 +116,27 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Core.Expression
         /// <returns></returns>
         protected override System.Linq.Expressions.Expression VisitMethodCall(MethodCallExpression node)
         {
-            var paramName = "@" + TempFileName;
+            var argumentExpression = (ConstantExpression)node.Arguments[0];
             switch (node.Method.Name)
             {
                 case "StartsWith":
-                    Visit(node.Object);
-                    _sqlCmd.AppendFormat(" LIKE {0}", paramName);
-                    Param.Add(paramName, node.Arguments[0] + "%");
-                    break;
+                    {
+                        Visit(node.Object);
+                        var paramName = "@" + TempFileName;
+                        _sqlCmd.AppendFormat(" LIKE {0}", paramName);
+                        Param.Add(TempFileName, argumentExpression.Value + "%");
+                        break;
+                    }
+
                 case "EndsWith":
-                    Visit(node.Object);
-                    _sqlCmd.AppendFormat(" LIKE {0}", paramName);
-                    Param.Add(paramName, "%" + node.Arguments[0]);
-                    break;
+                    {
+                        Visit(node.Object);
+                        var paramName = "@" + TempFileName;
+                        _sqlCmd.AppendFormat(" LIKE {0}", paramName);
+                        Param.Add(TempFileName, "%" + argumentExpression.Value);
+                        break;
+                    }
+
                 case "Contains":
                     if (typeof(IEnumerable).IsAssignableFrom(node.Method.DeclaringType))
                     {
@@ -153,17 +147,13 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Core.Expression
                     else if (node.Method.DeclaringType == typeof(string))
                     {
                         Visit(node.Object);
+                        var paramName = "@" + TempFileName;
                         _sqlCmd.AppendFormat(" LIKE {0}", paramName);
-                        Param.Add(paramName, "%" + node.Arguments[0] + "%");
+                        Param.Add(TempFileName, "%" + argumentExpression.Value + "%");
                     }
                     break;
                 default:
-
-                    var q = node.Method.Invoke(node.Arguments[0], node.Arguments.Select(a => (object)a).ToArray());
-                    var result = node.Object.ToConvertAndGetValue();
-
-                    var value = node.Method.Invoke(result, null);
-                    break;
+                    throw new Exception("the expression is no support this function");
             }
 
             return node;
