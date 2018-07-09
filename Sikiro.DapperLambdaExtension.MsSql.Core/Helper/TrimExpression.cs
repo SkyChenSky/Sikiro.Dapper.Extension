@@ -9,6 +9,7 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Helper
     /// </summary>
     internal class TrimExpression : ExpressionVisitor
     {
+        private bool IsDeep = false;
         internal static Expression Trim(Expression expression)
         {
             return new TrimExpression().Visit(expression);
@@ -19,10 +20,13 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Helper
             var type = expression.Type;
             switch (expression.NodeType)
             {
+                case ExpressionType.Equal:
+                case ExpressionType.Call:
+                    IsDeep = true;
+                    return expression;
+
                 case ExpressionType.Constant:
-                    if (expression.Type == type)
-                        return expression;
-                    else if (TypeHelper.GetNonNullableType(expression.Type) == TypeHelper.GetNonNullableType(type))
+                    if (TypeHelper.GetNonNullableType(expression.Type) == TypeHelper.GetNonNullableType(type))
                         return Expression.Constant(((ConstantExpression)expression).Value, type);
                     break;
 
@@ -34,7 +38,14 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Helper
                         var value = mExpression.MemberToValue(root);
                         return Expression.Constant(value, type);
                     }
-                    return mExpression;
+                    else
+                    {
+                        if (IsDeep)
+                            return expression;
+
+                        IsDeep = true;
+                        return Expression.Equal(expression, Expression.Constant(true));
+                    }
 
                 case ExpressionType.Convert:
                     var u = (UnaryExpression)expression;
@@ -50,12 +61,29 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Helper
                         return Expression.Constant(value, type);
                     }
                     break;
+
+                case ExpressionType.Not:
+                    var n = (UnaryExpression)expression;
+                    return Expression.Equal(n.Operand, Expression.Constant(false));
                 case ExpressionType.AndAlso:
                     var b = (BinaryExpression)expression;
-                    if (b.Left.NodeType == ExpressionType.Constant)
-                        return b.Right;
-                    if (b.Right.NodeType == ExpressionType.Constant)
-                        return b.Left;
+                    IsDeep = true;
+                    if (b.Left.NodeType != b.Right.NodeType)
+                    {
+                        if (b.Left.NodeType == ExpressionType.MemberAccess && b.Left.Type.Name == "Boolean")
+                        {
+                            return Expression.AndAlso(Expression.Equal(b.Left, Expression.Constant(true)), b.Right);
+                        }
+                        if (b.Right.NodeType == ExpressionType.MemberAccess && b.Right.Type.Name == "Boolean")
+                        {
+                            return Expression.AndAlso(b.Left, Expression.Equal(b.Right, Expression.Constant(true)));
+                        }
+                        if (b.Left.NodeType == ExpressionType.Constant)
+                            return b.Right;
+                        if (b.Right.NodeType == ExpressionType.Constant)
+                            return b.Left;
+                    }
+
                     break;
             }
 
@@ -65,13 +93,10 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Helper
         public override Expression Visit(Expression exp)
         {
             if (exp == null)
-            {
                 return null;
-            }
 
             exp = Sub(exp);
             return base.Visit(exp);
         }
-
     }
 }
