@@ -141,6 +141,21 @@ if (string.IsNullOrWhiteSpace(param.Mobile))
 con.QuerySet<SysUser>().Where(where).OrderBy(b => b.Email).Top(10).Select(a => a.Email).ToList();
 ```
 
+### Like
+
+#### StartsWith
+```c#
+con.QuerySet<SysUser>().Where(a => a.Mobile.StartsWith("59332")).ToList();
+```
+#### EndWith
+```c#
+con.QuerySet<SysUser>().Where(a => a.Mobile.EndWith("59332")).ToList();
+```
+#### Contains
+```c#
+con.QuerySet<SysUser>().Where(a => a.Mobile.Contains("59332")).ToList();
+```
+
 ### Transaction
 
 ```c#
