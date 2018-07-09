@@ -15,7 +15,7 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Samples
             var where = ExpressionBuilder.Init<SysUser>();
             var q = con.QuerySet<SysUser>().Where(a => a.Mobile.Contains("13536")).OrderBy(b => b.Email).Top(10).Select(a => a.Email).ToList();
 
-            var q2 = con.QuerySet<SysUser>().Where(a => a.Mobile.EndsWith("59332")).OrderBy(b => b.Email).Top(10).Select(a => a.Email).ToList();
+            var q2 = con.QuerySet<SysUser>().Where(a => a.Mobile.StartsWith("59332")).OrderBy(b => b.Email).Top(10).Select(a => a.Email).ToList();
 
             var deleteResult = con.CommandSet<SysUser>().Where(a => a.UserName == "chengong").Delete() > 0;
 
