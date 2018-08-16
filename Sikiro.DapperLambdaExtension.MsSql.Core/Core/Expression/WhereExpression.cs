@@ -116,45 +116,11 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Core.Expression
         /// <returns></returns>
         protected override System.Linq.Expressions.Expression VisitMethodCall(MethodCallExpression node)
         {
-            var argumentExpression = (ConstantExpression)node.Arguments[0];
-            switch (node.Method.Name)
-            {
-                case "StartsWith":
-                    {
-                        Visit(node.Object);
-                        var paramName = "@" + TempFileName;
-                        _sqlCmd.AppendFormat(" LIKE {0}", paramName);
-                        Param.Add(TempFileName, argumentExpression.Value + "%");
-                        break;
-                    }
-
-                case "EndsWith":
-                    {
-                        Visit(node.Object);
-                        var paramName = "@" + TempFileName;
-                        _sqlCmd.AppendFormat(" LIKE {0}", paramName);
-                        Param.Add(TempFileName, "%" + argumentExpression.Value);
-                        break;
-                    }
-
-                case "Contains":
-                    if (typeof(IEnumerable).IsAssignableFrom(node.Method.DeclaringType))
-                    {
-                        Visit(node.Arguments[0]);
-                        var memberObject = (MemberExpression)node.Object;
-                        Visit(memberObject.Expression);
-                    }
-                    else if (node.Method.DeclaringType == typeof(string))
-                    {
-                        Visit(node.Object);
-                        var paramName = "@" + TempFileName;
-                        _sqlCmd.AppendFormat(" LIKE {0}", paramName);
-                        Param.Add(TempFileName, "%" + argumentExpression.Value + "%");
-                    }
-                    break;
-                default:
-                    throw new Exception("the expression is no support this function");
-            }
+            if (node.Method.Name == "Contains" && typeof(IEnumerable).IsAssignableFrom(node.Method.DeclaringType) &&
+                node.Method.DeclaringType != typeof(string))
+                In(node);
+            else
+                Like(node);
 
             return node;
         }
@@ -172,6 +138,51 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Core.Expression
             {
                 _sqlCmd.Append("NULL");
             }
+        }
+
+        private void Like(MethodCallExpression node)
+        {
+            Visit(node.Object);
+            var paramName = "@" + TempFileName;
+            _sqlCmd.AppendFormat(" LIKE {0}", paramName);
+
+            switch (node.Method.Name)
+            {
+                case "StartsWith":
+                    {
+                        var argumentExpression = (ConstantExpression)node.Arguments[0];
+                        Param.Add(TempFileName, argumentExpression.Value + "%");
+                    }
+                    break;
+                case "EndsWith":
+                    {
+                        var argumentExpression = (ConstantExpression)node.Arguments[0];
+                        Param.Add(TempFileName, "%" + argumentExpression.Value);
+                    }
+                    break;
+                case "Contains":
+                    {
+                        var argumentExpression = (ConstantExpression)node.Arguments[0];
+                        Param.Add(TempFileName, "%" + argumentExpression.Value + "%");
+                    }
+                    break;
+                default:
+                    throw new Exception("the expression is no support this function");
+            }
+        }
+
+        private void In(MethodCallExpression node)
+        {
+            var arrayValue = (IList)((ConstantExpression)node.Object).Value;
+            if (arrayValue.Count == 0)
+            {
+                _sqlCmd.Append(" 1 = 2");
+                return;
+            }
+            Visit(node.Arguments[0]);
+            var paramName = "@" + TempFileName;
+            _sqlCmd.AppendFormat(" IN {0}", paramName);
+            Param.Add(TempFileName, arrayValue);
         }
     }
 }

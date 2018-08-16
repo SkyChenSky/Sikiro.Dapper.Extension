@@ -20,11 +20,6 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Helper
             var type = expression.Type;
             switch (expression.NodeType)
             {
-                case ExpressionType.Equal:
-                case ExpressionType.Call:
-                    IsDeep = true;
-                    return expression;
-
                 case ExpressionType.Constant:
                     if (TypeHelper.GetNonNullableType(expression.Type) == TypeHelper.GetNonNullableType(type))
                         return Expression.Constant(((ConstantExpression)expression).Value, type);
@@ -83,8 +78,10 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Helper
                         if (b.Right.NodeType == ExpressionType.Constant)
                             return b.Left;
                     }
-
                     break;
+                default:
+                    IsDeep = true;
+                    return expression;
             }
 
             return expression;
