@@ -42,19 +42,20 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Sikiro.DapperLambdaExtension.MsSql.Core\Sikiro.DapperLambdaExtension.MsSql.Core.csproj">
-      <Project>{D2ABD0E9-582E-4E89-8EF1-0167D519FB64}</Project>
-      <Name>Sikiro.DapperLambdaExtension.MsSql.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SqlClient, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Data.SqlClient.4.5.1\lib\net461\System.Data.SqlClient.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sikiro.DapperLambdaExtension.MsSql.Core\Sikiro.DapperLambdaExtension.MsSql.Core.csproj">
+      <Project>{d2abd0e9-582e-4e89-8ef1-0167d519fb64}</Project>
+      <Name>Sikiro.DapperLambdaExtension.MsSql.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

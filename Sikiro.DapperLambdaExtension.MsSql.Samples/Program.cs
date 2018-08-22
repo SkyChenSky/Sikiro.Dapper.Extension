@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using Sikiro.DapperLambdaExtension.MsSql.Core;
-using Sikiro.DapperLambdaExtension.MsSql.Core.Helper;
 
 namespace Sikiro.DapperLambdaExtension.MsSql.Samples
 {
@@ -11,19 +9,7 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Samples
         static void Main(string[] args)
         {
             var con = new SqlConnection(
-                "Data Source=192.168.13.53;Initial Catalog=SkyChen;Persist Security Info=True;User ID=sa;Password=123456789");
-
-            var where = ExpressionBuilder.Init<SysUser>();
-
-            var q1 = con.QuerySet<SysUser>().Where(a => a.UserType < 3 ).ToList();
-
-            var q = con.QuerySet<SysUser>().Where(a => a.Mobile.Contains("13536")).OrderBy(b => b.Email).Top(10).Select(a => a.Email).ToList();
-
-            var mobiles = new List<string> { };
-            var q11 = con.QuerySet<SysUser>().Where(a => mobiles.Contains(a.Mobile) && a.UserType < 3).OrderBy(b => b.Email).Top(10).Select(a => a.Email).ToList();
-
-            var mobiles2 = new List<string> { "13536059332", "10086      " };
-            var q2 = con.QuerySet<SysUser>().Where(a => mobiles2.Contains(a.Mobile) ).OrderBy(b => b.Email).Top(10).Select(a => a.Email).ToList();
+                " Data Source=192.168.13.53;Initial Catalog=SkyChen;Persist Security Info=True;User ID=sa;Password=123456789");
 
             var deleteResult = con.CommandSet<SysUser>().Where(a => a.UserName == "chengong").Delete() > 0;
 
