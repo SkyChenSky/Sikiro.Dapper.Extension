@@ -32,6 +32,13 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Helper
             return where;
         }
 
+        public static UpdateEntityWhereExpression ResolveWhere(object obj)
+        {
+            var where = new UpdateEntityWhereExpression(obj);
+            where.Resolve();
+            return where;
+        }
+
         public static string ResolveSelect(PropertyInfo[] propertyInfos, LambdaExpression selector, int? topNum)
         {
             var selectFormat = topNum.HasValue ? " SELECT {1} {0} " : " SELECT {0} ";

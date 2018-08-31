@@ -140,7 +140,7 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core
         {
             var paramsAndValuesSql = FormatInsertParamsAndValues(entity);
 
-            var ifnotexistsWhere = ResolveExpression.ResolveWhere(Context.CommandSet.IfNotExistsExpression,"INE_");
+            var ifnotexistsWhere = ResolveExpression.ResolveWhere(Context.CommandSet.IfNotExistsExpression, "INE_");
 
             Params.AddDynamicParams(ifnotexistsWhere.Param);
 
@@ -153,6 +153,22 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core
             var update = ResolveExpression.ResolveUpdate(updateExpression);
 
             var where = ResolveExpression.ResolveWhere(Context.CommandSet.WhereExpression);
+
+            var whereSql = where.SqlCmd;
+
+            Params = where.Param;
+            Params.AddDynamicParams(update.Param);
+
+            SqlString = $"UPDATE {FormatTableName(false)} {update.SqlCmd} {whereSql}";
+
+            return this;
+        }
+
+        public SqlProvider<T> FormatUpdate(T entity)
+        {
+            var update = ResolveExpression.ResolveUpdate<T>(a => entity);
+
+            var where = ResolveExpression.ResolveWhere(entity);
 
             var whereSql = where.SqlCmd;
 

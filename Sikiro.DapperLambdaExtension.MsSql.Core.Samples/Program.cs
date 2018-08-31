@@ -8,11 +8,7 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Samples
         static void Main(string[] args)
         {
             var con = new SqlConnection(
-                " Data Source=192.168.13.50;Initial Catalog=SkyChen;Persist Security Info=True;User ID=sa;Password=123456789");
-
-            var deleteResult = con.CommandSet<SysUser>().Where(a => a.UserName == "chengong").Delete() > 0;
-
-            Console.WriteLine("删除数{0}", deleteResult);
+                " Data Source=192.168.13.53;Initial Catalog=SkyChen;Persist Security Info=True;User ID=sa;Password=123456789");
 
             var insertResult2 = con.CommandSet<SysUser>().IfNotExists(a => a.Mobile == "18988563330").Insert(new SysUser
             {
@@ -44,7 +40,9 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Samples
             var countResult = con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com").Count();
             Console.WriteLine("查询个数{0}", insertResult);
 
-            var getResult = con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com").Get();
+            var getResult = con.QuerySet<SysUser>().Get();
+            getResult.Email = "1111113333@qq.com";
+            var updateModelResult = con.CommandSet<SysUser>().Update(getResult);
 
             var listResult = con.QuerySet<SysUser>().OrderBy(a => a.CreateDatetime).Select(a => a.Email).ToList();
 

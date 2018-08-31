@@ -33,7 +33,7 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Core.SetC
 
         public int Update(T entity)
         {
-            SqlProvider.FormatUpdate(a => entity);
+            SqlProvider.FormatUpdate(entity);
 
             return DbCon.Execute(SqlProvider.SqlString, SqlProvider.Params, _dbTransaction);
         }
