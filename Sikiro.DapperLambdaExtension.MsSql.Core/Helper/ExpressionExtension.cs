@@ -102,12 +102,15 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Helper
         {
             if (topMember.Expression == null)
             {
-                var aquire = Cache.GetOrAdd(memberExpression.ToString(), key => GetStaticProperty(memberExpression));
+                //var aquire = Cache.GetOrAdd(memberExpression.ToString(), key => GetStaticProperty(memberExpression));
+                var aquire = GetStaticProperty(memberExpression);
                 return aquire(null, null);
             }
             else
             {
-                var aquire = Cache.GetOrAdd(memberExpression.ToString(), key => GetInstanceProperty(memberExpression, topMember));
+                //var aquire = Cache.GetOrAdd(memberExpression.ToString(), key => GetInstanceProperty(memberExpression, topMember));
+
+                var aquire = GetInstanceProperty(memberExpression, topMember);
                 return aquire((topMember.Expression as ConstantExpression).Value, null);
             }
         }

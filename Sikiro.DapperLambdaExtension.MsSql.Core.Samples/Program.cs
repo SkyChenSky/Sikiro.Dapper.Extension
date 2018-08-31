@@ -10,6 +10,29 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Samples
             var con = new SqlConnection(
                 " Data Source=192.168.13.53;Initial Catalog=SkyChen;Persist Security Info=True;User ID=sa;Password=123456789");
 
+            var qwe = new SysUser
+            {
+                CreateDatetime = DateTime.Now,
+                Email = "287245177@qq.com",
+                Mobile = "18988563330",
+                RealName = "陈珙",
+                SysUserid = "487c9dac0c094a31a89fef1a98bc4204",
+                UserName = "chengong",
+                UserStatus = 1,
+                UserType = 1,
+                Password = "asdasdad"
+            };
+            con.CommandSet<SysUser>().Where(a => a.SysUserid == qwe.SysUserid)
+                .Update(a => new SysUser { Email = "287245177112@qq.com" });
+
+            var list = con.QuerySet<SysUser>().ToList();
+            foreach (var VARIABLE in list)
+            {
+                con.CommandSet<SysUser>().Where(a => a.SysUserid == VARIABLE.SysUserid)
+                    .Update(a => new SysUser { Email = "287242222@qq.com" });
+            }
+
+
             var insertResult2 = con.CommandSet<SysUser>().IfNotExists(a => a.Mobile == "18988563330").Insert(new SysUser
             {
                 CreateDatetime = DateTime.Now,
@@ -48,8 +71,8 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Samples
 
             var listResult2 = con.QuerySet<SysUser>().OrderBy(a => a.CreateDatetime).Top(2).Select(a => a.Email).ToList();
 
-            var updateResult = con.CommandSet<SysUser>().Where(a => a.Email == "287245177@qq.com")
-                .Update(a => new SysUser { UserStatus = 1 });
+            var updateResult = con.CommandSet<SysUser>().Where(a => a.SysUserid == "487c9dac0c094a31a89fef1a98bc4204")
+                .Update(a => new SysUser { Email = "287245177@qq.com" });
 
             getResult.Email = "287245145666@qq.com";
             var updateResult2 = con.CommandSet<SysUser>().Where(a => a.Email == "287245177@qq.com").Update(getResult);
@@ -99,6 +122,7 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Samples
             });
 
             con.Dispose();
+
         }
     }
 }
