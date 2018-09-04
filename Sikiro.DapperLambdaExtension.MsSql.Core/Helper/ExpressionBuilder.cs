@@ -34,14 +34,15 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Helper
         )
         {
             var map = first.Parameters
-                .Select((f, i) => new { f, s = second.Parameters[i] })
-                .ToDictionary(p => p.s, p => p.f);
+                .Select((oldParam, index) => new { oldParam, newParam = second.Parameters[index] })
+                .ToDictionary(p => p.newParam, p => p.oldParam);
 
             var secondBody = ParameterRebinder.ReplaceParameters(map, second.Body);
 
             return Expression.Lambda<T>(merge(first.Body, secondBody), first.Parameters);
         }
     }
+
     internal class ParameterRebinder : ExpressionVisitor
     {
         readonly Dictionary<ParameterExpression, ParameterExpression> _parameterMap;
@@ -52,19 +53,19 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Helper
         }
 
         public static Expression ReplaceParameters(Dictionary<ParameterExpression, ParameterExpression> map,
-            Expression exp)
+            Expression newParameters)
         {
-            return new ParameterRebinder(map).Visit(exp);
+            return new ParameterRebinder(map).Visit(newParameters);
         }
 
-        protected override Expression VisitParameter(ParameterExpression p)
+        protected override Expression VisitParameter(ParameterExpression newParameters)
         {
-            if (_parameterMap.TryGetValue(p, out var replacement))
+            if (_parameterMap.TryGetValue(newParameters, out var replacement))
             {
-                p = replacement;
+                newParameters = replacement;
             }
 
-            return base.VisitParameter(p);
+            return base.VisitParameter(newParameters);
         }
     }
 }
