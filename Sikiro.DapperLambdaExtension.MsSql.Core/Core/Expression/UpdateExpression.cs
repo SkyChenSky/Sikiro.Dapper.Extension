@@ -89,7 +89,7 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Core.Expression
         {
             var n = $"@{Prefix}{paramName}";
             _sqlCmd.AppendFormat(" {0}={1} ", sqlParamName, n);
-            Param.Add(n, value ?? "NULL");
+            Param.Add(n, value);
         }
     }
 }
