@@ -22,7 +22,7 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Helper
             {
                 case ExpressionType.Constant:
                     if (TypeHelper.GetNonNullableType(expression.Type) == TypeHelper.GetNonNullableType(type))
-                        return Expression.Constant(((ConstantExpression)expression).Value, type);
+                        return Expression.Constant(((ConstantExpression) expression).Value, type);
                     break;
 
                 case ExpressionType.MemberAccess:
@@ -43,7 +43,7 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Helper
                     }
 
                 case ExpressionType.Convert:
-                    var u = (UnaryExpression)expression;
+                    var u = (UnaryExpression) expression;
                     if (TypeHelper.GetNonNullableType(u.Operand.Type) == TypeHelper.GetNonNullableType(type))
                     {
                         expression = u.Operand;
@@ -58,20 +58,27 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Helper
                     break;
 
                 case ExpressionType.Not:
-                    var n = (UnaryExpression)expression;
+                    var n = (UnaryExpression) expression;
                     return Expression.Equal(n.Operand, Expression.Constant(false));
                 case ExpressionType.AndAlso:
-                    var b = (BinaryExpression)expression;
+                case ExpressionType.OrElse:
+                    var b = (BinaryExpression) expression;
                     IsDeep = true;
                     if (b.Left.NodeType != b.Right.NodeType)
                     {
                         if (b.Left.NodeType == ExpressionType.MemberAccess && b.Left.Type.Name == "Boolean")
                         {
-                            return Expression.AndAlso(Expression.Equal(b.Left, Expression.Constant(true)), b.Right);
+                            if (expression.NodeType == ExpressionType.AndAlso)
+                                return Expression.AndAlso(Expression.Equal(b.Left, Expression.Constant(true)), b.Right);
+                            if (expression.NodeType == ExpressionType.OrElse)
+                                return Expression.OrElse(Expression.Equal(b.Left, Expression.Constant(true)), b.Right);
                         }
                         if (b.Right.NodeType == ExpressionType.MemberAccess && b.Right.Type.Name == "Boolean")
                         {
-                            return Expression.AndAlso(b.Left, Expression.Equal(b.Right, Expression.Constant(true)));
+                            if (expression.NodeType == ExpressionType.AndAlso)
+                                return Expression.AndAlso(b.Left, Expression.Equal(b.Right, Expression.Constant(true)));
+                            if (expression.NodeType == ExpressionType.OrElse)
+                                return Expression.OrElse(b.Left, Expression.Equal(b.Right, Expression.Constant(true)));
                         }
                         if (b.Left.NodeType == ExpressionType.Constant)
                             return b.Right;
