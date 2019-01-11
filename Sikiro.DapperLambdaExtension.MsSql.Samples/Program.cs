@@ -12,6 +12,8 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Samples
             var con = new SqlConnection(
                 " Data Source=192.168.13.86;Initial Catalog=SkyChen;Persist Security Info=True;User ID=sa;Password=123456789");
 
+            var countResult1 = con.QuerySet<SysUser>().Where(a => a.UserType == UserType.普通管理员).Count();
+
             var deleteResult = con.CommandSet<SysUser>().Where(a => a.UserName == "chengong").Delete() > 0;
 
             Console.WriteLine("删除数{0}", deleteResult);
@@ -25,7 +27,7 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Samples
                 SysUserid = Guid.NewGuid().ToString("N"),
                 UserName = "chengong",
                 UserStatus = 1,
-                UserType = 1,
+                UserType = UserType.普通管理员,
                 Password = "asdasdad"
             });
 
@@ -38,7 +40,7 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Samples
                 SysUserid = Guid.NewGuid().ToString("N"),
                 UserName = "chengong",
                 UserStatus = 1,
-                UserType = 1,
+                UserType = UserType.普通管理员,
                 Password = "asdasdad"
             });
             Console.WriteLine("添加数{0}", insertResult);
@@ -98,7 +100,7 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Samples
                     SysUserid = Guid.NewGuid().ToString("N"),
                     UserName = "fengshuzhen",
                     UserStatus = 1,
-                    UserType = 1,
+                    UserType = UserType.普通管理员,
                     Password = "asdasdad"
                 });
             });

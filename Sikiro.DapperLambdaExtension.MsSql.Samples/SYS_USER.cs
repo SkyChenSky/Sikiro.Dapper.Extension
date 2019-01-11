@@ -88,6 +88,12 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Samples
         [Required]
         [Display(Name = "USER_TYPE")]
         [Column("USER_TYPE")]
-        public int UserType { get; set; }
+        public UserType UserType { get; set; }
+    }
+
+    public enum UserType
+    {
+        超级管理员 = 0,
+        普通管理员 = 1
     }
 }

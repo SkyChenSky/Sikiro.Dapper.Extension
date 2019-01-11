@@ -52,8 +52,16 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Helper
 
                     if (u.Operand.Type.IsEnum && u.Operand.NodeType == ExpressionType.MemberAccess)
                     {
-                        var value = Convert.ChangeType((u.Operand as MemberExpression).MemberToValue(), type);
-                        return Expression.Constant(value, type);
+                        var mem = u.Operand as MemberExpression;
+                        if (mem.Expression.NodeType == ExpressionType.Parameter)
+                        {
+                            return expression;
+                        }
+                        else
+                        {
+                            var value = Convert.ChangeType(mem.MemberToValue(), type);
+                            return Expression.Constant(value, type);
+                        }
                     }
                     break;
 
