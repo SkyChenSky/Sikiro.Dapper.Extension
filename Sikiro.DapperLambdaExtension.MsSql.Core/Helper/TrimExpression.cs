@@ -22,7 +22,7 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Helper
             {
                 case ExpressionType.Constant:
                     if (TypeHelper.GetNonNullableType(expression.Type) == TypeHelper.GetNonNullableType(type))
-                        return Expression.Constant(((ConstantExpression) expression).Value, type);
+                        return Expression.Constant(((ConstantExpression)expression).Value, type);
                     break;
 
                 case ExpressionType.MemberAccess:
@@ -43,7 +43,7 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Helper
                     }
 
                 case ExpressionType.Convert:
-                    var u = (UnaryExpression) expression;
+                    var u = (UnaryExpression)expression;
                     if (TypeHelper.GetNonNullableType(u.Operand.Type) == TypeHelper.GetNonNullableType(type))
                     {
                         expression = u.Operand;
@@ -52,17 +52,25 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Helper
 
                     if (u.Operand.Type.IsEnum && u.Operand.NodeType == ExpressionType.MemberAccess)
                     {
-                        var value = Convert.ChangeType((u.Operand as MemberExpression).MemberToValue(), type);
-                        return Expression.Constant(value, type);
+                        var mem = u.Operand as MemberExpression;
+                        if (mem.Expression.NodeType == ExpressionType.Parameter)
+                        {
+                            return expression;
+                        }
+                        else
+                        {
+                            var value = Convert.ChangeType(mem.MemberToValue(), type);
+                            return Expression.Constant(value, type);
+                        }
                     }
                     break;
 
                 case ExpressionType.Not:
-                    var n = (UnaryExpression) expression;
+                    var n = (UnaryExpression)expression;
                     return Expression.Equal(n.Operand, Expression.Constant(false));
                 case ExpressionType.AndAlso:
                 case ExpressionType.OrElse:
-                    var b = (BinaryExpression) expression;
+                    var b = (BinaryExpression)expression;
                     IsDeep = true;
                     if (b.Left.NodeType != b.Right.NodeType)
                     {
