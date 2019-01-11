@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Data.SqlClient;
+using System.Linq;
+using Dapper;
 
 namespace Sikiro.DapperLambdaExtension.MsSql.Core.Samples
 {
@@ -10,6 +12,22 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Samples
             var con = new SqlConnection(
                 " Data Source=192.168.13.53;Initial Catalog=SkyChen;Persist Security Info=True;User ID=sa;Password=123456789");
 
+
+            Enumerable.Range(0, 10000).ToList().AsParallel().ForAll(a =>
+            {
+                var con2 = new SqlConnection(
+                    " Data Source=192.168.13.53;Initial Catalog=SkyChen;Persist Security Info=True;User ID=sa;Password=123456789");
+                var count = con2.Execute(@"UPDATE  dbo.SYS_USER
+            SET     USER_TYPE = USER_TYPE - 10
+            WHERE   USER_TYPE >= 10
+            AND SYS_USERID = '2009b778a6bb426cbbb5e96b4d87ccea'; ");
+                Console.WriteLine(count);
+            });
+
+            con.Query<SysUser>(@"UPDATE  dbo.SYS_USER
+            SET     USER_TYPE = USER_TYPE - 10
+            WHERE   USER_TYPE >= 10
+            AND SYS_USERID = '2009b778a6bb426cbbb5e96b4d87ccea'; ");
             var qwe = new SysUser
             {
                 CreateDatetime = DateTime.Now,

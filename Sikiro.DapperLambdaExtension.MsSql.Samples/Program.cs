@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.SqlClient;
 using Sikiro.DapperLambdaExtension.MsSql.Core;
+using Sikiro.DapperLambdaExtension.MsSql.Core.Helper;
 
 namespace Sikiro.DapperLambdaExtension.MsSql.Samples
 {
@@ -9,7 +10,7 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Samples
         static void Main(string[] args)
         {
             var con = new SqlConnection(
-                " Data Source=192.168.13.53;Initial Catalog=SkyChen;Persist Security Info=True;User ID=sa;Password=123456789");
+                " Data Source=192.168.13.86;Initial Catalog=SkyChen;Persist Security Info=True;User ID=sa;Password=123456789");
 
             var deleteResult = con.CommandSet<SysUser>().Where(a => a.UserName == "chengong").Delete() > 0;
 
@@ -42,7 +43,8 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Samples
             });
             Console.WriteLine("添加数{0}", insertResult);
 
-            var countResult = con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com").Count();
+            var builder = ExpressionBuilder.Init<SysUser>().Or(a => a.Mobile == "18988561110");
+            var countResult = con.QuerySet<SysUser>().Where(builder).Count();
             Console.WriteLine("查询个数{0}", insertResult);
 
             var getResult = con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com").Get();

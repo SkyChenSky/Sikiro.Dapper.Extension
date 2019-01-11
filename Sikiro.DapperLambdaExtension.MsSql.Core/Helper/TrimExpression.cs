@@ -61,6 +61,7 @@ namespace Sikiro.DapperLambdaExtension.MsSql.Core.Helper
                     var n = (UnaryExpression)expression;
                     return Expression.Equal(n.Operand, Expression.Constant(false));
                 case ExpressionType.AndAlso:
+                case ExpressionType.OrElse:
                     var b = (BinaryExpression)expression;
                     IsDeep = true;
                     if (b.Left.NodeType != b.Right.NodeType)
