@@ -23,6 +23,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mysql", "mysql", "{62405CF3
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sikiro.Dapper.Extension.MySql.Core.Samples", "samples\mysql\Sikiro.Dapper.Extension.MySql.Core.Samples\Sikiro.Dapper.Extension.MySql.Core.Samples.csproj", "{BEC55940-1ACE-4EF8-97CD-F39FA7AA4625}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sikiro.Dapper.Extension.PostgreSql", "src\Sikiro.Dapper.Extension.PostgreSQL\Sikiro.Dapper.Extension.PostgreSql.csproj", "{FCC68F6D-B385-4724-A20C-9474EE283745}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "postgresql", "postgresql", "{95BECDB5-EE03-43A5-B5D5-7F22435EB56A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sikiro.Dapper.Extension.PostgreSql.Core.Samples", "samples\postgresql\Sikiro.Dapper.Extension.PostgreSql.Core.Samples\Sikiro.Dapper.Extension.PostgreSql.Core.Samples.csproj", "{0B327CAF-0233-4E4F-9B1B-3632D8E01732}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +59,14 @@ Global
 		{BEC55940-1ACE-4EF8-97CD-F39FA7AA4625}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BEC55940-1ACE-4EF8-97CD-F39FA7AA4625}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BEC55940-1ACE-4EF8-97CD-F39FA7AA4625}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCC68F6D-B385-4724-A20C-9474EE283745}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCC68F6D-B385-4724-A20C-9474EE283745}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCC68F6D-B385-4724-A20C-9474EE283745}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCC68F6D-B385-4724-A20C-9474EE283745}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B327CAF-0233-4E4F-9B1B-3632D8E01732}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B327CAF-0233-4E4F-9B1B-3632D8E01732}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B327CAF-0233-4E4F-9B1B-3632D8E01732}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B327CAF-0233-4E4F-9B1B-3632D8E01732}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,6 +80,9 @@ Global
 		{E7251BDE-4AD8-4591-9AF3-214D7D85F284} = {CAC5489A-C80C-458A-A471-C75F0698282C}
 		{62405CF3-6287-4898-AF59-82D3E4BA7122} = {E825B8FD-9AAB-4662-B1C5-DD39868EAD4B}
 		{BEC55940-1ACE-4EF8-97CD-F39FA7AA4625} = {62405CF3-6287-4898-AF59-82D3E4BA7122}
+		{FCC68F6D-B385-4724-A20C-9474EE283745} = {CAC5489A-C80C-458A-A471-C75F0698282C}
+		{95BECDB5-EE03-43A5-B5D5-7F22435EB56A} = {E825B8FD-9AAB-4662-B1C5-DD39868EAD4B}
+		{0B327CAF-0233-4E4F-9B1B-3632D8E01732} = {95BECDB5-EE03-43A5-B5D5-7F22435EB56A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {227769BC-3B0D-496D-9C39-FA16BD236A02}

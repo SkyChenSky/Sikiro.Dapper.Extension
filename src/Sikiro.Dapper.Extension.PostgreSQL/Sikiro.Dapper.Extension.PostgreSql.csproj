@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net451</TargetFrameworks>
+    <Authors>陈珙</Authors>
+    <Company>陈珙</Company>
+    <PackageId>Sikiro.Dapper.Extension.MsSql</PackageId>
+    <Product>Sikiro.Dapper.Extension.MsSql</Product>
+    <Description>This is an lambda extension of dapper, Chain style makes developers more elegant and intuitive.</Description>
+    <PackageLicenseUrl>https://github.com/SkyChenSky/Sikiro.Dapper.Extension/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/SkyChenSky/Sikiro.Dapper.Extension</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/SkyChenSky/Sikiro.DapperLambdaExtension.MsSql</RepositoryUrl>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
+    <PackageReleaseNotes>Porting to.Net standard Dapper lambda sql</PackageReleaseNotes>
+    <PackageTags>Sikiro Extension dapper orm lambda sql server mssql</PackageTags>
+    <Version>2.0.0.0</Version>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
+    <WarningLevel>3</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.3.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sikiro.Dapper.Extension\Sikiro.Dapper.Extension.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.ComponentModel.DataAnnotations" Condition="'$(TargetFramework)' == 'net451'" />
+    <Reference Include="System.ComponentModel.DataAnnotations" Condition="'$(TargetFramework)' == 'net451'" />
+  </ItemGroup>
+</Project>
