@@ -42,7 +42,6 @@
 *.user
 /samples/mssql/Sikiro.Dapper.Extension.MsSql.Samples/.vs/Sikiro.DapperLambdaExtension.MsSql.Samples/v15
 /samples/postgresql/Sikiro.Dapper.Extension.PostgreSql.Core.Samples/bin/Debug/netcoreapp2.0
-/samples/postgresql/Sikiro.Dapper.Extension.PostgreSql.Core.Samples/Program.cs
 /samples/postgresql/Sikiro.Dapper.Extension.PostgreSql.Core.Samples/obj
 /src/Sikiro.Dapper.Extension.PostgreSQL/obj
 /src/Sikiro.Dapper.Extension.PostgreSQL/bin
