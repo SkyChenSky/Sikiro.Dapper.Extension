@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net451</TargetFrameworks>
+    <Authors>陈珙</Authors>
+    <Company>陈珙</Company>
+    <PackageId>Sikiro.Dapper.Extension</PackageId>
+    <Product>Sikiro.Dapper.Extension</Product>
+    <Description>This is an lambda extension of dapper, Chain style makes developers more elegant and intuitive.</Description>
+    <PackageLicenseUrl>https://github.com/SkyChenSky/Sikiro.Dapper.Extension/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/SkyChenSky/Sikiro.Dapper.Extension</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/SkyChenSky/Sikiro.Dapper.Extension</RepositoryUrl>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
+    <PackageReleaseNotes>Porting to.Net standard Dapper lambda sql</PackageReleaseNotes>
+    <PackageTags>Sikiro Extension dapper orm lambda</PackageTags>
+    <Version>2.0.0.0</Version>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="1.50.4" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.3.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.ComponentModel.DataAnnotations" Condition="'$(TargetFramework)' == 'net451'" />
+    <Reference Include="System.ComponentModel.DataAnnotations" Condition="'$(TargetFramework)' == 'net451'" />
+  </ItemGroup>
+</Project>

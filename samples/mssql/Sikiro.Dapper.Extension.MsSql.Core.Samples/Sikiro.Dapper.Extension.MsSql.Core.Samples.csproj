@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>Sikiro.Dapper.Extension.Core.Samples</AssemblyName>
+    <RootNamespace>Sikiro.Dapper.Extension.Core.Samples</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Sikiro.Dapper.Extension.MsSql\Sikiro.Dapper.Extension.MsSql.csproj" />
+    <ProjectReference Include="..\..\..\src\Sikiro.Dapper.Extension\Sikiro.Dapper.Extension.csproj" />
+  </ItemGroup>
+
+</Project>
