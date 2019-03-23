@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net451</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net452</TargetFrameworks>
     <Authors>陈珙</Authors>
     <Company>陈珙</Company>
     <PackageId>Sikiro.Dapper.Extension</PackageId>

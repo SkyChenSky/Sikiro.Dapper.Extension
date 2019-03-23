@@ -5,6 +5,7 @@ using System.Text;
 using Dapper;
 using Sikiro.Dapper.Extension.Extension;
 using Sikiro.Dapper.Extension.Helper;
+using Sikiro.Dapper.Extension.Model;
 
 namespace Sikiro.Dapper.Extension.MsSql.Expression
 {
@@ -19,6 +20,10 @@ namespace Sikiro.Dapper.Extension.MsSql.Expression
         /// sql指令
         /// </summary>
         public string SqlCmd => _sqlCmd.Length > 0 ? $" SET {_sqlCmd} " : "";
+        
+        private readonly ProviderOption _providerOption;
+        
+        private readonly char _parameterPrefix;
 
         public DynamicParameters Param { get; }
 
@@ -31,9 +36,11 @@ namespace Sikiro.Dapper.Extension.MsSql.Expression
         /// </summary>
         /// <param name="expression"></param>
         /// <returns></returns>
-        public UpdateExpression(LambdaExpression expression)
+        public UpdateExpression(LambdaExpression expression,ProviderOption providerOption)
         {
             _sqlCmd = new StringBuilder(100);
+            _providerOption = providerOption;
+            _parameterPrefix = _providerOption.ParameterPrefix;
             Param = new DynamicParameters();
 
             Visit(expression);
@@ -58,8 +65,8 @@ namespace Sikiro.Dapper.Extension.MsSql.Expression
 
                 var paramName = item.Name;
                 var value = item.GetValue(entity);
-                var c = item.GetColumnAttributeName();
-                SetParam(c, paramName, value);
+                var fieldName =_providerOption.CombineFieldName(item.GetColumnAttributeName()) ;
+                SetParam(fieldName, paramName, value);
             }
 
             return node;
@@ -78,18 +85,18 @@ namespace Sikiro.Dapper.Extension.MsSql.Expression
                     _sqlCmd.Append(",");
 
                 var paramName = memberAssignment.Member.Name;
-                var c = memberAssignment.Member.GetColumnAttributeName();
+                var fieldName =_providerOption.CombineFieldName(memberAssignment.Member.GetColumnAttributeName()) ;
                 var constantExpression = (ConstantExpression)memberAssignment.Expression;
-                SetParam(c, paramName, constantExpression.Value);
+                SetParam(fieldName, paramName, constantExpression.Value);
             }
 
             return node;
         }
 
-        private void SetParam(string sqlParamName, string paramName, object value)
+        private void SetParam(string fieldName, string paramName, object value)
         {
-            var n = $"@{Prefix}{paramName}";
-            _sqlCmd.AppendFormat(" {0}={1} ", sqlParamName, n);
+            var n = $"{_parameterPrefix}{Prefix}{paramName}";
+            _sqlCmd.AppendFormat(" {0}={1} ", fieldName, n);
             Param.Add(n, value);
         }
     }

@@ -43,7 +43,7 @@ namespace Sikiro.Dapper.Extension.MySql
 
         public static UpdateEntityWhereExpression ResolveWhere(object obj)
         {
-            var where = new UpdateEntityWhereExpression(obj);
+            var where = new UpdateEntityWhereExpression(obj,ProviderOption);
             where.Resolve();
             return where;
         }
@@ -137,7 +137,7 @@ namespace Sikiro.Dapper.Extension.MySql
 
         public static UpdateExpression ResolveUpdate<T>(Expression<Func<T, T>> updateExpression)
         {
-            return new UpdateExpression(updateExpression);
+            return new UpdateExpression(updateExpression,ProviderOption);
         }
     }
 }
