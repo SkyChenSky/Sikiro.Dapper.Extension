@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Data.SqlClient;
-using System.Linq;
-using Dapper;
 using MySql.Data.MySqlClient;
 
 namespace Sikiro.Dapper.Extension.MySql.Core.Samples

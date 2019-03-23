@@ -12,6 +12,16 @@ namespace Sikiro.Dapper.Extension.MsSql
             return new QuerySet<T>(sqlConnection, new MsSqlProvider());
         }
 
+        public static QuerySet<T> QuerySet<T>(this IDbConnection sqlConnection, IDbTransaction dbTransaction)
+        {
+            return new QuerySet<T>(sqlConnection, new MsSqlProvider(), dbTransaction);
+        }
+        
+        public static CommandSet<T> CommandSet<T>(this IDbConnection sqlConnection, IDbTransaction dbTransaction)
+        {
+            return new CommandSet<T>(sqlConnection, new MsSqlProvider(), dbTransaction);
+        }
+
         public static CommandSet<T> CommandSet<T>(this IDbConnection sqlConnection)
         {
             return new CommandSet<T>(sqlConnection, new MsSqlProvider());
@@ -25,7 +35,7 @@ namespace Sikiro.Dapper.Extension.MsSql
             var transaction = sqlConnection.BeginTransaction();
             try
             {
-                action(new TransContext { DbTransaction = transaction, SqlConnection = sqlConnection });
+                action(new TransContext {DbTransaction = transaction, SqlConnection = sqlConnection});
                 transaction.Commit();
             }
             catch

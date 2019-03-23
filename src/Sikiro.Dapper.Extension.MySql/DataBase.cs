@@ -11,6 +11,16 @@ namespace Sikiro.Dapper.Extension.MySql
         {
             return new QuerySet<T>(sqlConnection, new MySqlProvider());
         }
+        
+        public static QuerySet<T> QuerySet<T>(this IDbConnection sqlConnection, IDbTransaction dbTransaction)
+        {
+            return new QuerySet<T>(sqlConnection, new MySqlProvider(), dbTransaction);
+        }
+        
+        public static CommandSet<T> CommandSet<T>(this IDbConnection sqlConnection, IDbTransaction dbTransaction)
+        {
+            return new CommandSet<T>(sqlConnection, new MySqlProvider(), dbTransaction);
+        }
 
         public static CommandSet<T> CommandSet<T>(this IDbConnection sqlConnection)
         {
