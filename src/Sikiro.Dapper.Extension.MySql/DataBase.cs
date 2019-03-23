@@ -2,6 +2,7 @@
 using System.Data;
 using Sikiro.Dapper.Extension.Core.SetC;
 using Sikiro.Dapper.Extension.Core.SetQ;
+using Sikiro.Dapper.Extension.Model;
 
 namespace Sikiro.Dapper.Extension.MySql
 {
@@ -27,7 +28,8 @@ namespace Sikiro.Dapper.Extension.MySql
             return new CommandSet<T>(sqlConnection, new MySqlProvider());
         }
 
-        public static void Transaction(this IDbConnection sqlConnection, Action<TransContext> action)
+        public static void Transaction(this IDbConnection sqlConnection, Action<TransContext> action,
+            Action<System.Exception> exAction = null)
         {
             if (sqlConnection.State == ConnectionState.Closed)
                 sqlConnection.Open();
@@ -35,35 +37,22 @@ namespace Sikiro.Dapper.Extension.MySql
             var transaction = sqlConnection.BeginTransaction();
             try
             {
-                action(new TransContext { DbTransaction = transaction, SqlConnection = sqlConnection });
+                action(new TransContext(sqlConnection, transaction, new MySqlProvider()));
                 transaction.Commit();
             }
-            catch
+            catch (System.Exception ex)
             {
-                transaction.Rollback();
-                throw;
+                if (exAction != null)
+                    exAction(ex);
+                else
+                {
+                    transaction.Rollback();
+                }
             }
             finally
             {
                 sqlConnection.Close();
             }
-        }
-    }
-
-    public class TransContext
-    {
-        public IDbConnection SqlConnection { internal get; set; }
-
-        public IDbTransaction DbTransaction { internal get; set; }
-
-        public QuerySet<T> QuerySet<T>()
-        {
-            return new QuerySet<T>(SqlConnection, new MySqlProvider(), DbTransaction);
-        }
-
-        public CommandSet<T> CommandSet<T>()
-        {
-            return new CommandSet<T>(SqlConnection, new MySqlProvider(), DbTransaction);
         }
     }
 }
