@@ -1,4 +1,4 @@
-Sikiro.Dapper.Extension - 基于dapper简单易用的lambda扩展   [English](https://github.com/SkyChenSky/Sikiro.DapperLambdaExtension.MsSql/blob/master/README.md)
+Sikiro.Dapper.Extension - 基于dapper简单易用的lambda扩展   [中文](https://github.com/SkyChenSky/Sikiro.DapperLambdaExtension.MsSql/blob/master/README.md)
 ========================================
 
 
@@ -68,6 +68,12 @@ UpdateAsync
 [Display(Name = "主键")]
 [Column("SYS_USERID")]
 ```
+
+实体生成工具
+-------
+[AutoBuildEntity](https://github.com/SkyChenSky/AutoBuildEntity)
+
+![img](https://github.com/SkyChenSky/AutoBuildEntity/blob/master/AutoBuildEntity/Resources/entity.gif "效果图")
 
 贡献
 -------
