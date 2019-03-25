@@ -1,8 +1,7 @@
-Sikiro.Dapper.Extension - 基于dapper简单易用的lambda扩展   [中文](https://github.com/SkyChenSky/Sikiro.DapperLambdaExtension.MsSql/blob/master/README.md)
+Sikiro.Dapper.Extension - a simple lambda extension for dapper  [中文](https://github.com/SkyChenSky/Sikiro.DapperLambdaExtension.MsSql/blob/master/README.md)
 ========================================
 
-
-这是基于dapper的一个扩展，支持lambda表达式的写法，链式风格让开发者使用起来更加优雅、直观。
+This is an extension based on dapper, supporting lambda expression, chain style allows developers to use more elegant and intuitive.
 
 
 Nuget
@@ -14,7 +13,7 @@ Nuget
 | Sikiro.Dapper.Extension.MySql | [![Sikiro.Dapper.Extension.MySql](https://img.shields.io/badge/nuget-v2.0.0.0-blue.svg)](https://www.nuget.org/packages/Sikiro.Dapper.Extension.MySql/)| 
 | Sikiro.Dapper.Extension.PostgreSql |[![Sikiro.Dapper.Extension.PostgreSql](https://img.shields.io/badge/nuget-v2.0.0.0-blue.svg)](https://www.nuget.org/packages/Sikiro.Dapper.Extension.PostgreSql/)| 
 
-安装
+Install
 ------------
 #### MsSql
 ```
@@ -28,18 +27,20 @@ PM> Install-Package Sikiro.Dapper.Extension.MySql
 ```
 PM> Install-Package Sikiro.Dapper.Extension.PostgreSql
 ```
-文档
+Document
 ---------
 https://github.com/SkyChenSky/Sikiro.Dapper.Extension/wiki
 
-特性
+Features
 ---------
-### 1.基于dapper的扩展
-Sikiro.Dapper.Extension是托管于nuget的一个dotNet Standard库。可使用于dotNet framework与dotNet Core平台。
+### 1.base on dapper
 
-基于dapper基础上做了lambda表达式封装，仍然是`IDbConnection` Interface的扩展，并保留与开放原生的`Execute`、`Query`等方法。
-### 2.简单直观的链式写法
-#### 查询
+Sikiro. Dapper. Extension is a dotNet Standard library hosted in nuget. It can be used in dotNet framework and dotNet Core platform.
+
+The lambda expression encapsulation based on dapper is still an extension of `IDbConnection'Interface, and retains and opens the original `Execute', `Query', etc
+
+### 2.Simple and intuitive chain
+#### Query
 ```c#
 con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com")
                        .OrderBy(a => a.CreateDatetime)
@@ -47,11 +48,11 @@ con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com")
                        .PageList(1, 10);
 ```
 
-#### 指令
+#### Command
 ```c#
 con.CommandSet<SysUser>().Where(a => a.Email == "287245177@qq.com").Update(a => new SysUser { Email = "123456789@qq.com" });
 ```
-### 3.支持异步
+### 3.Support Async
 ```c#
 ToListAsync
 GetAsync
@@ -59,7 +60,7 @@ InsertAsync
 DeleteAsync
 UpdateAsync
 ```
-### 4.忠于原生的特性标签
+### 4.Faithful to Native Attribute
 ```c#
 [Table("SYS_USER")]
 [Key]
@@ -69,15 +70,17 @@ UpdateAsync
 [Column("SYS_USERID")]
 ```
 
-实体生成工具
+Build Entity Tool
 -------
 [AutoBuildEntity](https://github.com/SkyChenSky/AutoBuildEntity)
 
 ![img](https://github.com/SkyChenSky/AutoBuildEntity/blob/master/AutoBuildEntity/Resources/entity.gif "效果图")
 
-贡献
+
+Contribution
+
 -------
-欢迎各位提交Pull Request代码变更，如果有问题可提交issue进行讨论。
+Welcome to submit Pull Request code changes. If you have any questions, you can submit them to issue for discussion.
 
 License
 -------
