@@ -1,205 +1,78 @@
-# Sikiro.DapperLambdaExtension.MsSql                                         [中文](https://github.com/SkyChenSky/Sikiro.DapperLambdaExtension.MsSql/blob/master/README.zh-cn.md)
-This is an lambda extension of dapper, Chain style makes developers more elegant and intuitive.
+Sikiro.Dapper.Extension - 基于dapper简单易用的lambda扩展   [中文](https://github.com/SkyChenSky/Sikiro.DapperLambdaExtension.MsSql/blob/master/README.md)
+========================================
 
-## Getting Started
 
-### Nuget
+这是基于dapper的一个扩展，支持lambda表达式的写法，链式风格让开发者使用起来更加优雅、直观。
 
-You can run the following command to install the Sikiro.DapperLambdaExtension.MsSql in your project。
 
+Nuget
+-----------
+| Package | NuGet | 
+| ------- | ------| 
+| Sikiro.Dapper.Extension |[![Sikiro.Dapper.Extension](https://img.shields.io/badge/nuget-v2.0.0.0-blue.svg)](https://www.nuget.org/packages/Sikiro.Dapper.Extension/)| 
+| Sikiro.Dapper.Extension.MsSql | [![Sikiro.Dapper.Extension.MsSql](https://img.shields.io/badge/nuget-v2.0.0.0-blue.svg)](https://www.nuget.org/packages/Sikiro.Dapper.Extension.MsSql/)| 
+| Sikiro.Dapper.Extension.MySql | [![Sikiro.Dapper.Extension.MySql](https://img.shields.io/badge/nuget-v2.0.0.0-blue.svg)](https://www.nuget.org/packages/Sikiro.Dapper.Extension.MySql/)| 
+| Sikiro.Dapper.Extension.PostgreSql |[![Sikiro.Dapper.Extension.PostgreSql](https://img.shields.io/badge/nuget-v2.0.0.0-blue.svg)](https://www.nuget.org/packages/Sikiro.Dapper.Extension.PostgreSql/)| 
+
+安装
+------------
+#### MsSql
 ```
-PM> Install-Package Sikiro.DapperLambdaExtension.MsSql
+PM> Install-Package Sikiro.Dapper.Extension.MsSql
 ```
+#### MySql
+```
+PM> Install-Package Sikiro.Dapper.Extension.MySql
+```
+#### PostgreSql
+```
+PM> Install-Package Sikiro.Dapper.Extension.PostgreSql
+```
+文档
+---------
+https://github.com/SkyChenSky/Sikiro.Dapper.Extension/wiki
 
-### SqlConnection
+特性
+---------
+### 1.基于dapper的扩展
+Sikiro.Dapper.Extension是托管于nuget的一个dotNet Standard库。可使用于dotNet framework与dotNet Core平台。
 
+基于dapper基础上做了lambda表达式封装，仍然是`IDbConnection` Interface的扩展，并保留与开放原生的`Execute`、`Query`等方法。
+### 2.简单直观的链式写法
+#### 查询
 ```c#
-var con = new SqlConnection("Data Source=192.168.13.46;Initial Catalog=SkyChen;Persist Security Info=True;User ID=sa;Password=123456789");
+con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com")
+                       .OrderBy(a => a.CreateDatetime)
+                       .Select(a => new SysUser { Email = a.Email, CreateDatetime = a.CreateDatetime, SysUserid = a.SysUserid })
+                       .PageList(1, 10);
 ```
 
-### Defining User Entity
-```c#
-[Table("SYS_USER")]
-public class SysUser
-{
-    /// <summary>
-    /// 主键
-    /// </summary>    
-    [Key]
-    [Required]
-    [StringLength(32)]
-    [Display(Name = "主键")]
-    [Column("SYS_USERID")]
-    public string SysUserid { get; set; }
-
-    /// <summary>
-    /// 创建时间
-    /// </summary>    
-    [Required]
-    [Display(Name = "创建时间")]
-    [Column("CREATE_DATETIME")]
-    public DateTime CreateDatetime { get; set; }
-
-    /// <summary>
-    /// 邮箱
-    /// </summary>    
-    [Required]
-    [StringLength(32)]
-    [Display(Name = "邮箱")]
-    [Column("EMAIL")]
-    public string Email { get; set; }
-
-    /// <summary>
-    /// USER_STATUS
-    /// </summary>    
-    [Required]
-    [Display(Name = "USER_STATUS")]
-    [Column("USER_STATUS")]
-    public int UserStatus { get; set; }
-}
-```
-
-### Insert
-```c#
-con.CommandSet<SysUser>().Insert(new SysUser
-{
-    CreateDatetime = DateTime.Now,
-    Email = "287245177@qq.com",
-    SysUserid = Guid.NewGuid().ToString("N"),
-    UserName = "chengong",
-});
-```
-If not exists...insert...
-```c#
-con.CommandSet<SysUser>().IfNotExists(a => a.Email == "287245177@qq.com").Insert(new SysUser
-{
-    CreateDatetime = DateTime.Now,
-    Email = "287245177@qq.com",
-    SysUserid = Guid.NewGuid().ToString("N"),
-    UserName = "chengong",
-});
-```
-
-### UPDATE
-Update according to the condition part field
+#### 指令
 ```c#
 con.CommandSet<SysUser>().Where(a => a.Email == "287245177@qq.com").Update(a => new SysUser { Email = "123456789@qq.com" });
 ```
-
-You can also update the entity field information based on the primary key 
+### 3.支持异步
 ```c#
-User.Email = "123456789@qq.com";
-condb.CommandSet<SysUser>().Update(User);
+ToListAsync
+GetAsync
+InsertAsync
+DeleteAsync
+UpdateAsync
+```
+### 4.忠于原生的特性标签
+```c#
+[Table("SYS_USER")]
+[Key]
+[Required]
+[StringLength(32)]
+[Display(Name = "主键")]
+[Column("SYS_USERID")]
 ```
 
-### DELETE
-Delete according to the condition
+贡献
+-------
+欢迎各位提交Pull Request代码变更，如果有问题可提交issue进行讨论。
 
-```c#
-con.CommandSet<SysUser>().Where(a => a.Email == "287245177@qq.com").Delete()
-```
-
-### QUERY
-
-#### GET
-Get the first data by filtering condition
-
-```c#
-con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com").Get()
-```
-#### TOLIST
-You can also query qualified data list.
-```c#
-con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com").OrderBy(b => b.Email).Top(10).Select(a => a.Email).ToList();
-```
-### PAGELIST
-```c#
-con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com")
-                 .OrderBy(a => a.CreateDatetime)
-                 .Select(a => new SysUser { Email = a.Email, CreateDatetime = a.CreateDatetime, SysUserid = a.SysUserid })
-                 .PageList(1, 10);
-```
-### UPDATESELECT
-First update then select
-```c#
-con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com")
-                .OrderBy(a => a.CreateDatetime)
-                .Select(a => new SysUser { Email = a.Email })
-                .UpdateSelect(a => new SysUser { Email = "2530665632@qq.com" });
-```
-
-### ExpressionBuilder
-```c#
-var where = ExpressionBuilder.Init<SysUser>();
-
-if (string.IsNullOrWhiteSpace(param.Email))
-    where = where.And(a => a.Email == "287245177@qq.com");
-
-if (string.IsNullOrWhiteSpace(param.Mobile))
-    where = where.And(a => a.Mobile == "18988565556");
-
-con.QuerySet<SysUser>().Where(where).OrderBy(b => b.Email).Top(10).Select(a => a.Email).ToList();
-```
-
-### Like
-
-#### StartsWith
-```c#
-con.QuerySet<SysUser>().Where(a => a.Mobile.StartsWith("59332")).ToList();
-```
-#### EndWith
-```c#
-con.QuerySet<SysUser>().Where(a => a.Mobile.EndWith("59332")).ToList();
-```
-#### Contains
-```c#
-con.QuerySet<SysUser>().Where(a => a.Mobile.Contains("59332")).ToList();
-```
-
-### Transaction
-
-```c#
-con.Transaction(tc =>
-{
-    var sysUserid = tc.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com").Select(a => a.SysUserid).Get();
-
-    tc.CommandSet<SysUser>().Where(a => a.SysUserid == sysUserid).Delete();
-
-    tc.CommandSet<SysUser>().Insert(new SysUser
-    {
-         CreateDatetime = DateTime.Now,
-         Email = "2530665632@qq.com",
-         SysUserid = Guid.NewGuid().ToString("N"),
-         UserName = "xiaobenzhen",
-    });
-});
-```
-
-### Finally a complete Demo
-
-```c#
-using (var con = new SqlConnection("Data Source=192.168.13.46;Initial Catalog=SkyChen;Persist Security Info=True;User ID=sa;Password=123456789"))
-{
-    con.CommandSet<SysUser>().Insert(new SysUser
-    {
-        CreateDatetime = DateTime.Now,
-        Email = "287245177@qq.com",
-        SysUserid = Guid.NewGuid().ToString("N"),
-        UserName = "chengong",
-    });
-
-    var model = con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com").Get();
-
-    con.CommandSet<SysUser>().Where(a => a.SysUserid == model.SysUserid)
-        .Update(a => new SysUser { Email = "2548987@qq.com" });
-
-    con.CommandSet<SysUser>().Where(a => a.SysUserid == model.SysUserid).Delete();
-}
-```
-
-### Others
-In addition to the above functions, there are aggregated queries.Such as Count、Sum、Exists
-
-## End
-If you have good suggestions, please feel free to mention to me.
-
+License
+-------
+[MIT](https://github.com/SkyChenSky/Sikiro.Dapper.Extension/blob/master/LICENSE)
