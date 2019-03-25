@@ -69,7 +69,7 @@ UpdateAsync
 [Column("SYS_USERID")]
 ```
 
-实体工具
+实体生成工具
 -------
 [AutoBuildEntity](https://github.com/SkyChenSky/AutoBuildEntity)
 
