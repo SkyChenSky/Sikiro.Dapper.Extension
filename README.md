@@ -69,6 +69,12 @@ UpdateAsync
 [Column("SYS_USERID")]
 ```
 
+实体工具
+-------
+[AutoBuildEntity](https://github.com/SkyChenSky/AutoBuildEntity)
+
+![img](https://github.com/SkyChenSky/AutoBuildEntity/blob/master/AutoBuildEntity/Resources/entity.gif "效果图")
+
 贡献
 -------
 欢迎各位提交Pull Request代码变更，如果有问题可提交issue进行讨论。
