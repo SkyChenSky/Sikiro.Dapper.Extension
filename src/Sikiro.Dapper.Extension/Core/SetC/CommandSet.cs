@@ -70,7 +70,7 @@ namespace Sikiro.Dapper.Extension.Core.SetC
 
         public void BatchInsert(IEnumerable<T> entities, int timeout = 120)
         {
-            SqlHelper.BulkCopy(DbCon, entities);
+            SqlProvider.ExcuteBulkCopy(DbCon, entities);
         }
     }
 }

@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using Sikiro.Dapper.Extension.Helper;
 
 namespace Sikiro.Dapper.Extension.Extension
 {
-    internal static class MapperExtension
+    public static class MapperExtension
     {
         /// <summary>
         /// List转DataTable
@@ -16,10 +17,10 @@ namespace Sikiro.Dapper.Extension.Extension
         public static DataTable ToDataTable<T>(this IEnumerable<T> list)
         {
             var type = typeof(T);
-
+            var tableName = type.GetTableAttributeName();
             var properties = type.GetProperties().ToList();
 
-            var newDt = new DataTable(type.Name);
+            var newDt = new DataTable(tableName);
 
             properties.ForEach(propertie =>
             {
@@ -33,7 +34,8 @@ namespace Sikiro.Dapper.Extension.Extension
                     columnType = propertie.PropertyType;
                 }
 
-                newDt.Columns.Add(propertie.Name, columnType);
+                var columnName = propertie.GetColumnAttributeName();
+                newDt.Columns.Add(columnName, columnType);
             });
 
             foreach (var item in list)
@@ -42,7 +44,7 @@ namespace Sikiro.Dapper.Extension.Extension
 
                 properties.ForEach(propertie =>
                 {
-                    newRow[propertie.Name] = propertie.GetValue(item, null) ?? DBNull.Value;
+                    newRow[propertie.GetColumnAttributeName()] = propertie.GetValue(item, null) ?? DBNull.Value;
                 });
 
                 newDt.Rows.Add(newRow);

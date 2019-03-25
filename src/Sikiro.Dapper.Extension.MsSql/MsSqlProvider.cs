@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Linq.Expressions;
 using Sikiro.Dapper.Extension.Exception;
 using Sikiro.Dapper.Extension.Model;
+using Sikiro.Dapper.Extension.MsSql.Helper;
 
 namespace Sikiro.Dapper.Extension.MsSql
 {
@@ -228,6 +231,12 @@ namespace Sikiro.Dapper.Extension.MsSql
             var topSql = topNum.HasValue ? " TOP " + topNum.Value : "";
             SqlString = $"UPDATE {topSql} {FormatTableName(false)} WITH ( UPDLOCK, READPAST ) {update.SqlCmd} {selectSql} {whereSql}";
 
+            return this;
+        }
+
+        public override SqlProvider ExcuteBulkCopy<T>(IDbConnection conn, IEnumerable<T> list)
+        {
+            SqlHelper.BulkCopy(conn, list);
             return this;
         }
     }

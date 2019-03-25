@@ -88,12 +88,12 @@ namespace Sikiro.Dapper.Extension.MsSql.Samples
         [Required]
         [Display(Name = "USER_TYPE")]
         [Column("USER_TYPE")]
-        public UserType UserType { get; set; }
+        public EUserType UserType { get; set; }
     }
 
-    public enum UserType
+    public enum EUserType
     {
-        超级管理员 = 0,
-        普通管理员 = 1
+        Admin,
+        Super
     }
 }

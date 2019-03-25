@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using Sikiro.Dapper.Extension.Helper;
 
 namespace Sikiro.Dapper.Extension.MsSql.Samples
@@ -11,13 +14,7 @@ namespace Sikiro.Dapper.Extension.MsSql.Samples
             var con = new SqlConnection(
                 " Data Source=192.168.13.86;Initial Catalog=SkyChen;Persist Security Info=True;User ID=sa;Password=123456789");
 
-            var countResult1 = con.QuerySet<SysUser>().Where(a => a.UserType == UserType.普通管理员).Count();
-
-            var deleteResult = con.CommandSet<SysUser>().Where(a => a.UserName == "chengong").Delete() > 0;
-
-            Console.WriteLine("删除数{0}", deleteResult);
-
-            var insertResult2 = con.CommandSet<SysUser>().IfNotExists(a => a.Mobile == "18988563330").Insert(new SysUser
+            var user = new SysUser
             {
                 CreateDatetime = DateTime.Now,
                 Email = "287245177@qq.com",
@@ -26,48 +23,70 @@ namespace Sikiro.Dapper.Extension.MsSql.Samples
                 SysUserid = Guid.NewGuid().ToString("N"),
                 UserName = "chengong",
                 UserStatus = 1,
-                UserType = UserType.普通管理员,
-                Password = "asdasdad"
-            });
+                UserType = EUserType.Super,
+                Password = "487c9dac0c094a31a89fef1a98bc1111"
+            };
 
-            var insertResult = con.CommandSet<SysUser>().Insert(new SysUser
+            var insertResult = con.CommandSet<SysUser>().Insert(user);
+            Console.WriteLine("Insert添加数{0}", insertResult);
+
+            user.Email = "287245188@qq.com";
+            user.SysUserid = Guid.NewGuid().ToString("N");
+            var ifNotExistsResult = con.CommandSet<SysUser>().IfNotExists(a => a.Email == "287245188@qq.com").Insert(user);
+            Console.WriteLine("IfNotExists添加数{0}", ifNotExistsResult);
+
+            user.SysUserid = Guid.NewGuid().ToString("N");
+            var ifNotExistsResult2 = con.CommandSet<SysUser>().IfNotExists(a => a.Email == "287245188@qq.com").Insert(user);
+            Console.WriteLine("IfNotExists2添加数{0}", ifNotExistsResult2);
+
+            var getResult = con.QuerySet<SysUser>().Get();
+            getResult.Email = "1111113333@qq.com";
+            var updateModelResult = con.CommandSet<SysUser>().Update(getResult);
+            Console.WriteLine("Update添加数{0}", updateModelResult);
+
+            var batchInsert = new List<SysUser>
             {
-                CreateDatetime = DateTime.Now,
-                Email = "287245177@qq.com",
-                Mobile = "18988561111",
-                RealName = "陈珙",
-                SysUserid = Guid.NewGuid().ToString("N"),
-                UserName = "chengong",
-                UserStatus = 1,
-                UserType = UserType.普通管理员,
-                Password = "asdasdad"
-            });
-            Console.WriteLine("添加数{0}", insertResult);
+                new SysUser
+                {
+                    CreateDatetime = DateTime.Now,
+                    Email = "287245172@qq.com",
+                    Mobile = "18988562222",
+                    RealName = "陈珙1",
+                    SysUserid = Guid.NewGuid().ToString("N"),
+                    UserName = "chengong",
+                    UserStatus = 1,
+                    UserType = EUserType.Super,
+                    Password = "487c9dac0c094a31a89fef1a98bc1111"
+                },
+                new SysUser
+                {
+                    CreateDatetime = DateTime.Now,
+                    Email = "287245177@qq.com",
+                    Mobile = "18988561111",
+                    RealName = "陈珙2",
+                    SysUserid = Guid.NewGuid().ToString("N"),
+                    UserName = "chengong",
+                    UserStatus = 1,
+                    UserType = EUserType.Super,
+                    Password = "487c9dac0c094a31a89fef1a98bc1111"
+                }
+            };
+            con.CommandSet<SysUser>().BatchInsert(batchInsert);
+            Console.WriteLine("BatchInsert done");
 
-            var builder = ExpressionBuilder.Init<SysUser>().Or(a => a.Mobile == "18988561110");
-            var countResult = con.QuerySet<SysUser>().Where(builder).Count();
-            Console.WriteLine("查询个数{0}", insertResult);
+            var countResult = con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com").Count();
+            Console.WriteLine("Count数{0}", countResult);
 
-            var getResult2 = con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com").Exists();
+            var toListResult = con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com")
+                .OrderBy(a => a.CreateDatetime).Top(2).Select(a => a.Email).ToList();
+            Console.WriteLine("ToList数{0}", toListResult.Count());
 
-            var getResult = con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com").Get();
-
-            var listResult = con.QuerySet<SysUser>().OrderBy(a => a.CreateDatetime).Select(a => a.Email).ToList();
-
-            var listResult2 = con.QuerySet<SysUser>().OrderBy(a => a.CreateDatetime).Top(2).Select(a => a.Email).ToList();
-
-            var updateResult = con.CommandSet<SysUser>().Where(a => a.Email == "287245177@qq.com")
-                .Update(a => new SysUser { UserStatus = 1 });
-
-            getResult.Email = "287245145666@qq.com";
-            var updateResult2 = con.CommandSet<SysUser>().Where(a => a.Email == "287245177@qq.com").Update(getResult);
-
-            var updateResult3 = con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com").OrderBy(b => b.Email)
-                .Top(10).Select(a => a.Email).ToList();
-
-            var updateResult8 = con.QuerySet<SysUser>().OrderBy(b => b.Email).Top(10).ToList();
+            var listResult2 = con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com")
+                .OrderBy(a => a.CreateDatetime).Select(a => a.Email).PageList(2, 2);
+            Console.WriteLine("PageList:{0}", listResult2.TotalPage);
 
             var updateResult4 = con.QuerySet<SysUser>().Sum(a => a.UserStatus);
+            Console.WriteLine("Sum:{0}", updateResult4);
 
             var updateResult5 = con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com")
                 .Select(a => new SysUser { Email = a.Email })
@@ -81,6 +100,43 @@ namespace Sikiro.Dapper.Extension.MsSql.Samples
                 .OrderBy(a => a.CreateDatetime)
                 .Select(a => new SysUser { Email = a.Email })
                 .UpdateSelect(a => new SysUser { Email = "2530665632@qq.com" });
+
+            var deleteResult = con.CommandSet<SysUser>().Delete();
+            Console.WriteLine("Delete:{0}", deleteResult);
+
+            if (con.State == ConnectionState.Closed)
+                con.Open();
+
+            using (var transaction = con.BeginTransaction())
+            {
+                con.CommandSet<SysUser>(transaction).Insert(new SysUser
+                {
+                    CreateDatetime = DateTime.Now,
+                    Email = "111111111@qq.com",
+                    Mobile = "11111111111",
+                    RealName = "陈珙",
+                    SysUserid = Guid.NewGuid().ToString("N"),
+                    UserName = "chengong111",
+                    UserStatus = 1,
+                    UserType = EUserType.Super,
+                    Password = "487c9dac0c094a31a89fef1a98bc1111"
+                });
+
+                con.CommandSet<SysUser>(transaction).Insert(new SysUser
+                {
+                    CreateDatetime = DateTime.Now,
+                    Email = "2222222@qq.com",
+                    Mobile = "22222222222",
+                    RealName = "陈珙",
+                    SysUserid = Guid.NewGuid().ToString("N"),
+                    UserName = "chengong222",
+                    UserStatus = 1,
+                    UserType = EUserType.Super,
+                    Password = "487c9dac0c094a31a89fef1a98bc1111"
+                });
+
+                transaction.Commit();
+            }
 
             con.Transaction(tc =>
             {
@@ -101,9 +157,12 @@ namespace Sikiro.Dapper.Extension.MsSql.Samples
                     SysUserid = Guid.NewGuid().ToString("N"),
                     UserName = "fengshuzhen",
                     UserStatus = 1,
-                    UserType = UserType.普通管理员,
+                    UserType = EUserType.Super,
                     Password = "asdasdad"
                 });
+            }, ex =>
+            {
+                //do something 
             });
 
             con.Dispose();

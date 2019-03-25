@@ -88,6 +88,12 @@ namespace Sikiro.Dapper.Extension.PostgreSql.Core.Samples
         [Required]
         [Display(Name = "USER_TYPE")]
         [Column("USER_TYPE")]
-        public int UserType { get; set; }
+        public EUserType UserType { get; set; }
+    }
+
+    public enum EUserType
+    {
+        Admin,
+        Super
     }
 }

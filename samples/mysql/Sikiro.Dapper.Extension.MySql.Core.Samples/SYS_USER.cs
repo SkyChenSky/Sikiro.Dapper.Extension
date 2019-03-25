@@ -6,7 +6,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Sikiro.Dapper.Extension.MySql.Core.Samples
+namespace Sikiro.Dapper.Extension.MsSql.Samples
 {
     [Table("SYS_USER")]
     public class SysUser
@@ -88,6 +88,12 @@ namespace Sikiro.Dapper.Extension.MySql.Core.Samples
         [Required]
         [Display(Name = "USER_TYPE")]
         [Column("USER_TYPE")]
-        public int UserType { get; set; }
+        public EUserType UserType { get; set; }
+    }
+
+    public enum EUserType
+    {
+        Admin,
+        Super
     }
 }

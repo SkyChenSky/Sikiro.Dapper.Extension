@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Linq.Expressions;
-using Sikiro.Dapper.Extension.Core.Interfaces;
 using Sikiro.Dapper.Extension.Exception;
 using Sikiro.Dapper.Extension.Model;
 
@@ -210,6 +211,11 @@ namespace Sikiro.Dapper.Extension.MySql
         public override SqlProvider FormatUpdateSelect<T>(Expression<Func<T, T>> updator)
         {
             throw new DapperExtensionException("the function is not support on mysql");
+        }
+
+        public override SqlProvider ExcuteBulkCopy<T>(IDbConnection conn, IEnumerable<T> list)
+        {
+            throw new NotImplementedException();
         }
     }
 }

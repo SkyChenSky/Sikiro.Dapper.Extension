@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Linq.Expressions;
 using System.Text;
 using Dapper;
@@ -44,6 +46,8 @@ namespace Sikiro.Dapper.Extension
         public abstract SqlProvider FormatSum<T>(LambdaExpression lambdaExpression);
 
         public abstract SqlProvider FormatUpdateSelect<T>(Expression<Func<T, T>> updator);
+
+        public abstract SqlProvider ExcuteBulkCopy<T>(IDbConnection conn, IEnumerable<T> list);
 
         protected string FormatTableName(bool isNeedFrom = true)
         {
