@@ -102,6 +102,8 @@ namespace Sikiro.Dapper.Extension.MsSql.Samples
                 .Select(a => new SysUser { Email = a.Email })
                 .UpdateSelect(a => new SysUser { Email = "2530665632@qq.com" });
 
+            var updateResult8 = con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com").Exists();
+
             var deleteResult = con.CommandSet<SysUser>().Delete();
             Console.WriteLine("Delete:{0}", deleteResult);
 

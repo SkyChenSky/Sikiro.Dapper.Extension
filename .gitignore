@@ -45,3 +45,8 @@
 /samples/postgresql/Sikiro.Dapper.Extension.PostgreSql.Core.Samples/obj
 /src/Sikiro.Dapper.Extension.PostgreSQL/obj
 /src/Sikiro.Dapper.Extension.PostgreSQL/bin
+/src/Sikiro.Dapper.Extension.MySql/bin/Release
+/src/Sikiro.Dapper.Extension/bin/Release/net452
+/src/Sikiro.Dapper.Extension/bin/Release
+/samples/mysql/Sikiro.Dapper.Extension.MySql.Core.Samples/bin/Release/netcoreapp2.0
+/samples/postgresql/Sikiro.Dapper.Extension.PostgreSql.Core.Samples/bin/Release/netcoreapp2.0
