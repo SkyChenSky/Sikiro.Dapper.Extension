@@ -1,4 +1,4 @@
-Sikiro.Dapper.Extension - 一个简单、易用，dapper的lambda扩展   [English](https://github.com/SkyChenSky/Sikiro.DapperLambdaExtension.MsSql/blob/master/README.md)
+Sikiro.Dapper.Extension - 基于dapper简单易用的lambda扩展   [English](https://github.com/SkyChenSky/Sikiro.DapperLambdaExtension.MsSql/blob/master/README.md)
 ========================================
 
 
