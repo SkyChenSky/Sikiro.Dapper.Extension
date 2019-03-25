@@ -3,10 +3,10 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net452</TargetFrameworks>
     <PackageId>Sikiro.Dapper.Extension.MySql</PackageId>
-    <Authors>Sikiro.Dapper.Extension.MySql</Authors>
+    <Authors>陈珙</Authors>
     <Version>2.0.0.0</Version>
     <Company>陈珙</Company>
-    <Product>陈珙</Product>
+    <Product>Sikiro.Dapper.Extension.MySql</Product>
     <Description>This is an lambda extension of dapper, Chain style makes developers more elegant and intuitive.</Description>
     <PackageProjectUrl>https://github.com/SkyChenSky/Sikiro.Dapper.Extension</PackageProjectUrl>
     <PackageIconUrl></PackageIconUrl>

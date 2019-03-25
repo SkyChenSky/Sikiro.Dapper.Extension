@@ -14,11 +14,11 @@ namespace Sikiro.Dapper.Extension.Core.SetQ
     /// 查询
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public abstract class Query<T> : IQuery<T>, IUpdateSelect<T>
+    public abstract class Query<T> : IQuery<T>
     {
-        protected readonly SqlProvider SqlProvider;
-        protected readonly IDbConnection DbCon;
-        protected readonly IDbTransaction DbTransaction;
+        public readonly SqlProvider SqlProvider;
+        public readonly IDbConnection DbCon;
+        public readonly IDbTransaction DbTransaction;
 
         public LambdaExpression WhereExpression { get; set; }
         public LambdaExpression IfNotExistsExpression { get; set; }
@@ -80,20 +80,6 @@ namespace Sikiro.Dapper.Extension.Core.SetQ
 
                 return new PageList<T>(pageIndex, pageSize, pageTotal, itemList);
             }
-        }
-
-        public List<T> UpdateSelect(Expression<Func<T, T>> updator)
-        {
-            SqlProvider.FormatUpdateSelect(updator);
-
-            return DbCon.Query<T>(SqlProvider.SqlString, SqlProvider.Params, DbTransaction).ToList();
-        }
-
-        public async Task<IEnumerable<T>> UpdateSelectAsync(Expression<Func<T, T>> updator)
-        {
-            SqlProvider.FormatUpdateSelect(updator);
-
-            return await DbCon.QueryAsync<T>(SqlProvider.SqlString, SqlProvider.Params, DbTransaction);
         }
     }
 }

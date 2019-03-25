@@ -3,16 +3,16 @@
     <TargetFrameworks>netstandard2.0;net452</TargetFrameworks>
     <Authors>陈珙</Authors>
     <Company>陈珙</Company>
-    <PackageId>Sikiro.Dapper.Extension.MsSql</PackageId>
-    <Product>Sikiro.Dapper.Extension.MsSql</Product>
+    <PackageId>Sikiro.Dapper.Extension.PostgreSql</PackageId>
+    <Product>Sikiro.Dapper.Extension.PostgreSql</Product>
     <Description>This is an lambda extension of dapper, Chain style makes developers more elegant and intuitive.</Description>
     <PackageLicenseUrl>https://github.com/SkyChenSky/Sikiro.Dapper.Extension/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/SkyChenSky/Sikiro.Dapper.Extension</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/SkyChenSky/Sikiro.DapperLambdaExtension.MsSql</RepositoryUrl>
+    <RepositoryUrl>https://github.com/SkyChenSky/Sikiro.Dapper.Extension</RepositoryUrl>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <FileVersion>2.0.0.0</FileVersion>
     <PackageReleaseNotes>Porting to.Net standard Dapper lambda sql</PackageReleaseNotes>
-    <PackageTags>Sikiro Extension dapper orm lambda sql server mssql</PackageTags>
+    <PackageTags>Sikiro Extension dapper orm lambda sql server PostgreSql</PackageTags>
     <Version>2.0.0.0</Version>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
