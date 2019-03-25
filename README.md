@@ -37,7 +37,7 @@ Features
 
 Sikiro. Dapper. Extension is a dotNet Standard library hosted in nuget. It can be used in dotNet framework and dotNet Core platform.
 
-The lambda expression encapsulation based on dapper is still an extension of `IDbConnection'Interface, and retains and opens the original `Execute', `Query', etc
+The lambda expression encapsulation based on dapper is still an extension of `IDbConnection`Interface, and retains and opens the original `Execute`, `Query`, etc
 
 ### 2.Simple And Intuitive Chain
 #### Query
