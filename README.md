@@ -78,7 +78,6 @@ Build Entity Tool
 
 
 Contribution
-
 -------
 Welcome to submit Pull Request code changes. If you have any questions, you can submit them to issue for discussion.
 
