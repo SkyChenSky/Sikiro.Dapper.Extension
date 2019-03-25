@@ -30,7 +30,7 @@ PM> Install-Package Sikiro.Dapper.Extension.PostgreSql
 ```
 文档
 ---------
-https://github.com/SkyChenSky/Sikiro.Dapper.Extension.wiki.git
+https://github.com/SkyChenSky/Sikiro.Dapper.Extension/wiki
 
 特性
 ---------
