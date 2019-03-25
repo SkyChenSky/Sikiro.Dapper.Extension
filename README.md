@@ -33,13 +33,13 @@ https://github.com/SkyChenSky/Sikiro.Dapper.Extension/wiki
 
 Features
 ---------
-### 1.base on dapper
+### 1.Base On Dapper
 
 Sikiro. Dapper. Extension is a dotNet Standard library hosted in nuget. It can be used in dotNet framework and dotNet Core platform.
 
 The lambda expression encapsulation based on dapper is still an extension of `IDbConnection'Interface, and retains and opens the original `Execute', `Query', etc
 
-### 2.Simple and intuitive chain
+### 2.Simple And Intuitive Chain
 #### Query
 ```c#
 con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com")
@@ -60,7 +60,7 @@ InsertAsync
 DeleteAsync
 UpdateAsync
 ```
-### 4.Faithful to Native Attribute
+### 4.Faithful To Native Attribute
 ```c#
 [Table("SYS_USER")]
 [Key]
