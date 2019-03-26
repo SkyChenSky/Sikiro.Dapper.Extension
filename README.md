@@ -58,6 +58,7 @@ ToListAsync
 GetAsync
 InsertAsync
 DeleteAsync
+UpdateSelectAsync
 UpdateAsync
 ```
 ### 4.Faithful To Native Attribute
@@ -68,6 +69,7 @@ UpdateAsync
 [StringLength(32)]
 [Display(Name = "主键")]
 [Column("SYS_USERID")]
+[DatabaseGenerated]
 ```
 
 Build Entity Tool
