@@ -9,11 +9,11 @@
     <PackageLicenseUrl>https://github.com/SkyChenSky/Sikiro.Dapper.Extension/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/SkyChenSky/Sikiro.Dapper.Extension</PackageProjectUrl>
     <RepositoryUrl>https://github.com/SkyChenSky/Sikiro.Dapper.Extension</RepositoryUrl>
-    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.1</AssemblyVersion>
     <FileVersion>2.0.0.0</FileVersion>
     <PackageReleaseNotes>Porting to.Net standard Dapper lambda sql</PackageReleaseNotes>
     <PackageTags>Sikiro Extension dapper orm lambda</PackageTags>
-    <Version>2.0.0.0</Version>
+    <Version>2.0.0.1</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Dapper" Version="1.50.4" />

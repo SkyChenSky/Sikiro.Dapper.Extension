@@ -228,7 +228,7 @@ namespace Sikiro.Dapper.Extension.MsSql
 
             var topNum = DataBaseContext<T>().QuerySet.TopNum;
 
-            var topSql = topNum.HasValue ? " TOP " + topNum.Value : "";
+            var topSql = topNum.HasValue ? $" TOP ({topNum.Value})" : "";
             SqlString = $"UPDATE {topSql} {FormatTableName(false)} WITH ( UPDLOCK, READPAST ) {update.SqlCmd} {selectSql} {whereSql}";
 
             return this;
