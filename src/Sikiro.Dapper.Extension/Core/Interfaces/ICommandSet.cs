@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace Sikiro.Dapper.Extension.Core.Interfaces
 {
-    public interface ICommandSet<T> : IDapperSet
+    public interface ICommandSet<T>
     {
         ICommand<T> Where(Expression<Func<T, bool>> predicate);
 

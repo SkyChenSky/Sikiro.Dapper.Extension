@@ -8,7 +8,7 @@ using Sikiro.Dapper.Extension.MsSql.Helper;
 
 namespace Sikiro.Dapper.Extension.MsSql
 {
-    public class MsSqlProvider : SqlProvider
+    internal class MsSqlProvider : SqlProvider
     {
         private const char OpenQuote = '[';
         private const char CloseQuote = ']';

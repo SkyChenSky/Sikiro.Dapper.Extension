@@ -7,7 +7,7 @@ using Sikiro.Dapper.Extension.Model;
 
 namespace Sikiro.Dapper.Extension.PostgreSql
 {
-    public class PostgreSqlProvider : SqlProvider
+    internal class PostgreSqlProvider : SqlProvider
     {
         private const char OpenQuote = '"';
         private const char CloseQuote = '"';

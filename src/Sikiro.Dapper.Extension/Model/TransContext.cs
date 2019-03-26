@@ -6,27 +6,27 @@ namespace Sikiro.Dapper.Extension.Model
 {
     public class TransContext
     {
-        public IDbConnection SqlConnection { internal get; set; }
+        private readonly IDbConnection _sqlConnection;
 
-        public IDbTransaction DbTransaction { internal get; set; }
+        private readonly IDbTransaction _dbTransaction;
 
         private readonly SqlProvider _sqlProvider;
 
-        public TransContext(IDbConnection sqlConnection, IDbTransaction dbTransaction,SqlProvider sqlProvider)
+        public TransContext(IDbConnection sqlConnection, IDbTransaction dbTransaction, SqlProvider sqlProvider)
         {
-            SqlConnection = sqlConnection;
-            DbTransaction = dbTransaction;
+            _sqlConnection = sqlConnection;
+            _dbTransaction = dbTransaction;
             _sqlProvider = sqlProvider;
         }
 
         public QuerySet<T> QuerySet<T>()
         {
-            return new QuerySet<T>(SqlConnection, _sqlProvider, DbTransaction);
+            return new QuerySet<T>(_sqlConnection, _sqlProvider, _dbTransaction);
         }
 
         public CommandSet<T> CommandSet<T>()
         {
-            return new CommandSet<T>(SqlConnection,_sqlProvider, DbTransaction);
+            return new CommandSet<T>(_sqlConnection, _sqlProvider, _dbTransaction);
         }
     }
 }

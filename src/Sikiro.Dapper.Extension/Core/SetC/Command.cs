@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -13,16 +12,11 @@ namespace Sikiro.Dapper.Extension.Core.SetC
     /// 指令
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public abstract class Command<T> : ICommand<T>, IInsert<T>
+    public abstract class Command<T> : AbstractSet, ICommand<T>, IInsert<T>
     {
         protected readonly SqlProvider SqlProvider;
         protected readonly IDbConnection DbCon;
         private readonly IDbTransaction _dbTransaction;
-
-        public LambdaExpression WhereExpression { get; set; }
-        public LambdaExpression IfNotExistsExpression { get; set; }
-        public Dictionary<EOrderBy, LambdaExpression> OrderbyExpressionList { get; set; }
-        public LambdaExpression SelectExpression { get; set; }
 
         protected DataBaseContext<T> SetContext { get; set; }
 

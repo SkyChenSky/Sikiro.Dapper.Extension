@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using Sikiro.Dapper.Extension.Helper;
 using Sikiro.Dapper.Extension.MsSql.Extension;
 
 namespace Sikiro.Dapper.Extension.MsSql.Samples

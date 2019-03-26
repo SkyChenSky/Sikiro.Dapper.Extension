@@ -14,8 +14,6 @@ namespace Sikiro.Dapper.Extension.Core.SetQ
     /// <typeparam name="T"></typeparam>
     public class QuerySet<T> : Aggregation<T>, IQuerySet<T>
     {
-        public Type TableType { get; set; }
-
         public QuerySet(IDbConnection conn, SqlProvider sqlProvider) : base(conn, sqlProvider)
         {
             TableType = typeof(T);

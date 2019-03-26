@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 using Sikiro.Dapper.Extension.Core.SetQ;
 
 namespace Sikiro.Dapper.Extension.Core.Interfaces

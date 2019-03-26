@@ -12,7 +12,7 @@ namespace Sikiro.Dapper.Extension.MsSql.Helper
         /// </summary>
         /// <param name="conn"></param>
         /// <param name="list">源数据</param>
-        internal static void BulkCopy<T>(IDbConnection conn, IEnumerable<T> list)
+        public static void BulkCopy<T>(IDbConnection conn, IEnumerable<T> list)
         {
             var dt = list.ToDataTable();
 

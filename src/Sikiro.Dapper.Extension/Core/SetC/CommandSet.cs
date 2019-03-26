@@ -14,8 +14,6 @@ namespace Sikiro.Dapper.Extension.Core.SetC
     /// <typeparam name="T"></typeparam>
     public class CommandSet<T> : Command<T>, ICommandSet<T>
     {
-        public Type TableType { get; set; }
-
         public CommandSet(IDbConnection conn, SqlProvider sqlProvider) : base(conn, sqlProvider)
         {
             TableType = typeof(T);

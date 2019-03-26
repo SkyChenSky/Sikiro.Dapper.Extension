@@ -13,7 +13,7 @@ namespace Sikiro.Dapper.Extension.Model
 
     public abstract class AbstractDataBaseContext
     {
-        public IDapperSet Set { get; internal set; }
+        public AbstractSet Set { get; internal set; }
 
         internal EOperateType OperateType { get; set; }
     }

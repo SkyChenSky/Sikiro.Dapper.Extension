@@ -10,7 +10,8 @@ namespace Sikiro.Dapper.Extension.Helper
     /// </summary>
     public class TrimExpression : ExpressionVisitor
     {
-        private bool IsDeep = false;
+        private bool _isDeep;
+
         public static Expression Trim(Expression expression)
         {
             return new TrimExpression().Visit(expression);
@@ -36,10 +37,10 @@ namespace Sikiro.Dapper.Extension.Helper
                     }
                     else
                     {
-                        if (IsDeep)
+                        if (_isDeep)
                             return expression;
 
-                        IsDeep = true;
+                        _isDeep = true;
                         return Expression.Equal(expression, Expression.Constant(true));
                     }
 
@@ -72,7 +73,7 @@ namespace Sikiro.Dapper.Extension.Helper
                 case ExpressionType.AndAlso:
                 case ExpressionType.OrElse:
                     var b = (BinaryExpression)expression;
-                    IsDeep = true;
+                    _isDeep = true;
                     if (b.Left.NodeType != b.Right.NodeType)
                     {
                         if (b.Left.NodeType == ExpressionType.MemberAccess && b.Left.Type.Name == "Boolean")
@@ -96,7 +97,7 @@ namespace Sikiro.Dapper.Extension.Helper
                     }
                     break;
                 default:
-                    IsDeep = true;
+                    _isDeep = true;
                     return expression;
             }
 

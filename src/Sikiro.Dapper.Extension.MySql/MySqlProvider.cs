@@ -7,7 +7,7 @@ using Sikiro.Dapper.Extension.Model;
 
 namespace Sikiro.Dapper.Extension.MySql
 {
-    public class MySqlProvider : SqlProvider
+    internal class MySqlProvider : SqlProvider
     {
         private const char OpenQuote = '`';
         private const char CloseQuote = '`';

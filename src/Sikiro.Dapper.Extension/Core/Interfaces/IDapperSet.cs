@@ -5,16 +5,16 @@ using Sikiro.Dapper.Extension.Model;
 
 namespace Sikiro.Dapper.Extension.Core.Interfaces
 {
-    public interface IDapperSet
+    public abstract class AbstractSet
     {
-        Type TableType { get; set; }
+        public Type TableType { get; protected set; }
 
-        LambdaExpression WhereExpression { get; set; }
+        public LambdaExpression WhereExpression { get; protected set; }
 
-        LambdaExpression IfNotExistsExpression { get; set; }
+        public LambdaExpression IfNotExistsExpression { get; protected set; }
 
-        Dictionary<EOrderBy, LambdaExpression> OrderbyExpressionList { get; set; }
+        public Dictionary<EOrderBy, LambdaExpression> OrderbyExpressionList { get; protected set; }
 
-        LambdaExpression SelectExpression { get; set; }
+        public LambdaExpression SelectExpression { get; protected set; }
     }
 }

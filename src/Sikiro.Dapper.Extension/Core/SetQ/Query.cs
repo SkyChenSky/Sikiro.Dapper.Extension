@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Dapper;
 using Sikiro.Dapper.Extension.Core.Interfaces;
@@ -14,16 +12,11 @@ namespace Sikiro.Dapper.Extension.Core.SetQ
     /// 查询
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public abstract class Query<T> : IQuery<T>
+    public abstract class Query<T> : AbstractSet, IQuery<T>
     {
         public readonly SqlProvider SqlProvider;
         public readonly IDbConnection DbCon;
         public readonly IDbTransaction DbTransaction;
-
-        public LambdaExpression WhereExpression { get; set; }
-        public LambdaExpression IfNotExistsExpression { get; set; }
-        public Dictionary<EOrderBy, LambdaExpression> OrderbyExpressionList { get; set; }
-        public LambdaExpression SelectExpression { get; set; }
 
         protected DataBaseContext<T> SetContext { get; set; }
 
