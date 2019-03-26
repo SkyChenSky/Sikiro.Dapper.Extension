@@ -1,4 +1,4 @@
-Sikiro.Dapper.Extension - 基于dapper简单易用的lambda扩展   [中文](https://github.com/SkyChenSky/Sikiro.DapperLambdaExtension.MsSql/blob/master/README.md)
+Sikiro.Dapper.Extension - 基于dapper简单易用的lambda扩展   [英文](https://github.com/SkyChenSky/Sikiro.DapperLambdaExtension.MsSql/blob/master/README.md)
 ========================================
 
 
@@ -57,6 +57,7 @@ ToListAsync
 GetAsync
 InsertAsync
 DeleteAsync
+UpdateSelectAsync
 UpdateAsync
 ```
 ### 4.忠于原生的特性标签
@@ -67,6 +68,7 @@ UpdateAsync
 [StringLength(32)]
 [Display(Name = "主键")]
 [Column("SYS_USERID")]
+[DatabaseGenerated]
 ```
 
 实体生成工具
