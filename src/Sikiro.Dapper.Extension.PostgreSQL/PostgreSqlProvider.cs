@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq.Expressions;
+using System.Runtime.InteropServices.ComTypes;
 using Sikiro.Dapper.Extension.Exception;
+using Sikiro.Dapper.Extension.Extension;
 using Sikiro.Dapper.Extension.Model;
 
 namespace Sikiro.Dapper.Extension.PostgreSql
@@ -209,7 +211,27 @@ namespace Sikiro.Dapper.Extension.PostgreSql
 
         public override SqlProvider FormatUpdateSelect<T>(Expression<Func<T, T>> updator)
         {
-            throw new DapperExtensionException("the function is not support on mysql");
+            var keyField = ProviderOption.CombineFieldName(typeof(T).GetKeyPropertity().GetColumnAttributeName());
+
+            var update = ResolveExpression.ResolveUpdate(updator);
+
+            var selectSql = ResolveExpression.ResolveSelect(typeof(T).GetProperties(), Context.Set.SelectExpression, false);
+
+            var where = ResolveExpression.ResolveWhere(Context.Set.WhereExpression);
+
+            var whereSql = where.SqlCmd;
+
+            Params = where.Param;
+            Params.AddDynamicParams(update.Param);
+
+            var topNum = DataBaseContext<T>().QuerySet.TopNum;
+
+            var limitSql = topNum.HasValue ? " LIMIT " + topNum.Value : "";
+            var tableName = FormatTableName(false);
+
+            SqlString = $"UPDATE {tableName} {update.SqlCmd} WHERE {keyField} IN (SELECT {keyField} FROM {tableName} {whereSql} {limitSql} FOR UPDATE SKIP LOCKED) RETURNING {selectSql}";
+
+            return this;
         }
 
         public override SqlProvider ExcuteBulkCopy<T>(IDbConnection conn, IEnumerable<T> list)

@@ -48,9 +48,9 @@ namespace Sikiro.Dapper.Extension.PostgreSql
             return where;
         }
 
-        public static string ResolveSelect(PropertyInfo[] propertyInfos, LambdaExpression selector)
+        public static string ResolveSelect(PropertyInfo[] propertyInfos, LambdaExpression selector, bool isNeedSelect = true)
         {
-            var selectFormat = " SELECT {0} ";
+            var selectFormat = isNeedSelect? " SELECT {0} ": " {0} ";
             var selectSql = "";
 
             if (selector == null)

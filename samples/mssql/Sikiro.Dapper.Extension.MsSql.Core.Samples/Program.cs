@@ -98,9 +98,9 @@ namespace Sikiro.Dapper.Extension.Core.Samples
                 .Select(a => new SysUser { Email = a.Email, Mobile = a.Mobile, Password = a.Password }).PageList(1, 10);
 
             var updateResult7 = con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com")
-                .OrderBy(a => a.CreateDatetime)
-                .Select(a => new SysUser { Email = a.Email })
-                .UpdateSelect(a => new SysUser { Email = "2530665632@qq.com" });
+                                                       .Top(2)
+                                                       .Select(a => new SysUser { Email = a.Email })
+                                                       .UpdateSelect(a => new SysUser { Email = "2530665632@qq.com" });
 
             var deleteResult = con.CommandSet<SysUser>().Delete();
             Console.WriteLine("Delete:{0}", deleteResult);

@@ -2,6 +2,7 @@
 using System.Data;
 using System.Linq;
 using Npgsql;
+using Sikiro.Dapper.Extension.PostgreSql.Extension;
 
 namespace Sikiro.Dapper.Extension.PostgreSql.Core.Samples
 {
@@ -55,6 +56,12 @@ namespace Sikiro.Dapper.Extension.PostgreSql.Core.Samples
 
             var updateResult4 = con.QuerySet<SysUser>().Sum(a => a.UserStatus);
             Console.WriteLine("Sum:{0}", updateResult4);
+
+            var updateResult7 = con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com")
+                .Top(2)
+                .Select(a => new SysUser { Email = a.Email })
+                .UpdateSelect(a => new SysUser { Email = "2530665632@qq.com" });
+            Console.WriteLine("UpdateSelect:{0}", updateResult7.Count);
 
             var deleteResult = con.CommandSet<SysUser>().Delete();
             Console.WriteLine("Delete:{0}", deleteResult);
