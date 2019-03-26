@@ -7,9 +7,9 @@ using Sikiro.Dapper.Extension.Extension;
 using Sikiro.Dapper.Extension.Helper;
 using Sikiro.Dapper.Extension.Model;
 
-namespace Sikiro.Dapper.Extension.MsSql.Expression
+namespace Sikiro.Dapper.Extension.Expressions
 {
-    internal sealed class WhereExpression : ExpressionVisitor
+    public sealed class WhereExpression : ExpressionVisitor
     {
         #region sql指令
 
@@ -34,9 +34,11 @@ namespace Sikiro.Dapper.Extension.MsSql.Expression
 
         private readonly string _prefix;
 
-        private readonly ProviderOption _providerOption;
-
         private readonly char _parameterPrefix;
+
+        private readonly char _closeQuote;
+
+        private readonly char _openQuote;
 
         #endregion
 
@@ -57,7 +59,8 @@ namespace Sikiro.Dapper.Extension.MsSql.Expression
 
             _prefix = prefix;
             _parameterPrefix = providerOption.ParameterPrefix;
-            _providerOption = providerOption;
+            _openQuote = providerOption.OpenQuote;
+            _closeQuote = providerOption.CloseQuote;
             var exp = TrimExpression.Trim(expression);
             Visit(exp);
         }
@@ -73,8 +76,7 @@ namespace Sikiro.Dapper.Extension.MsSql.Expression
         /// <returns></returns>
         protected override System.Linq.Expressions.Expression VisitMember(MemberExpression node)
         {
-            var fieldName = _providerOption.CombineFieldName(node.Member.GetColumnAttributeName());
-            _sqlCmd.Append(fieldName);
+            _sqlCmd.Append(_openQuote + node.Member.GetColumnAttributeName() + _closeQuote);
             TempFieldName = node.Member.Name;
 
             return node;

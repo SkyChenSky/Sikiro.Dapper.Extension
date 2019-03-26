@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using Sikiro.Dapper.Extension.Exception;
+using Sikiro.Dapper.Extension.Expressions;
 using Sikiro.Dapper.Extension.Extension;
 using Sikiro.Dapper.Extension.Model;
-using Sikiro.Dapper.Extension.MySql.Expression;
 
 namespace Sikiro.Dapper.Extension.MySql
 {

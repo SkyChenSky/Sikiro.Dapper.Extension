@@ -7,22 +7,23 @@ using Sikiro.Dapper.Extension.Extension;
 using Sikiro.Dapper.Extension.Helper;
 using Sikiro.Dapper.Extension.Model;
 
-namespace Sikiro.Dapper.Extension.MsSql.Expression
+namespace Sikiro.Dapper.Extension.Expressions
 {
-    internal sealed class UpdateExpression : ExpressionVisitor
+    public sealed class UpdateExpression : ExpressionVisitor
     {
         #region sql指令
 
         private readonly StringBuilder _sqlCmd;
 
         private const string Prefix = "UPDATE_";
+
         /// <summary>
         /// sql指令
         /// </summary>
         public string SqlCmd => _sqlCmd.Length > 0 ? $" SET {_sqlCmd} " : "";
-        
+
         private readonly ProviderOption _providerOption;
-        
+
         private readonly char _parameterPrefix;
 
         public DynamicParameters Param { get; }
@@ -30,13 +31,14 @@ namespace Sikiro.Dapper.Extension.MsSql.Expression
         #endregion
 
         #region 执行解析
+
         /// <inheritdoc />
         /// <summary>
         /// 执行解析
         /// </summary>
         /// <param name="expression"></param>
         /// <returns></returns>
-        public UpdateExpression(LambdaExpression expression,ProviderOption providerOption)
+        public UpdateExpression(LambdaExpression expression, ProviderOption providerOption)
         {
             _sqlCmd = new StringBuilder(100);
             _providerOption = providerOption;
@@ -45,13 +47,14 @@ namespace Sikiro.Dapper.Extension.MsSql.Expression
 
             Visit(expression);
         }
+
         #endregion
 
         protected override System.Linq.Expressions.Expression VisitMember(MemberExpression node)
         {
             var memberInitExpression = node;
 
-            var entity = ((ConstantExpression)TrimExpression.Trim(memberInitExpression)).Value;
+            var entity = ((ConstantExpression) TrimExpression.Trim(memberInitExpression)).Value;
 
             var properties = memberInitExpression.Type.GetProperties();
 
@@ -65,7 +68,7 @@ namespace Sikiro.Dapper.Extension.MsSql.Expression
 
                 var paramName = item.Name;
                 var value = item.GetValue(entity);
-                var fieldName =_providerOption.CombineFieldName(item.GetColumnAttributeName()) ;
+                var fieldName = _providerOption.CombineFieldName(item.GetColumnAttributeName());
                 SetParam(fieldName, paramName, value);
             }
 
@@ -79,14 +82,14 @@ namespace Sikiro.Dapper.Extension.MsSql.Expression
 
             foreach (var item in memberInitExpression.Bindings)
             {
-                var memberAssignment = (MemberAssignment)item;
+                var memberAssignment = (MemberAssignment) item;
 
                 if (_sqlCmd.Length > 0)
                     _sqlCmd.Append(",");
 
                 var paramName = memberAssignment.Member.Name;
-                var fieldName =_providerOption.CombineFieldName(memberAssignment.Member.GetColumnAttributeName()) ;
-                var constantExpression = (ConstantExpression)memberAssignment.Expression;
+                var fieldName = _providerOption.CombineFieldName(memberAssignment.Member.GetColumnAttributeName());
+                var constantExpression = (ConstantExpression) memberAssignment.Expression;
                 SetParam(fieldName, paramName, constantExpression.Value);
             }
 
