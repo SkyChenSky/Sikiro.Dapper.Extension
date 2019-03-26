@@ -1,4 +1,4 @@
-Sikiro.Dapper.Extension - a simple lambda extension for dapper  [中文](https://github.com/SkyChenSky/Sikiro.DapperLambdaExtension.MsSql/blob/master/README.md)
+Sikiro.Dapper.Extension - a simple lambda extension for dapper  [中文](https://github.com/SkyChenSky/Sikiro.Dapper.Extension/blob/master/README.zh-cn.md)
 ========================================
 
 This is an extension based on dapper, supporting lambda expression, chain style allows developers to use more elegant and intuitive.
