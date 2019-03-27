@@ -1,7 +1,7 @@
 Sikiro.Dapper.Extension - a simple lambda extension for dapper  [中文](https://github.com/SkyChenSky/Sikiro.Dapper.Extension/blob/master/README.zh-cn.md)
 ========================================
 
-This is an extension based on dapper, supporting lambda expression, chain style allows developers to use more elegant and intuitive.
+This is an extension based on dapper, supporting lambda expression, with chain style which allows developers to use more gracely and innovationally.
 
 
 Nuget
@@ -35,7 +35,8 @@ Features
 ---------
 ### 1.Base On Dapper
 
-Sikiro. Dapper. Extension is a dotNet Standard library hosted in nuget. It can be used in dotNet framework and dotNet Core platform.
+Sikiro.Dapper.Extension is a library hosted in nuget. It can be used both on dotNet framework and dotNet Core.
+
 
 The lambda expression encapsulation based on dapper is still an extension of `IDbConnection`Interface, and retains and opens the original `Execute`, `Query`, etc
 
@@ -81,7 +82,7 @@ Build Entity Tool
 
 Contribution
 -------
-Welcome to submit Pull Request code changes. If you have any questions, you can submit them to issue for discussion.
+Welcome to submit Pull Request for code changes. If you have any questions, you can open an issue for further discussion.
 
 License
 -------
