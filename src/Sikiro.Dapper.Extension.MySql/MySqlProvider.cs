@@ -27,6 +27,8 @@ namespace Sikiro.Dapper.Extension.MySql
 
             var fromTableSql = FormatTableName();
 
+            var nolockSql = ResolveExpression.ResolveWithNoLock(Context.Set.NoLock);
+
             var whereParams = ResolveExpression.ResolveWhere(Context.Set.WhereExpression);
 
             var whereSql = whereParams.SqlCmd;
@@ -35,7 +37,7 @@ namespace Sikiro.Dapper.Extension.MySql
 
             var orderbySql = ResolveExpression.ResolveOrderBy(Context.Set.OrderbyExpressionList);
 
-            SqlString = $"{selectSql} {fromTableSql} {whereSql} {orderbySql} LIMIT 1";
+            SqlString = $"{selectSql} {fromTableSql} {whereSql} {nolockSql} {orderbySql} LIMIT 1";
 
             return this;
         }
@@ -45,6 +47,8 @@ namespace Sikiro.Dapper.Extension.MySql
             var selectSql = ResolveExpression.ResolveSelect(typeof(T).GetProperties(), Context.Set.SelectExpression);
 
             var fromTableSql = FormatTableName();
+
+            var nolockSql = ResolveExpression.ResolveWithNoLock(Context.Set.NoLock);
 
             var whereParams = ResolveExpression.ResolveWhere(Context.Set.WhereExpression);
 
@@ -58,7 +62,7 @@ namespace Sikiro.Dapper.Extension.MySql
 
             var limitSql = topNum.HasValue ? " LIMIT " + topNum.Value : "";
 
-            SqlString = $"{selectSql} {fromTableSql} {whereSql} {orderbySql} {limitSql}";
+            SqlString = $"{selectSql} {fromTableSql} {nolockSql} {whereSql}  {orderbySql} {limitSql}";
 
             return this;
         }
@@ -73,6 +77,8 @@ namespace Sikiro.Dapper.Extension.MySql
 
             var fromTableSql = FormatTableName();
 
+            var nolockSql = ResolveExpression.ResolveWithNoLock(Context.Set.NoLock);
+
             var whereParams = ResolveExpression.ResolveWhere(Context.Set.WhereExpression);
 
             var whereSql = whereParams.SqlCmd;
@@ -80,7 +86,7 @@ namespace Sikiro.Dapper.Extension.MySql
             Params = whereParams.Param;
 
             SqlString = $"SELECT COUNT(1) {fromTableSql} {whereSql};";
-            SqlString += $"{selectSql} {fromTableSql} {whereSql} {orderbySql} LIMIT {(pageIndex - 1) * pageSize},{pageIndex * pageSize}";
+            SqlString += $"{selectSql} {fromTableSql} {nolockSql} {whereSql} {orderbySql} LIMIT {(pageIndex - 1) * pageSize},{pageIndex * pageSize}";
 
             return this;
         }
@@ -91,13 +97,15 @@ namespace Sikiro.Dapper.Extension.MySql
 
             var fromTableSql = FormatTableName();
 
+            var nolockSql = ResolveExpression.ResolveWithNoLock(Context.Set.NoLock);
+
             var whereParams = ResolveExpression.ResolveWhere(Context.Set.WhereExpression);
 
             var whereSql = whereParams.SqlCmd;
 
             Params = whereParams.Param;
 
-            SqlString = $"{selectSql} {fromTableSql} {whereSql} ";
+            SqlString = $"{selectSql} {fromTableSql} {nolockSql} {whereSql}";
 
             return this;
         }
@@ -108,13 +116,15 @@ namespace Sikiro.Dapper.Extension.MySql
 
             var fromTableSql = FormatTableName();
 
+            var nolockSql = ResolveExpression.ResolveWithNoLock(Context.Set.NoLock);
+
             var whereParams = ResolveExpression.ResolveWhere(Context.Set.WhereExpression);
 
             var whereSql = whereParams.SqlCmd;
 
             Params = whereParams.Param;
 
-            SqlString = $"{selectSql} {fromTableSql} {whereSql} LIMIT 1";
+            SqlString = $"{selectSql} {fromTableSql} {nolockSql} {whereSql}  LIMIT 1";
 
             return this;
         }
@@ -129,7 +139,7 @@ namespace Sikiro.Dapper.Extension.MySql
 
             Params = whereParams.Param;
 
-            SqlString = $"DELETE {fromTableSql} {whereSql }";
+            SqlString = $"DELETE {fromTableSql} {whereSql}";
 
             return this;
         }
@@ -197,13 +207,15 @@ namespace Sikiro.Dapper.Extension.MySql
 
             var fromTableSql = FormatTableName();
 
+            var nolockSql = ResolveExpression.ResolveWithNoLock(Context.Set.NoLock);
+
             var whereParams = ResolveExpression.ResolveWhere(Context.Set.WhereExpression);
 
             var whereSql = whereParams.SqlCmd;
 
             Params = whereParams.Param;
 
-            SqlString = $"{selectSql} {fromTableSql} {whereSql} ";
+            SqlString = $"{selectSql} {fromTableSql} {nolockSql} {whereSql}";
 
             return this;
         }

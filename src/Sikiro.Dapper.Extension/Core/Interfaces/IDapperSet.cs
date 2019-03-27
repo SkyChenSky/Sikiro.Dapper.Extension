@@ -16,5 +16,7 @@ namespace Sikiro.Dapper.Extension.Core.Interfaces
         public Dictionary<EOrderBy, LambdaExpression> OrderbyExpressionList { get; protected set; }
 
         public LambdaExpression SelectExpression { get; protected set; }
+
+        public bool NoLock { get; protected set; }
     }
 }

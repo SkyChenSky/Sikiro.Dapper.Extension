@@ -30,7 +30,7 @@ namespace Sikiro.Dapper.Extension.Core.SetQ
 
             var currentQuerySet = (QuerySet<T>)this;
 
-            return new QuerySet<TResult>(DbCon, SqlProvider, typeof(T), currentQuerySet.WhereExpression, currentQuerySet.SelectExpression, currentQuerySet.TopNum, currentQuerySet.OrderbyExpressionList, DbTransaction);
+            return new QuerySet<TResult>(DbCon, SqlProvider, typeof(T), currentQuerySet.WhereExpression, currentQuerySet.SelectExpression, currentQuerySet.TopNum, currentQuerySet.OrderbyExpressionList, DbTransaction, currentQuerySet.NoLock);
         }
 
         /// <inheritdoc />

@@ -29,6 +29,8 @@ namespace Sikiro.Dapper.Extension.PostgreSql
 
             var fromTableSql = FormatTableName();
 
+            var nolockSql = ResolveExpression.ResolveWithNoLock(Context.Set.NoLock);
+
             var whereParams = ResolveExpression.ResolveWhere(Context.Set.WhereExpression);
 
             var whereSql = whereParams.SqlCmd;
@@ -37,7 +39,7 @@ namespace Sikiro.Dapper.Extension.PostgreSql
 
             var orderbySql = ResolveExpression.ResolveOrderBy(Context.Set.OrderbyExpressionList);
 
-            SqlString = $"{selectSql} {fromTableSql} {whereSql} {orderbySql} LIMIT 1";
+            SqlString = $"{selectSql} {fromTableSql} {nolockSql} {whereSql} {orderbySql} LIMIT 1";
 
             return this;
         }
@@ -47,6 +49,8 @@ namespace Sikiro.Dapper.Extension.PostgreSql
             var selectSql = ResolveExpression.ResolveSelect(typeof(T).GetProperties(), Context.Set.SelectExpression);
 
             var fromTableSql = FormatTableName();
+
+            var nolockSql = ResolveExpression.ResolveWithNoLock(Context.Set.NoLock);
 
             var whereParams = ResolveExpression.ResolveWhere(Context.Set.WhereExpression);
 
@@ -60,7 +64,7 @@ namespace Sikiro.Dapper.Extension.PostgreSql
 
             var limitSql = topNum.HasValue ? " LIMIT " + topNum.Value : "";
 
-            SqlString = $"{selectSql} {fromTableSql} {whereSql} {orderbySql} {limitSql}";
+            SqlString = $"{selectSql} {fromTableSql} {nolockSql} {whereSql} {orderbySql} {limitSql}";
 
             return this;
         }
@@ -75,14 +79,16 @@ namespace Sikiro.Dapper.Extension.PostgreSql
 
             var fromTableSql = FormatTableName();
 
+            var nolockSql = ResolveExpression.ResolveWithNoLock(Context.Set.NoLock);
+
             var whereParams = ResolveExpression.ResolveWhere(Context.Set.WhereExpression);
 
             var whereSql = whereParams.SqlCmd;
 
             Params = whereParams.Param;
 
-            SqlString = $"SELECT COUNT(1) {fromTableSql} {whereSql};";
-            SqlString += $"{selectSql} {fromTableSql} {whereSql} {orderbySql} LIMIT {pageSize} OFFSET  {(pageIndex - 1) * pageSize}";
+            SqlString = $"SELECT COUNT(1) {fromTableSql} {nolockSql} {whereSql};";
+            SqlString += $"{selectSql} {fromTableSql} {nolockSql} {whereSql}  {orderbySql} LIMIT {pageSize} OFFSET  {(pageIndex - 1) * pageSize}";
 
             return this;
         }
@@ -93,13 +99,15 @@ namespace Sikiro.Dapper.Extension.PostgreSql
 
             var fromTableSql = FormatTableName();
 
+            var nolockSql = ResolveExpression.ResolveWithNoLock(Context.Set.NoLock);
+
             var whereParams = ResolveExpression.ResolveWhere(Context.Set.WhereExpression);
 
             var whereSql = whereParams.SqlCmd;
 
             Params = whereParams.Param;
 
-            SqlString = $"{selectSql} {fromTableSql} {whereSql} ";
+            SqlString = $"{selectSql} {fromTableSql} {nolockSql} {whereSql} ";
 
             return this;
         }
@@ -110,13 +118,15 @@ namespace Sikiro.Dapper.Extension.PostgreSql
 
             var fromTableSql = FormatTableName();
 
+            var nolockSql = ResolveExpression.ResolveWithNoLock(Context.Set.NoLock);
+
             var whereParams = ResolveExpression.ResolveWhere(Context.Set.WhereExpression);
 
             var whereSql = whereParams.SqlCmd;
 
             Params = whereParams.Param;
 
-            SqlString = $"{selectSql} {fromTableSql} {whereSql} LIMIT 1";
+            SqlString = $"{selectSql} {fromTableSql} {nolockSql} {whereSql} LIMIT 1";
 
             return this;
         }
@@ -198,13 +208,15 @@ namespace Sikiro.Dapper.Extension.PostgreSql
 
             var fromTableSql = FormatTableName();
 
+            var nolockSql = ResolveExpression.ResolveWithNoLock(Context.Set.NoLock);
+
             var whereParams = ResolveExpression.ResolveWhere(Context.Set.WhereExpression);
 
             var whereSql = whereParams.SqlCmd;
 
             Params = whereParams.Param;
 
-            SqlString = $"{selectSql} {fromTableSql} {whereSql} ";
+            SqlString = $"{selectSql} {fromTableSql} {nolockSql} {whereSql} ";
 
             return this;
         }

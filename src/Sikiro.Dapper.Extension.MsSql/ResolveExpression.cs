@@ -139,5 +139,10 @@ namespace Sikiro.Dapper.Extension.MsSql
         {
             return new UpdateExpression(updateExpression, ProviderOption);
         }
+
+        public static string ResolveWithNoLock(bool nolock)
+        {
+            return nolock ? "(NOLOCK)" : "";
+        }
     }
 }

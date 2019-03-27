@@ -12,7 +12,7 @@ namespace Sikiro.Dapper.Extension.MsSql.Samples
         static void Main(string[] args)
         {
             var con = new SqlConnection(
-                " Data Source=192.168.13.86;Initial Catalog=SkyChen;Persist Security Info=True;User ID=sa;Password=123456789");
+                 " Data Source=192.168.13.86;Initial Catalog=SkyChen;Persist Security Info=True;User ID=sa;Password=123456789");
 
             var user = new SysUser
             {
@@ -39,7 +39,7 @@ namespace Sikiro.Dapper.Extension.MsSql.Samples
             var ifNotExistsResult2 = con.CommandSet<SysUser>().IfNotExists(a => a.Email == "287245188@qq.com").Insert(user);
             Console.WriteLine("IfNotExists2添加数{0}", ifNotExistsResult2);
 
-            var getResult = con.QuerySet<SysUser>().Get();
+            var getResult = con.QuerySet<SysUser>().WithNoLock().Get();
             getResult.Email = "1111113333@qq.com";
             var updateModelResult = con.CommandSet<SysUser>().Update(getResult);
             Console.WriteLine("Update添加数{0}", updateModelResult);
@@ -74,18 +74,18 @@ namespace Sikiro.Dapper.Extension.MsSql.Samples
             con.CommandSet<SysUser>().BatchInsert(batchInsert);
             Console.WriteLine("BatchInsert done");
 
-            var countResult = con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com").Count();
+            var countResult = con.QuerySet<SysUser>().WithNoLock().Where(a => a.Email == "287245177@qq.com").Count();
             Console.WriteLine("Count数{0}", countResult);
 
-            var toListResult = con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com")
+            var toListResult = con.QuerySet<SysUser>().WithNoLock().Where(a => a.Email == "287245177@qq.com")
                 .OrderBy(a => a.CreateDatetime).Top(2).Select(a => a.Email).ToList();
             Console.WriteLine("ToList数{0}", toListResult.Count());
 
-            var listResult2 = con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com")
+            var listResult2 = con.QuerySet<SysUser>().WithNoLock().Where(a => a.Email == "287245177@qq.com")
                 .OrderBy(a => a.CreateDatetime).Select(a => a.Email).PageList(2, 2);
             Console.WriteLine("PageList:{0}", listResult2.TotalPage);
 
-            var updateResult4 = con.QuerySet<SysUser>().Sum(a => a.UserStatus);
+            var updateResult4 = con.QuerySet<SysUser>().WithNoLock().Sum(a => a.UserStatus);
             Console.WriteLine("Sum:{0}", updateResult4);
 
             var updateResult5 = con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com")
@@ -97,11 +97,9 @@ namespace Sikiro.Dapper.Extension.MsSql.Samples
                 .Select(a => new SysUser { Email = a.Email, Mobile = a.Mobile, Password = a.Password }).PageList(1, 10);
 
             var updateResult7 = con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com")
-                .OrderBy(a => a.CreateDatetime)
-                .Select(a => new SysUser { Email = a.Email })
-                .UpdateSelect(a => new SysUser { Email = "2530665632@qq.com" });
-
-            var updateResult8 = con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com").Exists();
+                                                       .Top(2)
+                                                       .Select(a => new SysUser { Email = a.Email })
+                                                       .UpdateSelect(a => new SysUser { Email = "2530665632@qq.com" });
 
             var deleteResult = con.CommandSet<SysUser>().Delete();
             Console.WriteLine("Delete:{0}", deleteResult);

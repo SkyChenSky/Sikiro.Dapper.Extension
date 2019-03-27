@@ -139,5 +139,10 @@ namespace Sikiro.Dapper.Extension.PostgreSql
         {
             return new UpdateExpression(updateExpression, ProviderOption);
         }
+
+        public static string ResolveWithNoLock(bool nolock)
+        {
+            return nolock ? "NOLOCK" : "";
+        }
     }
 }

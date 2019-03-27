@@ -38,13 +38,14 @@ namespace Sikiro.Dapper.Extension.Core.SetQ
             sqlProvider.Context = SetContext;
         }
 
-        internal QuerySet(IDbConnection conn, SqlProvider sqlProvider, Type tableType, LambdaExpression whereExpression, LambdaExpression selectExpression, int? topNum, Dictionary<EOrderBy, LambdaExpression> orderbyExpressionList, IDbTransaction dbTransaction) : base(conn, sqlProvider, dbTransaction)
+        internal QuerySet(IDbConnection conn, SqlProvider sqlProvider, Type tableType, LambdaExpression whereExpression, LambdaExpression selectExpression, int? topNum, Dictionary<EOrderBy, LambdaExpression> orderbyExpressionList, IDbTransaction dbTransaction, bool noLock) : base(conn, sqlProvider, dbTransaction)
         {
             TableType = tableType;
             WhereExpression = whereExpression;
             SelectExpression = selectExpression;
             TopNum = topNum;
             OrderbyExpressionList = orderbyExpressionList;
+            NoLock = noLock;
 
             SetContext = new DataBaseContext<T>
             {
@@ -59,6 +60,12 @@ namespace Sikiro.Dapper.Extension.Core.SetQ
         {
             WhereExpression = WhereExpression == null ? predicate : ((Expression<Func<T, bool>>)WhereExpression).And(predicate);
 
+            return this;
+        }
+
+        public QuerySet<T> WithNoLock()
+        {
+            NoLock = true;
             return this;
         }
     }
