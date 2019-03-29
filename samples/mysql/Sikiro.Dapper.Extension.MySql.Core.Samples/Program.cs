@@ -57,6 +57,9 @@ namespace Sikiro.Dapper.Extension.MySql.Core.Samples
             var updateResult4 = con.QuerySet<SysUser>().WithNoLock().Sum(a => a.UserStatus);
             Console.WriteLine("Sum:{0}", updateResult4);
 
+            var listResult3 = con.QuerySet<SysUser>().WithNoLock().Where(a => a.Email.Equals("287245177@qq.com"))
+                .OrderBy(a => a.CreateDatetime).Select(a => a.Email).PageList(2, 2);
+
             var deleteResult = con.CommandSet<SysUser>().Delete();
             Console.WriteLine("Delete:{0}", deleteResult);
 

@@ -57,6 +57,9 @@ namespace Sikiro.Dapper.Extension.PostgreSql.Core.Samples
             var updateResult4 = con.QuerySet<SysUser>().WithNoLock().Sum(a => a.UserStatus);
             Console.WriteLine("Sum:{0}", updateResult4);
 
+            var listResult3 = con.QuerySet<SysUser>().WithNoLock().Where(a => a.Email.Equals("287245177@qq.com"))
+                .OrderBy(a => a.CreateDatetime).Select(a => a.Email).PageList(2, 2);
+
             var updateResult7 = con.QuerySet<SysUser>().WithNoLock().Where(a => a.Email == "287245177@qq.com")
                 .Top(2)
                 .Select(a => new SysUser { Email = a.Email })

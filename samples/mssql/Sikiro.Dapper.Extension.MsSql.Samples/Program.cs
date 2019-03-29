@@ -83,6 +83,10 @@ namespace Sikiro.Dapper.Extension.MsSql.Samples
 
             var listResult2 = con.QuerySet<SysUser>().WithNoLock().Where(a => a.Email == "287245177@qq.com")
                 .OrderBy(a => a.CreateDatetime).Select(a => a.Email).PageList(2, 2);
+
+            var listResult3 = con.QuerySet<SysUser>().WithNoLock().Where(a => a.Email.Equals("287245177@qq.com"))
+                .OrderBy(a => a.CreateDatetime).Select(a => a.Email).PageList(2, 2);
+
             Console.WriteLine("PageList:{0}", listResult2.TotalPage);
 
             var updateResult4 = con.QuerySet<SysUser>().WithNoLock().Sum(a => a.UserStatus);
