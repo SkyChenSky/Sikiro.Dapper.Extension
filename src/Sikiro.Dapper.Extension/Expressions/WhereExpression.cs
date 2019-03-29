@@ -132,6 +132,8 @@ namespace Sikiro.Dapper.Extension.Expressions
             if (node.Method.Name == "Contains" && typeof(IEnumerable).IsAssignableFrom(node.Method.DeclaringType) &&
                 node.Method.DeclaringType != typeof(string))
                 In(node);
+            else if (node.Method.Name == "Equals")
+                Equal(node);
             else
                 Like(node);
 
@@ -157,7 +159,6 @@ namespace Sikiro.Dapper.Extension.Expressions
         {
             Visit(node.Object);
             _sqlCmd.AppendFormat(" LIKE {0}", ParamName);
-
             switch (node.Method.Name)
             {
                 case "StartsWith":
@@ -181,6 +182,14 @@ namespace Sikiro.Dapper.Extension.Expressions
                 default:
                     throw new DapperExtensionException("the expression is no support this function");
             }
+        }
+
+        private void Equal(MethodCallExpression node)
+        {
+            Visit(node.Object);
+            _sqlCmd.AppendFormat(" ={0}", ParamName);
+            var argumentExpression = node.Arguments[0].ToConvertAndGetValue();
+            Param.Add(TempFieldName, argumentExpression);
         }
 
         private void In(MethodCallExpression node)
