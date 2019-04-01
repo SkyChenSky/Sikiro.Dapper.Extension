@@ -21,22 +21,18 @@ namespace Sikiro.Dapper.Extension.Core.SetQ
 
         }
 
-        public int? TopNum { get; set; }
-
         /// <inheritdoc />
         public virtual Query<TResult> Select<TResult>(Expression<Func<T, TResult>> selector)
         {
-            SelectExpression = selector;
+            SqlProvider.SelectExpression = selector;
 
-            var currentQuerySet = (QuerySet<T>)this;
-
-            return new QuerySet<TResult>(DbCon, SqlProvider, typeof(T), currentQuerySet.WhereExpression, currentQuerySet.SelectExpression, currentQuerySet.TopNum, currentQuerySet.OrderbyExpressionList, DbTransaction, currentQuerySet.NoLock);
+            return new QuerySet<TResult>(DbCon, SqlProvider, typeof(T), DbTransaction);
         }
 
         /// <inheritdoc />
         public virtual Option<T> Top(int num)
         {
-            TopNum = num;
+            SqlProvider.TopNum = num;
             return this;
         }
     }

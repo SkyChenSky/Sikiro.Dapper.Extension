@@ -22,6 +22,9 @@ namespace Sikiro.Dapper.Extension.MsSql
 
         public static string ResolveOrderBy(Dictionary<EOrderBy, LambdaExpression> orderbyExpressionDic)
         {
+            if (orderbyExpressionDic == null || !orderbyExpressionDic.Any())
+                return "";
+
             var orderByList = orderbyExpressionDic.Select(a =>
             {
                 var columnName = ((MemberExpression)a.Value.Body).Member.GetColumnAttributeName();

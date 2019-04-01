@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Linq.Expressions;
 using Sikiro.Dapper.Extension.Core.Interfaces;
 using Sikiro.Dapper.Extension.Helper;
-using Sikiro.Dapper.Extension.Model;
 
 namespace Sikiro.Dapper.Extension.Core.SetQ
 {
@@ -16,56 +14,29 @@ namespace Sikiro.Dapper.Extension.Core.SetQ
     {
         public QuerySet(IDbConnection conn, SqlProvider sqlProvider) : base(conn, sqlProvider)
         {
-            TableType = typeof(T);
-            SetContext = new DataBaseContext<T>
-            {
-                Set = this,
-                OperateType = EOperateType.Query
-            };
-
-            sqlProvider.Context = SetContext;
+            SqlProvider.TableType = typeof(T);
         }
 
         public QuerySet(IDbConnection conn, SqlProvider sqlProvider, IDbTransaction dbTransaction) : base(conn, sqlProvider, dbTransaction)
         {
-            TableType = typeof(T);
-            SetContext = new DataBaseContext<T>
-            {
-                Set = this,
-                OperateType = EOperateType.Query
-            };
-
-            sqlProvider.Context = SetContext;
+            SqlProvider.TableType = typeof(T);
         }
 
-        internal QuerySet(IDbConnection conn, SqlProvider sqlProvider, Type tableType, LambdaExpression whereExpression, LambdaExpression selectExpression, int? topNum, Dictionary<EOrderBy, LambdaExpression> orderbyExpressionList, IDbTransaction dbTransaction, bool noLock) : base(conn, sqlProvider, dbTransaction)
+        internal QuerySet(IDbConnection conn, SqlProvider sqlProvider, Type tableType,IDbTransaction dbTransaction) : base(conn, sqlProvider, dbTransaction)
         {
-            TableType = tableType;
-            WhereExpression = whereExpression;
-            SelectExpression = selectExpression;
-            TopNum = topNum;
-            OrderbyExpressionList = orderbyExpressionList;
-            NoLock = noLock;
-
-            SetContext = new DataBaseContext<T>
-            {
-                Set = this,
-                OperateType = EOperateType.Query
-            };
-
-            sqlProvider.Context = SetContext;
+            SqlProvider.TableType = tableType;
         }
 
         public QuerySet<T> Where(Expression<Func<T, bool>> predicate)
         {
-            WhereExpression = WhereExpression == null ? predicate : ((Expression<Func<T, bool>>)WhereExpression).And(predicate);
+            SqlProvider.WhereExpression = SqlProvider.WhereExpression == null ? predicate : ((Expression<Func<T, bool>>)SqlProvider.WhereExpression).And(predicate);
 
             return this;
         }
 
         public QuerySet<T> WithNoLock()
         {
-            NoLock = true;
+            SqlProvider.NoLock = true;
             return this;
         }
     }

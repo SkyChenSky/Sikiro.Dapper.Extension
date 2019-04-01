@@ -14,23 +14,11 @@ namespace Sikiro.Dapper.Extension.Core.SetQ
     /// <typeparam name="T"></typeparam>
     public abstract class Query<T> : AbstractSet, IQuery<T>
     {
-        public readonly SqlProvider SqlProvider;
-        public readonly IDbConnection DbCon;
-        public readonly IDbTransaction DbTransaction;
-
-        protected DataBaseContext<T> SetContext { get; set; }
-
-        protected Query(IDbConnection conn, SqlProvider sqlProvider)
+        protected Query(IDbConnection dbCon, SqlProvider sqlProvider) : base(dbCon, sqlProvider)
         {
-            SqlProvider = sqlProvider;
-            DbCon = conn;
         }
-
-        protected Query(IDbConnection conn, SqlProvider sqlProvider, IDbTransaction dbTransaction)
+        protected Query(IDbConnection dbCon, SqlProvider sqlProvider, IDbTransaction dbTransaction) : base(dbCon, sqlProvider, dbTransaction)
         {
-            SqlProvider = sqlProvider;
-            DbCon = conn;
-            DbTransaction = dbTransaction;
         }
 
         public T Get()

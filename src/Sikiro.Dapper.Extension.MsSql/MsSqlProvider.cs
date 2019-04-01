@@ -24,19 +24,19 @@ namespace Sikiro.Dapper.Extension.MsSql
 
         public override SqlProvider FormatGet<T>()
         {
-            var selectSql = ResolveExpression.ResolveSelect(typeof(T).GetProperties(), Context.Set.SelectExpression, 1);
+            var selectSql = ResolveExpression.ResolveSelect(typeof(T).GetProperties(), SelectExpression, 1);
 
             var fromTableSql = FormatTableName();
 
-            var nolockSql = ResolveExpression.ResolveWithNoLock(Context.Set.NoLock);
+            var nolockSql = ResolveExpression.ResolveWithNoLock(NoLock);
 
-            var whereParams = ResolveExpression.ResolveWhere(Context.Set.WhereExpression);
+            var whereParams = ResolveExpression.ResolveWhere(WhereExpression);
 
             var whereSql = whereParams.SqlCmd;
 
             Params = whereParams.Param;
 
-            var orderbySql = ResolveExpression.ResolveOrderBy(Context.Set.OrderbyExpressionList);
+            var orderbySql = ResolveExpression.ResolveOrderBy(OrderbyExpressionList);
 
             SqlString = $"{selectSql} {fromTableSql} {nolockSql} {whereSql} {orderbySql}";
 
@@ -45,21 +45,21 @@ namespace Sikiro.Dapper.Extension.MsSql
 
         public override SqlProvider FormatToList<T>()
         {
-            var topNum = DataBaseContext<T>().QuerySet.TopNum;
+            var topNum = TopNum;
 
-            var selectSql = ResolveExpression.ResolveSelect(typeof(T).GetProperties(), Context.Set.SelectExpression, topNum);
+            var selectSql = ResolveExpression.ResolveSelect(typeof(T).GetProperties(), SelectExpression, topNum);
 
             var fromTableSql = FormatTableName();
 
-            var nolockSql = ResolveExpression.ResolveWithNoLock(Context.Set.NoLock);
+            var nolockSql = ResolveExpression.ResolveWithNoLock(NoLock);
 
-            var whereParams = ResolveExpression.ResolveWhere(Context.Set.WhereExpression);
+            var whereParams = ResolveExpression.ResolveWhere(WhereExpression);
 
             var whereSql = whereParams.SqlCmd;
 
             Params = whereParams.Param;
 
-            var orderbySql = ResolveExpression.ResolveOrderBy(Context.Set.OrderbyExpressionList);
+            var orderbySql = ResolveExpression.ResolveOrderBy(OrderbyExpressionList);
 
             SqlString = $"{selectSql} {fromTableSql} {nolockSql} {whereSql} {orderbySql}";
 
@@ -68,17 +68,17 @@ namespace Sikiro.Dapper.Extension.MsSql
 
         public override SqlProvider FormatToPageList<T>(int pageIndex, int pageSize)
         {
-            var orderbySql = ResolveExpression.ResolveOrderBy(Context.Set.OrderbyExpressionList);
+            var orderbySql = ResolveExpression.ResolveOrderBy(OrderbyExpressionList);
             if (string.IsNullOrEmpty(orderbySql))
                 throw new DapperExtensionException("order by takes precedence over pagelist");
 
-            var selectSql = ResolveExpression.ResolveSelect(typeof(T).GetProperties(), Context.Set.SelectExpression, pageSize);
+            var selectSql = ResolveExpression.ResolveSelect(typeof(T).GetProperties(), SelectExpression, pageSize);
 
             var fromTableSql = FormatTableName();
 
-            var nolockSql = ResolveExpression.ResolveWithNoLock(Context.Set.NoLock);
+            var nolockSql = ResolveExpression.ResolveWithNoLock(NoLock);
 
-            var whereParams = ResolveExpression.ResolveWhere(Context.Set.WhereExpression);
+            var whereParams = ResolveExpression.ResolveWhere(WhereExpression);
 
             var whereSql = whereParams.SqlCmd;
 
@@ -103,9 +103,9 @@ namespace Sikiro.Dapper.Extension.MsSql
 
             var fromTableSql = FormatTableName();
 
-            var nolockSql = ResolveExpression.ResolveWithNoLock(Context.Set.NoLock);
+            var nolockSql = ResolveExpression.ResolveWithNoLock(NoLock);
 
-            var whereParams = ResolveExpression.ResolveWhere(Context.Set.WhereExpression);
+            var whereParams = ResolveExpression.ResolveWhere(WhereExpression);
 
             var whereSql = whereParams.SqlCmd;
 
@@ -122,9 +122,9 @@ namespace Sikiro.Dapper.Extension.MsSql
 
             var fromTableSql = FormatTableName();
 
-            var nolockSql = ResolveExpression.ResolveWithNoLock(Context.Set.NoLock);
+            var nolockSql = ResolveExpression.ResolveWithNoLock(NoLock);
 
-            var whereParams = ResolveExpression.ResolveWhere(Context.Set.WhereExpression);
+            var whereParams = ResolveExpression.ResolveWhere(WhereExpression);
 
             var whereSql = whereParams.SqlCmd;
 
@@ -139,7 +139,7 @@ namespace Sikiro.Dapper.Extension.MsSql
         {
             var fromTableSql = FormatTableName();
 
-            var whereParams = ResolveExpression.ResolveWhere(Context.Set.WhereExpression);
+            var whereParams = ResolveExpression.ResolveWhere(WhereExpression);
 
             var whereSql = whereParams.SqlCmd;
 
@@ -154,11 +154,11 @@ namespace Sikiro.Dapper.Extension.MsSql
         {
             var paramsAndValuesSql = FormatInsertParamsAndValues(entity);
 
-            if (Context.Set.IfNotExistsExpression == null)
+            if (IfNotExistsExpression == null)
                 SqlString = $"INSERT INTO {FormatTableName(false)} ({paramsAndValuesSql[0]}) VALUES({paramsAndValuesSql[1]})";
             else
             {
-                var ifnotexistsWhere = ResolveExpression.ResolveWhere(Context.Set.IfNotExistsExpression, "INT_");
+                var ifnotexistsWhere = ResolveExpression.ResolveWhere(IfNotExistsExpression, "INT_");
 
                 SqlString = string.Format(@"INSERT INTO {0}({1})  
                 SELECT {2}
@@ -178,7 +178,7 @@ namespace Sikiro.Dapper.Extension.MsSql
         {
             var update = ResolveExpression.ResolveUpdate(updateExpression);
 
-            var where = ResolveExpression.ResolveWhere(Context.Set.WhereExpression);
+            var where = ResolveExpression.ResolveWhere(WhereExpression);
 
             var whereSql = where.SqlCmd;
 
@@ -212,9 +212,9 @@ namespace Sikiro.Dapper.Extension.MsSql
 
             var fromTableSql = FormatTableName();
 
-            var whereParams = ResolveExpression.ResolveWhere(Context.Set.WhereExpression);
+            var whereParams = ResolveExpression.ResolveWhere(WhereExpression);
 
-            var nolockSql = ResolveExpression.ResolveWithNoLock(Context.Set.NoLock);
+            var nolockSql = ResolveExpression.ResolveWithNoLock(NoLock);
 
             var whereSql = whereParams.SqlCmd;
 
@@ -229,16 +229,16 @@ namespace Sikiro.Dapper.Extension.MsSql
         {
             var update = ResolveExpression.ResolveUpdate(updator);
 
-            var selectSql = ResolveExpression.ResolveSelectOfUpdate(typeof(T).GetProperties(), Context.Set.SelectExpression);
+            var selectSql = ResolveExpression.ResolveSelectOfUpdate(typeof(T).GetProperties(), SelectExpression);
 
-            var where = ResolveExpression.ResolveWhere(Context.Set.WhereExpression);
+            var where = ResolveExpression.ResolveWhere(WhereExpression);
 
             var whereSql = where.SqlCmd;
 
             Params = where.Param;
             Params.AddDynamicParams(update.Param);
 
-            var topNum = DataBaseContext<T>().QuerySet.TopNum;
+            var topNum = TopNum;
 
             var topSql = topNum.HasValue ? $" TOP ({topNum.Value})" : "";
             SqlString = $"UPDATE {topSql} {FormatTableName(false)} WITH ( UPDLOCK, READPAST ) {update.SqlCmd} {selectSql} {whereSql}";

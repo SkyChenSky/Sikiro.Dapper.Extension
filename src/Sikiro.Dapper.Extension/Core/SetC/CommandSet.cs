@@ -4,7 +4,6 @@ using System.Data;
 using System.Linq.Expressions;
 using Sikiro.Dapper.Extension.Core.Interfaces;
 using Sikiro.Dapper.Extension.Helper;
-using Sikiro.Dapper.Extension.Model;
 
 namespace Sikiro.Dapper.Extension.Core.SetC
 {
@@ -14,54 +13,32 @@ namespace Sikiro.Dapper.Extension.Core.SetC
     /// <typeparam name="T"></typeparam>
     public class CommandSet<T> : Command<T>, ICommandSet<T>
     {
-        public CommandSet(IDbConnection conn, SqlProvider sqlProvider) : base(conn, sqlProvider)
+        public CommandSet(IDbConnection conn, SqlProvider sqlProvider) : base(sqlProvider, conn)
         {
-            TableType = typeof(T);
-            SetContext = new DataBaseContext<T>
-            {
-                Set = this,
-                OperateType = EOperateType.Command
-            };
-
-            sqlProvider.Context = SetContext;
+            SqlProvider.TableType = typeof(T);
         }
 
-        public CommandSet(IDbConnection conn, SqlProvider sqlProvider, IDbTransaction dbTransaction) : base(conn, sqlProvider, dbTransaction)
+        public CommandSet(IDbConnection conn, SqlProvider sqlProvider, IDbTransaction dbTransaction) : base(sqlProvider, conn, dbTransaction)
         {
-            TableType = typeof(T);
-            SetContext = new DataBaseContext<T>
-            {
-                Set = this,
-                OperateType = EOperateType.Command
-            };
-
-            sqlProvider.Context = SetContext;
+            SqlProvider.TableType = typeof(T);
         }
 
-        internal CommandSet(IDbConnection conn, SqlProvider sqlProvider, Type tableType, LambdaExpression whereExpression) : base(conn, sqlProvider)
+        internal CommandSet(IDbConnection conn, SqlProvider sqlProvider, Type tableType, LambdaExpression whereExpression) : base(sqlProvider, conn)
         {
-            TableType = tableType;
-            WhereExpression = whereExpression;
-
-            SetContext = new DataBaseContext<T>
-            {
-                Set = this,
-                OperateType = EOperateType.Command
-            };
-
-            sqlProvider.Context = SetContext;
+            SqlProvider.TableType = tableType;
+            SqlProvider.WhereExpression = whereExpression;
         }
 
         public ICommand<T> Where(Expression<Func<T, bool>> predicate)
         {
-            WhereExpression = WhereExpression == null ? predicate : ((Expression<Func<T, bool>>)WhereExpression).And(predicate);
+            SqlProvider.WhereExpression = SqlProvider.WhereExpression == null ? predicate : ((Expression<Func<T, bool>>)SqlProvider.WhereExpression).And(predicate);
 
             return this;
         }
 
         public IInsert<T> IfNotExists(Expression<Func<T, bool>> predicate)
         {
-            IfNotExistsExpression = IfNotExistsExpression == null ? predicate : ((Expression<Func<T, bool>>)IfNotExistsExpression).And(predicate);
+            SqlProvider.IfNotExistsExpression = SqlProvider.IfNotExistsExpression == null ? predicate : ((Expression<Func<T, bool>>)SqlProvider.IfNotExistsExpression).And(predicate);
 
             return this;
         }

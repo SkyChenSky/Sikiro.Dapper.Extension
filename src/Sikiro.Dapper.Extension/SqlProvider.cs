@@ -12,11 +12,24 @@ namespace Sikiro.Dapper.Extension
 {
     public abstract class SqlProvider
     {
-        public AbstractDataBaseContext Context { get; set; }
+        public Type TableType { get; internal set; }
+
+        public LambdaExpression WhereExpression { get; internal set; }
+
+        public LambdaExpression IfNotExistsExpression { get; internal set; }
+
+        public Dictionary<EOrderBy, LambdaExpression> OrderbyExpressionList { get; internal set; }
+
+        public LambdaExpression SelectExpression { get; internal set; }
+
+        public int? TopNum { get; internal set; }
+
+        public bool NoLock { get; set; }
 
         protected SqlProvider()
         {
             Params = new DynamicParameters();
+            OrderbyExpressionList = new Dictionary<EOrderBy, LambdaExpression>();
         }
 
         protected abstract ProviderOption ProviderOption { get; set; }
@@ -51,11 +64,11 @@ namespace Sikiro.Dapper.Extension
 
         protected string FormatTableName(bool isNeedFrom = true)
         {
-            var typeOfTableClass = Context.Set.TableType;
+            var typeOfTableClass = TableType;
 
             var tableName = typeOfTableClass.GetTableAttributeName();
 
-            SqlString = $" {ProviderOption.OpenQuote}{tableName}{ProviderOption.CloseQuote} ";
+            SqlString = $" {ProviderOption.CombineFieldName(tableName)} ";
             if (isNeedFrom)
                 SqlString = " FROM " + SqlString;
 
@@ -78,22 +91,17 @@ namespace Sikiro.Dapper.Extension
                     valueSqlBuilder.Append(",");
                 }
 
-                var name = propertiy.GetColumnAttributeName();
+                var columnName = propertiy.GetColumnAttributeName();
+                var paramterName = ProviderOption.ParameterPrefix + columnName;
+                paramSqlBuilder.Append(ProviderOption.CombineFieldName(columnName));
+                valueSqlBuilder.Append(paramterName);
 
-                paramSqlBuilder.AppendFormat("{0}{1}{2}", ProviderOption.OpenQuote, name, ProviderOption.CloseQuote);
-                valueSqlBuilder.Append(ProviderOption.ParameterPrefix + name);
-
-                Params.Add(ProviderOption.ParameterPrefix + name, propertiy.GetValue(entity));
+                Params.Add(paramterName, propertiy.GetValue(entity));
 
                 isAppend = true;
             }
 
             return new[] { paramSqlBuilder.ToString(), valueSqlBuilder.ToString() };
-        }
-
-        protected DataBaseContext<T> DataBaseContext<T>()
-        {
-            return (DataBaseContext<T>)Context;
         }
     }
 }
