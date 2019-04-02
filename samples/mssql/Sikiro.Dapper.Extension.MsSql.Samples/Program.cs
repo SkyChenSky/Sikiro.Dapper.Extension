@@ -39,6 +39,9 @@ namespace Sikiro.Dapper.Extension.MsSql.Samples
             var ifNotExistsResult2 = con.CommandSet<SysUser>().IfNotExists(a => a.Email == "287245188@qq.com").Insert(user);
             Console.WriteLine("IfNotExists2添加数{0}", ifNotExistsResult2);
 
+            var getEmailResult = con.QuerySet<SysUser>().WithNoLock().Select(a => a.Email).Get();
+            Console.WriteLine("getEmailResult:{0}", getEmailResult);
+
             var getResult = con.QuerySet<SysUser>().WithNoLock().Get();
             getResult.Email = "1111113333@qq.com";
             var updateModelResult = con.CommandSet<SysUser>().Update(getResult);
