@@ -24,19 +24,19 @@ namespace Sikiro.Dapper.Extension.PostgreSql
 
         public override SqlProvider FormatGet<T>()
         {
-            var selectSql = ResolveExpression.ResolveSelect(typeof(T).GetProperties(), SelectExpression);
+            var selectSql = ResolveExpression.ResolveSelect(typeof(T).GetProperties(), SetContext.SelectExpression);
 
             var fromTableSql = FormatTableName();
 
-            var nolockSql = ResolveExpression.ResolveWithNoLock(NoLock);
+            var nolockSql = ResolveExpression.ResolveWithNoLock(SetContext.NoLock);
 
-            var whereParams = ResolveExpression.ResolveWhere(WhereExpression);
+            var whereParams = ResolveExpression.ResolveWhere(SetContext.WhereExpression);
 
             var whereSql = whereParams.SqlCmd;
 
             Params = whereParams.Param;
 
-            var orderbySql = ResolveExpression.ResolveOrderBy(OrderbyExpressionList);
+            var orderbySql = ResolveExpression.ResolveOrderBy(SetContext.OrderbyExpressionList);
 
             SqlString = $"{selectSql} {fromTableSql} {nolockSql} {whereSql} {orderbySql} LIMIT 1";
 
@@ -45,21 +45,21 @@ namespace Sikiro.Dapper.Extension.PostgreSql
 
         public override SqlProvider FormatToList<T>()
         {
-            var selectSql = ResolveExpression.ResolveSelect(typeof(T).GetProperties(), SelectExpression);
+            var selectSql = ResolveExpression.ResolveSelect(typeof(T).GetProperties(), SetContext.SelectExpression);
 
             var fromTableSql = FormatTableName();
 
-            var nolockSql = ResolveExpression.ResolveWithNoLock(NoLock);
+            var nolockSql = ResolveExpression.ResolveWithNoLock(SetContext.NoLock);
 
-            var whereParams = ResolveExpression.ResolveWhere(WhereExpression);
+            var whereParams = ResolveExpression.ResolveWhere(SetContext.WhereExpression);
 
             var whereSql = whereParams.SqlCmd;
 
             Params = whereParams.Param;
 
-            var orderbySql = ResolveExpression.ResolveOrderBy(OrderbyExpressionList);
+            var orderbySql = ResolveExpression.ResolveOrderBy(SetContext.OrderbyExpressionList);
 
-            var topNum = TopNum;
+            var topNum = SetContext.TopNum;
 
             var limitSql = topNum.HasValue ? " LIMIT " + topNum.Value : "";
 
@@ -70,17 +70,17 @@ namespace Sikiro.Dapper.Extension.PostgreSql
 
         public override SqlProvider FormatToPageList<T>(int pageIndex, int pageSize)
         {
-            var orderbySql = ResolveExpression.ResolveOrderBy(OrderbyExpressionList);
+            var orderbySql = ResolveExpression.ResolveOrderBy(SetContext.OrderbyExpressionList);
             if (string.IsNullOrEmpty(orderbySql))
                 throw new DapperExtensionException("order by takes precedence over pagelist");
 
-            var selectSql = ResolveExpression.ResolveSelect(typeof(T).GetProperties(), SelectExpression);
+            var selectSql = ResolveExpression.ResolveSelect(typeof(T).GetProperties(), SetContext.SelectExpression);
 
             var fromTableSql = FormatTableName();
 
-            var nolockSql = ResolveExpression.ResolveWithNoLock(NoLock);
+            var nolockSql = ResolveExpression.ResolveWithNoLock(SetContext.NoLock);
 
-            var whereParams = ResolveExpression.ResolveWhere(WhereExpression);
+            var whereParams = ResolveExpression.ResolveWhere(SetContext.WhereExpression);
 
             var whereSql = whereParams.SqlCmd;
 
@@ -98,9 +98,9 @@ namespace Sikiro.Dapper.Extension.PostgreSql
 
             var fromTableSql = FormatTableName();
 
-            var nolockSql = ResolveExpression.ResolveWithNoLock(NoLock);
+            var nolockSql = ResolveExpression.ResolveWithNoLock(SetContext.NoLock);
 
-            var whereParams = ResolveExpression.ResolveWhere(WhereExpression);
+            var whereParams = ResolveExpression.ResolveWhere(SetContext.WhereExpression);
 
             var whereSql = whereParams.SqlCmd;
 
@@ -117,9 +117,9 @@ namespace Sikiro.Dapper.Extension.PostgreSql
 
             var fromTableSql = FormatTableName();
 
-            var nolockSql = ResolveExpression.ResolveWithNoLock(NoLock);
+            var nolockSql = ResolveExpression.ResolveWithNoLock(SetContext.NoLock);
 
-            var whereParams = ResolveExpression.ResolveWhere(WhereExpression);
+            var whereParams = ResolveExpression.ResolveWhere(SetContext.WhereExpression);
 
             var whereSql = whereParams.SqlCmd;
 
@@ -134,7 +134,7 @@ namespace Sikiro.Dapper.Extension.PostgreSql
         {
             var fromTableSql = FormatTableName();
 
-            var whereParams = ResolveExpression.ResolveWhere(WhereExpression);
+            var whereParams = ResolveExpression.ResolveWhere(SetContext.WhereExpression);
 
             var whereSql = whereParams.SqlCmd;
 
@@ -149,11 +149,11 @@ namespace Sikiro.Dapper.Extension.PostgreSql
         {
             var paramsAndValuesSql = FormatInsertParamsAndValues(entity);
 
-            if (IfNotExistsExpression == null)
+            if (SetContext.IfNotExistsExpression == null)
                 SqlString = $"INSERT INTO {FormatTableName(false)} ({paramsAndValuesSql[0]}) VALUES({paramsAndValuesSql[1]})";
             else
             {
-                var ifnotexistsWhere = ResolveExpression.ResolveWhere(IfNotExistsExpression, "INT_");
+                var ifnotexistsWhere = ResolveExpression.ResolveWhere(SetContext.IfNotExistsExpression, "INT_");
 
                 SqlString = string.Format(@"INSERT INTO {0}({1})  
                 SELECT {2}
@@ -173,7 +173,7 @@ namespace Sikiro.Dapper.Extension.PostgreSql
         {
             var update = ResolveExpression.ResolveUpdate(updateExpression);
 
-            var where = ResolveExpression.ResolveWhere(WhereExpression);
+            var where = ResolveExpression.ResolveWhere(SetContext.WhereExpression);
 
             var whereSql = where.SqlCmd;
 
@@ -207,9 +207,9 @@ namespace Sikiro.Dapper.Extension.PostgreSql
 
             var fromTableSql = FormatTableName();
 
-            var nolockSql = ResolveExpression.ResolveWithNoLock(NoLock);
+            var nolockSql = ResolveExpression.ResolveWithNoLock(SetContext.NoLock);
 
-            var whereParams = ResolveExpression.ResolveWhere(WhereExpression);
+            var whereParams = ResolveExpression.ResolveWhere(SetContext.WhereExpression);
 
             var whereSql = whereParams.SqlCmd;
 
@@ -226,16 +226,16 @@ namespace Sikiro.Dapper.Extension.PostgreSql
 
             var update = ResolveExpression.ResolveUpdate(updator);
 
-            var selectSql = ResolveExpression.ResolveSelect(typeof(T).GetProperties(), SelectExpression, false);
+            var selectSql = ResolveExpression.ResolveSelect(typeof(T).GetProperties(), SetContext.SelectExpression, false);
 
-            var where = ResolveExpression.ResolveWhere(WhereExpression);
+            var where = ResolveExpression.ResolveWhere(SetContext.WhereExpression);
 
             var whereSql = where.SqlCmd;
 
             Params = where.Param;
             Params.AddDynamicParams(update.Param);
 
-            var topNum = TopNum;
+            var topNum = SetContext.TopNum;
 
             var limitSql = topNum.HasValue ? " LIMIT " + topNum.Value : "";
             var tableName = FormatTableName(false);

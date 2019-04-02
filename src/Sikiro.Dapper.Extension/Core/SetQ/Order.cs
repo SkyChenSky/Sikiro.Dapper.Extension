@@ -26,7 +26,7 @@ namespace Sikiro.Dapper.Extension.Core.SetQ
         public virtual Order<T> OrderBy<TProperty>(Expression<Func<T, TProperty>> field)
         {
             if (field != null)
-                SqlProvider.OrderbyExpressionList.Add(EOrderBy.Asc, field);
+                SqlProvider.SetContext.OrderbyExpressionList.Add(EOrderBy.Asc, field);
 
             return this;
         }
@@ -35,7 +35,7 @@ namespace Sikiro.Dapper.Extension.Core.SetQ
         public virtual Order<T> OrderByDescing<TProperty>(Expression<Func<T, TProperty>> field)
         {
             if (field != null)
-                SqlProvider.OrderbyExpressionList.Add(EOrderBy.Desc, field);
+                SqlProvider.SetContext.OrderbyExpressionList.Add(EOrderBy.Desc, field);
 
             return this;
         }

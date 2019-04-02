@@ -15,30 +15,30 @@ namespace Sikiro.Dapper.Extension.Core.SetC
     {
         public CommandSet(IDbConnection conn, SqlProvider sqlProvider) : base(sqlProvider, conn)
         {
-            SqlProvider.TableType = typeof(T);
+            SqlProvider.SetContext.TableType = typeof(T);
         }
 
         public CommandSet(IDbConnection conn, SqlProvider sqlProvider, IDbTransaction dbTransaction) : base(sqlProvider, conn, dbTransaction)
         {
-            SqlProvider.TableType = typeof(T);
+            SqlProvider.SetContext.TableType = typeof(T);
         }
 
         internal CommandSet(IDbConnection conn, SqlProvider sqlProvider, Type tableType, LambdaExpression whereExpression) : base(sqlProvider, conn)
         {
-            SqlProvider.TableType = tableType;
-            SqlProvider.WhereExpression = whereExpression;
+            SqlProvider.SetContext.TableType = tableType;
+            SqlProvider.SetContext.WhereExpression = whereExpression;
         }
 
         public ICommand<T> Where(Expression<Func<T, bool>> predicate)
         {
-            SqlProvider.WhereExpression = SqlProvider.WhereExpression == null ? predicate : ((Expression<Func<T, bool>>)SqlProvider.WhereExpression).And(predicate);
+            SqlProvider.SetContext.WhereExpression = SqlProvider.SetContext.WhereExpression == null ? predicate : ((Expression<Func<T, bool>>)SqlProvider.SetContext.WhereExpression).And(predicate);
 
             return this;
         }
 
         public IInsert<T> IfNotExists(Expression<Func<T, bool>> predicate)
         {
-            SqlProvider.IfNotExistsExpression = SqlProvider.IfNotExistsExpression == null ? predicate : ((Expression<Func<T, bool>>)SqlProvider.IfNotExistsExpression).And(predicate);
+            SqlProvider.SetContext.IfNotExistsExpression = SqlProvider.SetContext.IfNotExistsExpression == null ? predicate : ((Expression<Func<T, bool>>)SqlProvider.SetContext.IfNotExistsExpression).And(predicate);
 
             return this;
         }

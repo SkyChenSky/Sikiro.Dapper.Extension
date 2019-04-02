@@ -12,24 +12,12 @@ namespace Sikiro.Dapper.Extension
 {
     public abstract class SqlProvider
     {
-        public Type TableType { get; internal set; }
-
-        public LambdaExpression WhereExpression { get; internal set; }
-
-        public LambdaExpression IfNotExistsExpression { get; internal set; }
-
-        public Dictionary<EOrderBy, LambdaExpression> OrderbyExpressionList { get; internal set; }
-
-        public LambdaExpression SelectExpression { get; internal set; }
-
-        public int? TopNum { get; internal set; }
-
-        public bool NoLock { get; set; }
+        public SetContext SetContext { get; internal set; }
 
         protected SqlProvider()
         {
             Params = new DynamicParameters();
-            OrderbyExpressionList = new Dictionary<EOrderBy, LambdaExpression>();
+            SetContext = new SetContext();
         }
 
         protected abstract ProviderOption ProviderOption { get; set; }
@@ -64,7 +52,7 @@ namespace Sikiro.Dapper.Extension
 
         protected string FormatTableName(bool isNeedFrom = true)
         {
-            var typeOfTableClass = TableType;
+            var typeOfTableClass = SetContext.TableType;
 
             var tableName = typeOfTableClass.GetTableAttributeName();
 

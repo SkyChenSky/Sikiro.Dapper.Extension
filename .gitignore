@@ -50,3 +50,5 @@
 /src/Sikiro.Dapper.Extension/bin/Release
 /samples/mysql/Sikiro.Dapper.Extension.MySql.Core.Samples/bin/Release/netcoreapp2.0
 /samples/postgresql/Sikiro.Dapper.Extension.PostgreSql.Core.Samples/bin/Release/netcoreapp2.0
+/test/Sikiro.Dapper.Extension.MsSql.Test/bin/Debug/netcoreapp2.1
+/test/Sikiro.Dapper.Extension.MsSql.Test/obj

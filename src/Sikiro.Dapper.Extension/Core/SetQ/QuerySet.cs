@@ -14,29 +14,29 @@ namespace Sikiro.Dapper.Extension.Core.SetQ
     {
         public QuerySet(IDbConnection conn, SqlProvider sqlProvider) : base(conn, sqlProvider)
         {
-            SqlProvider.TableType = typeof(T);
+            SqlProvider.SetContext.TableType = typeof(T);
         }
 
         public QuerySet(IDbConnection conn, SqlProvider sqlProvider, IDbTransaction dbTransaction) : base(conn, sqlProvider, dbTransaction)
         {
-            SqlProvider.TableType = typeof(T);
+            SqlProvider.SetContext.TableType = typeof(T);
         }
 
         internal QuerySet(IDbConnection conn, SqlProvider sqlProvider, Type tableType,IDbTransaction dbTransaction) : base(conn, sqlProvider, dbTransaction)
         {
-            SqlProvider.TableType = tableType;
+            SqlProvider.SetContext.TableType = tableType;
         }
 
         public QuerySet<T> Where(Expression<Func<T, bool>> predicate)
         {
-            SqlProvider.WhereExpression = SqlProvider.WhereExpression == null ? predicate : ((Expression<Func<T, bool>>)SqlProvider.WhereExpression).And(predicate);
+            SqlProvider.SetContext.WhereExpression = SqlProvider.SetContext.WhereExpression == null ? predicate : ((Expression<Func<T, bool>>)SqlProvider.SetContext.WhereExpression).And(predicate);
 
             return this;
         }
 
         public QuerySet<T> WithNoLock()
         {
-            SqlProvider.NoLock = true;
+            SqlProvider.SetContext.NoLock = true;
             return this;
         }
     }

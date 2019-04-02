@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace Sikiro.Dapper.Extension.Core.Interfaces
+namespace Sikiro.Dapper.Extension.Core
 {
     public abstract class AbstractSet
     {

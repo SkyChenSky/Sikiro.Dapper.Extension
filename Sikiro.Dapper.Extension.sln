@@ -29,6 +29,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "postgresql", "postgresql", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sikiro.Dapper.Extension.PostgreSql.Core.Samples", "samples\postgresql\Sikiro.Dapper.Extension.PostgreSql.Core.Samples\Sikiro.Dapper.Extension.PostgreSql.Core.Samples.csproj", "{0B327CAF-0233-4E4F-9B1B-3632D8E01732}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{1BB24546-57D9-4644-80A6-95E715E4A82B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sikiro.Dapper.Extension.MsSql.Test", "test\Sikiro.Dapper.Extension.MsSql.Test\Sikiro.Dapper.Extension.MsSql.Test.csproj", "{BCB5071C-8B52-4983-8C19-A36E861CD3E3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +71,10 @@ Global
 		{0B327CAF-0233-4E4F-9B1B-3632D8E01732}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B327CAF-0233-4E4F-9B1B-3632D8E01732}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B327CAF-0233-4E4F-9B1B-3632D8E01732}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCB5071C-8B52-4983-8C19-A36E861CD3E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCB5071C-8B52-4983-8C19-A36E861CD3E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCB5071C-8B52-4983-8C19-A36E861CD3E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCB5071C-8B52-4983-8C19-A36E861CD3E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,6 +91,7 @@ Global
 		{FCC68F6D-B385-4724-A20C-9474EE283745} = {CAC5489A-C80C-458A-A471-C75F0698282C}
 		{95BECDB5-EE03-43A5-B5D5-7F22435EB56A} = {E825B8FD-9AAB-4662-B1C5-DD39868EAD4B}
 		{0B327CAF-0233-4E4F-9B1B-3632D8E01732} = {95BECDB5-EE03-43A5-B5D5-7F22435EB56A}
+		{BCB5071C-8B52-4983-8C19-A36E861CD3E3} = {1BB24546-57D9-4644-80A6-95E715E4A82B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {227769BC-3B0D-496D-9C39-FA16BD236A02}

@@ -24,7 +24,7 @@ namespace Sikiro.Dapper.Extension.Core.SetQ
         /// <inheritdoc />
         public virtual Query<TResult> Select<TResult>(Expression<Func<T, TResult>> selector)
         {
-            SqlProvider.SelectExpression = selector;
+            SqlProvider.SetContext.SelectExpression = selector;
 
             return new QuerySet<TResult>(DbCon, SqlProvider, typeof(T), DbTransaction);
         }
@@ -32,7 +32,7 @@ namespace Sikiro.Dapper.Extension.Core.SetQ
         /// <inheritdoc />
         public virtual Option<T> Top(int num)
         {
-            SqlProvider.TopNum = num;
+            SqlProvider.SetContext.TopNum = num;
             return this;
         }
     }
