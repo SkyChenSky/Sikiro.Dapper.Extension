@@ -7,7 +7,7 @@ using Sikiro.Dapper.Extension.Exception;
 
 namespace Sikiro.Dapper.Extension.Extension
 {
-    public static class ReflectExtension
+    internal static class ReflectExtension
     {
         public static PropertyInfo[] GetProperties(this object obj)
         {

@@ -6,7 +6,7 @@ using Sikiro.Dapper.Extension.Helper;
 
 namespace Sikiro.Dapper.Extension.Extension
 {
-    public static class MapperExtension
+    internal static class MapperExtension
     {
         /// <summary>
         /// List转DataTable

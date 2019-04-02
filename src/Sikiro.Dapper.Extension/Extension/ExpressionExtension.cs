@@ -7,7 +7,7 @@ using Sikiro.Dapper.Extension.Helper;
 
 namespace Sikiro.Dapper.Extension.Extension
 {
-    public static class ExpressionExtension
+    internal static class ExpressionExtension
     {
         #region 表达式类型字典
         /// <summary>

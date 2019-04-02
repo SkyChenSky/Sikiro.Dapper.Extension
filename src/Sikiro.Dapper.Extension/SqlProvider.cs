@@ -12,7 +12,7 @@ namespace Sikiro.Dapper.Extension
 {
     public abstract class SqlProvider
     {
-        public SetContext SetContext { get; internal set; }
+        internal SetContext SetContext { get; set; }
 
         protected SqlProvider()
         {

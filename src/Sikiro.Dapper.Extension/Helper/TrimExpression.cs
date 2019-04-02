@@ -8,7 +8,7 @@ namespace Sikiro.Dapper.Extension.Helper
     /// <summary>
     /// 修树
     /// </summary>
-    public class TrimExpression : ExpressionVisitor
+    internal class TrimExpression : ExpressionVisitor
     {
         private bool _isDeep;
 
