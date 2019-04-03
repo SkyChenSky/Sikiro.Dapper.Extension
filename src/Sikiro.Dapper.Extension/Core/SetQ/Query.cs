@@ -57,7 +57,7 @@ namespace Sikiro.Dapper.Extension.Core.SetQ
             {
                 var pageTotal = queryResult.ReadFirst<int>();
 
-                var itemList = queryResult.Read<T>().ToList();
+                var itemList = queryResult.Read<T>();
 
                 return new PageList<T>(pageIndex, pageSize, pageTotal, itemList);
             }

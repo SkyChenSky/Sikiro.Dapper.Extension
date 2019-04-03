@@ -15,7 +15,7 @@ namespace Sikiro.Dapper.Extension.Model
         /// <param name="pageSize">页项</param>
         /// <param name="totalCount">总数</param>
         /// <param name="items">元素</param>
-        public PageList(int pageIndex, int pageSize, int totalCount, List<T> items)
+        public PageList(int pageIndex, int pageSize, int totalCount, IEnumerable<T> items)
         {
             Total = totalCount;
             PageSize = pageSize;
@@ -32,7 +32,7 @@ namespace Sikiro.Dapper.Extension.Model
         /// <summary>
         /// 元素
         /// </summary>
-        public List<T> Items { get; }
+        public IEnumerable<T> Items { get; }
 
         /// <summary>
         /// 页项

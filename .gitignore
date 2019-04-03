@@ -52,3 +52,4 @@
 /samples/postgresql/Sikiro.Dapper.Extension.PostgreSql.Core.Samples/bin/Release/netcoreapp2.0
 /test/Sikiro.Dapper.Extension.MsSql.Test/bin/Debug/netcoreapp2.1
 /test/Sikiro.Dapper.Extension.MsSql.Test/obj
+/test/Sikiro.Dapper.Extension.MsSql.Test/bin/Release/netcoreapp2.1
