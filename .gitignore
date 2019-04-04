@@ -53,3 +53,5 @@
 /test/Sikiro.Dapper.Extension.MsSql.Test/bin/Debug/netcoreapp2.1
 /test/Sikiro.Dapper.Extension.MsSql.Test/obj
 /test/Sikiro.Dapper.Extension.MsSql.Test/bin/Release/netcoreapp2.1
+/src/Sikiro.Dapper.Extension.HighAvailability/obj
+/test/Sikiro.Dapper.Extension.HighAvailability.Test/obj
