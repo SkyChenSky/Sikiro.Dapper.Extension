@@ -1,4 +1,5 @@
-﻿using Sikiro.Dapper.Extension.HighAvailability.Enums;
+﻿using System.Collections.Generic;
+using Sikiro.Dapper.Extension.HighAvailability.Enums;
 using Sikiro.Dapper.Extension.HighAvailability.Rule;
 
 namespace Sikiro.Dapper.Extension.HighAvailability
@@ -8,20 +9,25 @@ namespace Sikiro.Dapper.Extension.HighAvailability
     /// </summary>
     public class Balancer
     {
-        public static LoadBalanceRule Create(ELoadBalance loadBalance)
+        private static LoadBalanceRule _loadBalanceRule;
+
+        public static LoadBalanceRule Create(ELoadBalance loadBalance,
+            IList<WeightedRuleOption> weightedRuleOptionCollection)
         {
-            LoadBalanceRule loadBalanceRule;
+            if (_loadBalanceRule != null)
+                return _loadBalanceRule;
+
             switch (loadBalance)
             {
                 case ELoadBalance.WeightedRandom:
-                    loadBalanceRule = new WeightedRandomRule();
+                    _loadBalanceRule = new WeightedRandomRule(weightedRuleOptionCollection);
                     break;
                 default:
-                    loadBalanceRule = new WeightedRoundRobinRule();
+                    _loadBalanceRule = new WeightedRoundRobinRule(weightedRuleOptionCollection);
                     break;
             }
 
-            return loadBalanceRule;
+            return _loadBalanceRule;
         }
     }
 }

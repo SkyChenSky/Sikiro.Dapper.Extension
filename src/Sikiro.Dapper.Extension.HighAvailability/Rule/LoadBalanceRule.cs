@@ -5,6 +5,21 @@ namespace Sikiro.Dapper.Extension.HighAvailability.Rule
 {
     public abstract class LoadBalanceRule
     {
-        public abstract IDbConnection Choose(IEnumerable<IDbConnection> dbConnectionList);
+        protected readonly IList<WeightedRuleOption> _weightedRuleOptionCollection;
+
+        protected LoadBalanceRule(IList<WeightedRuleOption> weightedRuleOptionCollection)
+        {
+            _weightedRuleOptionCollection = weightedRuleOptionCollection;
+        }
+
+        public abstract IDbConnection Select();
     }
+}
+
+
+public class WeightedRuleOption
+{
+    public IDbConnection DbConnection { get; set; }
+
+    public int Weight { get; set; }
 }

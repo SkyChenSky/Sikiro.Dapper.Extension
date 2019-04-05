@@ -10,7 +10,9 @@ namespace Sikiro.Dapper.Extension.HighAvailability
     {
         private readonly IEnumerable<IDbConnection> _slaveConnectionList;
         private readonly ELoadBalance _loadBalanceType;
-        public DbConnectionCluster(IReadOnlyList<IDbConnection> dbConnectionList) : this(dbConnectionList, ELoadBalance.WeightedRoundRobin)
+
+        public DbConnectionCluster(IReadOnlyList<IDbConnection> dbConnectionList) : this(dbConnectionList,
+            ELoadBalance.WeightedRoundRobin)
         {
         }
 
@@ -23,6 +25,6 @@ namespace Sikiro.Dapper.Extension.HighAvailability
 
         public IDbConnection Master { get; }
 
-        public IDbConnection Slave => Balancer.Create(_loadBalanceType).Choose(_slaveConnectionList);
+        public IDbConnection Slave => Balancer.Create(_loadBalanceType, null).Select();
     }
 }

@@ -3,9 +3,16 @@ using System.Data;
 
 namespace Sikiro.Dapper.Extension.HighAvailability.Rule
 {
+    /// <summary>
+    /// 加权轮询算法
+    /// </summary>
     public class WeightedRoundRobinRule : LoadBalanceRule
     {
-        public override IDbConnection Choose(IEnumerable<IDbConnection> dbConnectionList)
+        public WeightedRoundRobinRule(IList<WeightedRuleOption> weightedRuleOptionCollection) : base(weightedRuleOptionCollection)
+        {
+        }
+
+        public override IDbConnection Select()
         {
             throw new System.NotImplementedException();
         }
