@@ -8,27 +8,32 @@ namespace Sikiro.Dapper.Extension.HighAvailability.Rule
     /// <summary>
     /// /加权随机算法
     /// </summary>
-    public class WeightedRandomRule : LoadBalanceRule
+    public class WeightedRandomRule : WeightedRule
     {
-        private static readonly ConcurrentDictionary<IList<WeightedRuleOption>, List<int>> Cache =
-            new ConcurrentDictionary<IList<WeightedRuleOption>, List<int>>();
+        private static readonly ConcurrentDictionary<List<WeightedRuleOption>, List<int>> Cache =
+            new ConcurrentDictionary<List<WeightedRuleOption>, List<int>>();
 
-        public WeightedRandomRule(IList<WeightedRuleOption> weightedRuleOptionCollection) : base(
+        public WeightedRandomRule(List<WeightedRuleOption> weightedRuleOptionCollection) : base(
             weightedRuleOptionCollection)
         {
         }
 
         public override IDbConnection Select()
         {
-            var indexList = GetIndexList(_weightedRuleOptionCollection);
+            var indexList = GetIndexList(WeightedRuleOptionCollection);
 
-            var ranValue = new Random(Guid.NewGuid().GetHashCode()).Next(0, indexList.Count);
+            var ranValue = new Random(Guid.NewGuid().GetHashCode()).Next(0, indexList.Count - 1);
             var randomIndex = indexList[ranValue];
 
-            return _weightedRuleOptionCollection[randomIndex].DbConnection;
+            return WeightedRuleOptionCollection[randomIndex].DbConnection;
         }
 
-        private static List<int> GetIndexList(IList<WeightedRuleOption> weightedRuleOptionCollection)
+        /// <summary>
+        /// 获取数据库连接索引列
+        /// </summary>
+        /// <param name="weightedRuleOptionCollection"></param>
+        /// <returns></returns>
+        private static List<int> GetIndexList(List<WeightedRuleOption> weightedRuleOptionCollection)
         {
             return Cache.GetOrAdd(weightedRuleOptionCollection, key =>
             {

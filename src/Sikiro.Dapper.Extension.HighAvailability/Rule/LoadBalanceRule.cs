@@ -5,14 +5,7 @@ namespace Sikiro.Dapper.Extension.HighAvailability.Rule
 {
     public abstract class LoadBalanceRule
     {
-        protected readonly IList<WeightedRuleOption> _weightedRuleOptionCollection;
-
-        protected LoadBalanceRule(IList<WeightedRuleOption> weightedRuleOptionCollection)
-        {
-            _weightedRuleOptionCollection = weightedRuleOptionCollection;
-        }
-
-        public abstract IDbConnection Select();
+        public abstract IDbConnection Select();     
     }
 }
 

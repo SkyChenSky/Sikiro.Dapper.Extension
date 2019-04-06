@@ -12,7 +12,7 @@ namespace Sikiro.Dapper.Extension.HighAvailability
         private static LoadBalanceRule _loadBalanceRule;
 
         public static LoadBalanceRule Create(ELoadBalance loadBalance,
-            IList<WeightedRuleOption> weightedRuleOptionCollection)
+            List<WeightedRuleOption> weightedRuleOptionCollection)
         {
             if (_loadBalanceRule != null)
                 return _loadBalanceRule;
