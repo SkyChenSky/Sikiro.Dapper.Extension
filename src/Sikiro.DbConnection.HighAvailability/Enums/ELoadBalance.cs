@@ -1,4 +1,4 @@
-﻿namespace Sikiro.Dapper.Extension.HighAvailability.Enums
+﻿namespace Sikiro.DbConnection.HighAvailability.Enums
 {
     public enum ELoadBalance
     {

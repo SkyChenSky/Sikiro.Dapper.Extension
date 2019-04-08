@@ -56,3 +56,10 @@
 /src/Sikiro.Dapper.Extension.HighAvailability/obj
 /test/Sikiro.Dapper.Extension.HighAvailability.Test/obj
 /src/Sikiro.Dapper.Extension.HighAvailability/bin/Release/netstandard2.0
+*.cd
+/src/Sikiro.DbConnection.HighAvailability/bin
+/src/Sikiro.DbConnection.HighAvailability/obj/Debug
+/src/Sikiro.DbConnection.HighAvailability/obj
+/src/Sikiro.DbConnection.HighAvailability.MsSql/obj
+/src/Sikiro.DbConnection.HighAvailability.MsSql/bin/Debug
+/test/Sikiro.Dapper.Extension.HighAvailability.Test/bin/Debug/netcoreapp2.1

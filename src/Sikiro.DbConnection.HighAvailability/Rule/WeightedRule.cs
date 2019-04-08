@@ -1,18 +1,21 @@
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
-namespace Sikiro.Dapper.Extension.HighAvailability.Rule
+namespace Sikiro.DbConnection.HighAvailability.Rule
 {
     /// <summary>
     /// 加权算法
     /// </summary>
-    public abstract class WeightedRule : LoadBalanceRule
+    internal abstract class WeightedRule : LoadBalanceRule
     {
         protected readonly List<WeightedRuleOption> WeightedRuleOptionCollection;
 
-        public WeightedRule(List<WeightedRuleOption> weightedRuleOptionCollection)
+        protected int CurrentIndex;
+
+        protected WeightedRule(List<WeightedRuleOption> weightedRuleOptionCollection)
         {
-            WeightedRuleOptionCollection = ExceptWeighDivisor(weightedRuleOptionCollection) ;
+            WeightedRuleOptionCollection = ExceptWeighDivisor(weightedRuleOptionCollection);
         }
 
         /// <summary>
@@ -28,10 +31,13 @@ namespace Sikiro.Dapper.Extension.HighAvailability.Rule
                 if (result == 1)
                     break;
 
+                if (numList[i].Weight == 0)
+                    continue;
+
                 result = GreatestCommonDivisor(result, numList[i].Weight);
             }
 
-            if (result != 1)
+            if (result != 1 && result != 0)
             {
                 numList.ForEach(item => { item.Weight = item.Weight / result; });
             }
@@ -39,8 +45,15 @@ namespace Sikiro.Dapper.Extension.HighAvailability.Rule
             return numList;
         }
 
+        public override IDbConnection ReSelect()
+        {
+            WeightedRuleOptionCollection.RemoveAt(CurrentIndex);
+
+            return Select();
+        }
+
         /// <summary>
-        /// 计算最大公约数（辗转相除）
+        /// 计算最大公约数（辗转相除-Euclidean algorithm）
         /// </summary>
         /// <param name="aNum"></param>
         /// <param name="bNum"></param>

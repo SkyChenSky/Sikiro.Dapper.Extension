@@ -33,9 +33,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{1BB24546-5
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sikiro.Dapper.Extension.MsSql.Test", "test\Sikiro.Dapper.Extension.MsSql.Test\Sikiro.Dapper.Extension.MsSql.Test.csproj", "{BCB5071C-8B52-4983-8C19-A36E861CD3E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sikiro.Dapper.Extension.HighAvailability", "src\Sikiro.Dapper.Extension.HighAvailability\Sikiro.Dapper.Extension.HighAvailability.csproj", "{913C1D44-F936-42A4-A89D-C71C0B3A1EF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sikiro.Dapper.Extension.HighAvailability.Test", "test\Sikiro.Dapper.Extension.HighAvailability.Test\Sikiro.Dapper.Extension.HighAvailability.Test.csproj", "{2FA751D2-68DE-48D3-A634-BAD324D760E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sikiro.Dapper.Extension.HighAvailability.Test", "test\Sikiro.Dapper.Extension.HighAvailability.Test\Sikiro.Dapper.Extension.HighAvailability.Test.csproj", "{2FA751D2-68DE-48D3-A634-BAD324D760E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sikiro.DbConnection.HighAvailability.MsSql", "src\Sikiro.DbConnection.HighAvailability.MsSql\Sikiro.DbConnection.HighAvailability.MsSql.csproj", "{B7819691-0A5C-4F5D-8D51-18C73A975747}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sikiro.DbConnection.HighAvailability", "src\Sikiro.DbConnection.HighAvailability\Sikiro.DbConnection.HighAvailability.csproj", "{05A175A5-6E59-4F66-82CA-3BCDEB9DD3FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,14 +81,18 @@ Global
 		{BCB5071C-8B52-4983-8C19-A36E861CD3E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCB5071C-8B52-4983-8C19-A36E861CD3E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCB5071C-8B52-4983-8C19-A36E861CD3E3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{913C1D44-F936-42A4-A89D-C71C0B3A1EF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{913C1D44-F936-42A4-A89D-C71C0B3A1EF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{913C1D44-F936-42A4-A89D-C71C0B3A1EF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{913C1D44-F936-42A4-A89D-C71C0B3A1EF1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2FA751D2-68DE-48D3-A634-BAD324D760E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2FA751D2-68DE-48D3-A634-BAD324D760E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FA751D2-68DE-48D3-A634-BAD324D760E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2FA751D2-68DE-48D3-A634-BAD324D760E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7819691-0A5C-4F5D-8D51-18C73A975747}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7819691-0A5C-4F5D-8D51-18C73A975747}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7819691-0A5C-4F5D-8D51-18C73A975747}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7819691-0A5C-4F5D-8D51-18C73A975747}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05A175A5-6E59-4F66-82CA-3BCDEB9DD3FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05A175A5-6E59-4F66-82CA-3BCDEB9DD3FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05A175A5-6E59-4F66-82CA-3BCDEB9DD3FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05A175A5-6E59-4F66-82CA-3BCDEB9DD3FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -104,8 +110,9 @@ Global
 		{95BECDB5-EE03-43A5-B5D5-7F22435EB56A} = {E825B8FD-9AAB-4662-B1C5-DD39868EAD4B}
 		{0B327CAF-0233-4E4F-9B1B-3632D8E01732} = {95BECDB5-EE03-43A5-B5D5-7F22435EB56A}
 		{BCB5071C-8B52-4983-8C19-A36E861CD3E3} = {1BB24546-57D9-4644-80A6-95E715E4A82B}
-		{913C1D44-F936-42A4-A89D-C71C0B3A1EF1} = {CAC5489A-C80C-458A-A471-C75F0698282C}
 		{2FA751D2-68DE-48D3-A634-BAD324D760E0} = {1BB24546-57D9-4644-80A6-95E715E4A82B}
+		{B7819691-0A5C-4F5D-8D51-18C73A975747} = {CAC5489A-C80C-458A-A471-C75F0698282C}
+		{05A175A5-6E59-4F66-82CA-3BCDEB9DD3FD} = {CAC5489A-C80C-458A-A471-C75F0698282C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {227769BC-3B0D-496D-9C39-FA16BD236A02}

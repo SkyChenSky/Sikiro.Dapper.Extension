@@ -13,9 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Sikiro.Dapper.Extension.HighAvailability\Sikiro.Dapper.Extension.HighAvailability.csproj" />
+    <ProjectReference Include="..\..\src\Sikiro.Dapper.Extension.HighAvailability\Sikiro.DbConnection.HighAvailability.csproj" />
     <ProjectReference Include="..\..\src\Sikiro.Dapper.Extension.MsSql\Sikiro.Dapper.Extension.MsSql.csproj" />
     <ProjectReference Include="..\..\src\Sikiro.Dapper.Extension\Sikiro.Dapper.Extension.csproj" />
+    <ProjectReference Include="..\..\src\Sikiro.DbConnection.HighAvailability\Sikiro.DbConnection.HighAvailability.csproj" />
   </ItemGroup>
 
 </Project>

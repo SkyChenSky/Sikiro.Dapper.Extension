@@ -4,16 +4,17 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
-namespace Sikiro.Dapper.Extension.HighAvailability.Rule
+namespace Sikiro.DbConnection.HighAvailability.Rule
 {
     /// <summary>
     /// 加权轮询算法
     /// </summary>
-    public class WeightedRoundRobinRule : WeightedRule
+    internal class WeightedRoundRobinRule : WeightedRule
     {
         private static readonly ConcurrentDictionary<List<WeightedRuleOption>, IEnumerator> Cache =
             new ConcurrentDictionary<List<WeightedRuleOption>, IEnumerator>();
-        
+
+
         public WeightedRoundRobinRule(List<WeightedRuleOption> weightedRuleOptionCollection) : base(
             weightedRuleOptionCollection)
         {
@@ -21,19 +22,29 @@ namespace Sikiro.Dapper.Extension.HighAvailability.Rule
 
         public override IDbConnection Select()
         {
-            var indexList = GetIndexList(WeightedRuleOptionCollection);
-            
+            var indexList = (LoopEnumerator)GetIndexList(WeightedRuleOptionCollection);
+
+            if (indexList.Length == 0)
+            {
+                CurrentIndex = -1;
+                return null;
+            }
+
+            if (indexList.Length == 1)
+                return WeightedRuleOptionCollection[0].DbConnection;
+
             indexList.MoveNext();
             var randomIndex = (int)indexList.Current;
+            CurrentIndex = randomIndex;
 
             return WeightedRuleOptionCollection[randomIndex].DbConnection;
         }
-        
+
         private static IEnumerator GetIndexList(List<WeightedRuleOption> weightedRuleOptionCollection)
         {
             return Cache.GetOrAdd(weightedRuleOptionCollection, key =>
             {
-                var indexList = new int[weightedRuleOptionCollection.Select(a=>a.Weight).Sum()];
+                var indexList = new int[weightedRuleOptionCollection.Select(a => a.Weight).Sum()];
                 var collectionCount = weightedRuleOptionCollection.Count;
                 var tempIndex = 0;
                 for (var i = 0; i < collectionCount; i++)

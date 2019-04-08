@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using Sikiro.Dapper.Extension.HighAvailability.Rule;
+using Sikiro.DbConnection.HighAvailability.Rule;
 using Xunit;
 using Xunit.Abstractions;
 

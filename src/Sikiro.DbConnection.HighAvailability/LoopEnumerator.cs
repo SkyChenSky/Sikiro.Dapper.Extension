@@ -1,9 +1,12 @@
 using System;
 using System.Collections;
 
-namespace Sikiro.Dapper.Extension.HighAvailability
+namespace Sikiro.DbConnection.HighAvailability
 {
-    public class LoopEnumerator : IEnumerator
+    /// <summary>
+    /// 循环迭代器(如果position超出长度则归0)
+    /// </summary>
+    internal class LoopEnumerator : IEnumerator
     {
         private readonly int[] _list;
 
@@ -17,10 +20,10 @@ namespace Sikiro.Dapper.Extension.HighAvailability
         public bool MoveNext()
         {
             _position++;
-            
+
             if (_position >= _list.Length)
                 _position = 0;
-            
+
             return _position < _list.Length;
         }
 
@@ -29,9 +32,9 @@ namespace Sikiro.Dapper.Extension.HighAvailability
             _position = -1;
         }
 
-        object IEnumerator.Current => Current;
+        public int Length => _list.Length;
 
-        private int Current
+        public object Current
         {
             get
             {

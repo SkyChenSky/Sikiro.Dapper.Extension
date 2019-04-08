@@ -2,13 +2,14 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
-namespace Sikiro.Dapper.Extension.HighAvailability.Rule
+namespace Sikiro.DbConnection.HighAvailability.Rule
 {
     /// <summary>
     /// /加权随机算法
     /// </summary>
-    public class WeightedRandomRule : WeightedRule
+    internal class WeightedRandomRule : WeightedRule
     {
         private static readonly ConcurrentDictionary<List<WeightedRuleOption>, List<int>> Cache =
             new ConcurrentDictionary<List<WeightedRuleOption>, List<int>>();
@@ -22,8 +23,18 @@ namespace Sikiro.Dapper.Extension.HighAvailability.Rule
         {
             var indexList = GetIndexList(WeightedRuleOptionCollection);
 
+            if (!indexList.Any())
+            {
+                CurrentIndex = -1;
+                return null;
+            }
+
+            if (indexList.Count == 1)
+                return WeightedRuleOptionCollection[0].DbConnection;
+
             var ranValue = new Random(Guid.NewGuid().GetHashCode()).Next(0, indexList.Count - 1);
             var randomIndex = indexList[ranValue];
+            CurrentIndex = randomIndex;
 
             return WeightedRuleOptionCollection[randomIndex].DbConnection;
         }

@@ -10,8 +10,8 @@
         "dependencies": {
           "Microsoft.NET.Test.Sdk": "15.9.0",
           "Sikiro.Dapper.Extension": "2.0.1",
-          "Sikiro.Dapper.Extension.HighAvailability": "1.0.0",
           "Sikiro.Dapper.Extension.MsSql": "2.0.1",
+          "Sikiro.DbConnection.HighAvailability": "1.0.0",
           "xunit": "2.4.0",
           "xunit.runner.visualstudio": "2.4.0"
         },
@@ -1183,11 +1183,6 @@
           "Sikiro.Dapper.Extension.dll": {}
         }
       },
-      "Sikiro.Dapper.Extension.HighAvailability/1.0.0": {
-        "runtime": {
-          "Sikiro.Dapper.Extension.HighAvailability.dll": {}
-        }
-      },
       "Sikiro.Dapper.Extension.MsSql/2.0.1": {
         "dependencies": {
           "Sikiro.Dapper.Extension": "2.0.1",
@@ -1195,6 +1190,11 @@
         },
         "runtime": {
           "Sikiro.Dapper.Extension.MsSql.dll": {}
+        }
+      },
+      "Sikiro.DbConnection.HighAvailability/1.0.0": {
+        "runtime": {
+          "Sikiro.DbConnection.HighAvailability.dll": {}
         }
       }
     }
@@ -1812,12 +1812,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Sikiro.Dapper.Extension.HighAvailability/1.0.0": {
+    "Sikiro.Dapper.Extension.MsSql/2.0.1": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "Sikiro.Dapper.Extension.MsSql/2.0.1": {
+    "Sikiro.DbConnection.HighAvailability/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
