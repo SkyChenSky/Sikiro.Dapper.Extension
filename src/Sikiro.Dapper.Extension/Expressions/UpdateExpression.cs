@@ -96,7 +96,7 @@ namespace Sikiro.Dapper.Extension.Expressions
                         SetParam(fieldName, paramName, constantExpression.Value);
                         break;
                     case ExpressionType.MemberAccess:
-                        var constantValue = ((ConstantExpression)TrimExpression.Trim(memberAssignment.Expression)).Value;
+                        var constantValue = ((MemberExpression)memberAssignment.Expression).MemberToValue();
                         SetParam(fieldName, paramName, constantValue);
                         break; ;
                 }
