@@ -11,7 +11,7 @@ namespace Sikiro.Dapper.Extension.MySql.Core.Samples
         static void Main(string[] args)
         {
             var con = new MySqlConnection(
-                "server = 192.168.13.86;User Id = root;password = 123456789;Database = SkyChen");
+                "server = 192.168.13.62;User Id = root;password = 123456789;Database = SkyChen");
 
             var user = new SysUser
             {
@@ -42,6 +42,12 @@ namespace Sikiro.Dapper.Extension.MySql.Core.Samples
             getResult.Email = "1111113333@qq.com";
             var updateModelResult = con.CommandSet<SysUser>().Update(getResult);
             Console.WriteLine("Update添加数{0}", updateModelResult);
+
+            var updateDateTime = con.CommandSet<SysUser>().Where(a => a.SysUserid == getResult.SysUserid).Update(a => new SysUser
+            {
+                CreateDatetime = DateTime.Now
+            });
+            Console.WriteLine("updateDateTime添加数{0}", updateDateTime);
 
             var countResult = con.QuerySet<SysUser>().WithNoLock().Where(a => a.Email == "287245177@qq.com").Count();
             Console.WriteLine("Count数{0}", countResult);

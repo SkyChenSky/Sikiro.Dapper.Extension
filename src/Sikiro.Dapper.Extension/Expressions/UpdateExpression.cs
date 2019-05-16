@@ -54,7 +54,7 @@ namespace Sikiro.Dapper.Extension.Expressions
         {
             var memberInitExpression = node;
 
-            var entity = ((ConstantExpression) TrimExpression.Trim(memberInitExpression)).Value;
+            var entity = ((ConstantExpression)TrimExpression.Trim(memberInitExpression)).Value;
 
             var properties = memberInitExpression.Type.GetProperties();
 
@@ -82,15 +82,25 @@ namespace Sikiro.Dapper.Extension.Expressions
 
             foreach (var item in memberInitExpression.Bindings)
             {
-                var memberAssignment = (MemberAssignment) item;
+                var memberAssignment = (MemberAssignment)item;
 
                 if (_sqlCmd.Length > 0)
                     _sqlCmd.Append(",");
 
                 var paramName = memberAssignment.Member.Name;
                 var fieldName = _providerOption.CombineFieldName(memberAssignment.Member.GetColumnAttributeName());
-                var constantExpression = (ConstantExpression) memberAssignment.Expression;
-                SetParam(fieldName, paramName, constantExpression.Value);
+                switch (memberAssignment.Expression.NodeType)
+                {
+                    case ExpressionType.Constant:
+                        var constantExpression = (ConstantExpression)memberAssignment.Expression;
+                        SetParam(fieldName, paramName, constantExpression.Value);
+                        break;
+                    case ExpressionType.MemberAccess:
+                        var constantValue = ((ConstantExpression)TrimExpression.Trim(memberAssignment.Expression)).Value;
+                        SetParam(fieldName, paramName, constantValue);
+                        break; ;
+                }
+
             }
 
             return node;

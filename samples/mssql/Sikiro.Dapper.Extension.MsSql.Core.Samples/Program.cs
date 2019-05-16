@@ -13,8 +13,7 @@ namespace Sikiro.Dapper.Extension.Core.Samples
         static void Main(string[] args)
         {
             var con = new SqlConnection(
-                " Data Source=192.168.13.86;Initial Catalog=SkyChen;Persist Security Info=True;User ID=sa;Password=123456789");
-
+                " Data Source=192.168.13.62;Initial Catalog=SkyChen;Persist Security Info=True;User ID=sa;Password=123456789");
             var user = new SysUser
             {
                 CreateDatetime = DateTime.Now,
@@ -44,6 +43,12 @@ namespace Sikiro.Dapper.Extension.Core.Samples
             getResult.Email = "1111113333@qq.com";
             var updateModelResult = con.CommandSet<SysUser>().Update(getResult);
             Console.WriteLine("Update添加数{0}", updateModelResult);
+
+            var updateDateTime = con.CommandSet<SysUser>().Where(a => a.SysUserid == getResult.SysUserid).Update(a => new SysUser
+            {
+                CreateDatetime = DateTime.Now
+            });
+            Console.WriteLine("updateDateTime添加数{0}", updateDateTime);
 
             var batchInsert = new List<SysUser>
             {

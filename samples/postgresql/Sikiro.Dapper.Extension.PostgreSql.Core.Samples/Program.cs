@@ -43,6 +43,12 @@ namespace Sikiro.Dapper.Extension.PostgreSql.Core.Samples
             var updateModelResult = con.CommandSet<SysUser>().Update(getResult);
             Console.WriteLine("Update添加数{0}", updateModelResult);
 
+            var updateDateTime = con.CommandSet<SysUser>().Where(a => a.SysUserid == getResult.SysUserid).Update(a => new SysUser
+            {
+                CreateDatetime = DateTime.Now
+            });
+            Console.WriteLine("updateDateTime添加数{0}", updateDateTime);
+
             var countResult = con.QuerySet<SysUser>().WithNoLock().Where(a => a.Email == "287245177@qq.com").Count();
             Console.WriteLine("Count数{0}", countResult);
 
