@@ -42,10 +42,10 @@ namespace Sikiro.Dapper.Extension.Extension
                 switch (node.NodeType)
                 {
                     case ExpressionType.Equal:
-                        nodeType = " IS ";
+                        nodeType = " IS NULL ";
                         break;
                     case ExpressionType.NotEqual:
-                        nodeType = " IS NOT ";
+                        nodeType = " IS NOT NULL ";
                         break;
                 }
             }
