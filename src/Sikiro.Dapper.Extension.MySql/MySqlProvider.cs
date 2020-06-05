@@ -86,7 +86,7 @@ namespace Sikiro.Dapper.Extension.MySql
             Params = whereParams.Param;
 
             SqlString = $"SELECT COUNT(1) {fromTableSql} {whereSql};";
-            SqlString += $"{selectSql} {fromTableSql} {nolockSql} {whereSql} {orderbySql} LIMIT {(pageIndex - 1) * pageSize},{pageIndex * pageSize}";
+            SqlString += $"{selectSql} {fromTableSql} {nolockSql} {whereSql} {orderbySql} LIMIT {(pageIndex - 1) * pageSize},{pageSize}";
 
             return this;
         }
