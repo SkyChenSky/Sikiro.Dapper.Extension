@@ -41,6 +41,7 @@ Sikiro.Dapper.Extension is a library hosted in nuget. It can be used both on dot
 The lambda expression encapsulation based on dapper is still an extension of `IDbConnection`Interface, and retains and opens the original `Execute`, `Query`, etc
 
 ### 2.Simple And Intuitive Chain
+
 #### Query
 ```c#
 con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com")
@@ -52,6 +53,19 @@ con.QuerySet<SysUser>().Where(a => a.Email == "287245177@qq.com")
 #### Command
 ```c#
 con.CommandSet<SysUser>().Where(a => a.Email == "287245177@qq.com").Update(a => new SysUser { Email = "123456789@qq.com" });
+```
+#### ExpressionBuilder
+-----------------
+```c#
+var where = ExpressionBuilder.Init<SysUser>();
+
+if (string.IsNullOrWhiteSpace(param.Email))
+    where = where.And(a => a.Email == "287245177@qq.com");
+
+if (string.IsNullOrWhiteSpace(param.Mobile))
+    where = where.And(a => a.Mobile == "18988565556");
+
+con.QuerySet<SysUser>().Where(where).OrderBy(b => b.Email).Top(10).Select(a => a.Email).ToList();
 ```
 ### 3.Support Async
 ```c#
