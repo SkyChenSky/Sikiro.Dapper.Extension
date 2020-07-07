@@ -59,8 +59,11 @@ namespace Sikiro.Dapper.Extension.Expressions
         {
             if (value != null)
             {
-                _sqlCmd.Append(_parameterPrefix + fileName);
-                Param.Add(fileName, value);
+                if (!string.IsNullOrWhiteSpace(fileName))
+                {
+                    _sqlCmd.Append(_parameterPrefix + fileName);
+                    Param.Add(fileName, value);
+                }
             }
             else
             {

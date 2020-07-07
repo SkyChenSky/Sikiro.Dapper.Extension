@@ -26,7 +26,7 @@ namespace Sikiro.Dapper.Extension.Expressions
 
         private string TempFieldName
         {
-            get => _prefix + _tempFieldName;
+            get => _prefix + _tempFieldName + ParameterCount;
             set => _tempFieldName = value;
         }
 
@@ -39,6 +39,8 @@ namespace Sikiro.Dapper.Extension.Expressions
         private readonly char _closeQuote;
 
         private readonly char _openQuote;
+
+        private int ParameterCount { get; set; }
 
         #endregion
 
@@ -74,11 +76,11 @@ namespace Sikiro.Dapper.Extension.Expressions
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
-        protected override System.Linq.Expressions.Expression VisitMember(MemberExpression node)
+        protected override Expression VisitMember(MemberExpression node)
         {
             _sqlCmd.Append(_openQuote + node.Member.GetColumnAttributeName() + _closeQuote);
             TempFieldName = node.Member.Name;
-
+            ParameterCount++;
             return node;
         }
 
@@ -91,7 +93,7 @@ namespace Sikiro.Dapper.Extension.Expressions
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
-        protected override System.Linq.Expressions.Expression VisitBinary(BinaryExpression node)
+        protected override Expression VisitBinary(BinaryExpression node)
         {
             _sqlCmd.Append("(");
             Visit(node.Left);
@@ -112,7 +114,7 @@ namespace Sikiro.Dapper.Extension.Expressions
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
-        protected override System.Linq.Expressions.Expression VisitConstant(ConstantExpression node)
+        protected override Expression VisitConstant(ConstantExpression node)
         {
             SetParam(node.Value);
 
@@ -127,7 +129,7 @@ namespace Sikiro.Dapper.Extension.Expressions
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
-        protected override System.Linq.Expressions.Expression VisitMethodCall(MethodCallExpression node)
+        protected override Expression VisitMethodCall(MethodCallExpression node)
         {
             if (node.Method.Name == "Contains" && typeof(IEnumerable).IsAssignableFrom(node.Method.DeclaringType) &&
                 node.Method.DeclaringType != typeof(string))
