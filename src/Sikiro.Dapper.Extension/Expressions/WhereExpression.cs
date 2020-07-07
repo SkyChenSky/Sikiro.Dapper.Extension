@@ -146,8 +146,11 @@ namespace Sikiro.Dapper.Extension.Expressions
         {
             if (value != null)
             {
-                _sqlCmd.Append(ParamName);
-                Param.Add(TempFieldName, value);
+                if (!string.IsNullOrWhiteSpace(TempFieldName))
+                {
+                    _sqlCmd.Append(ParamName);
+                    Param.Add(TempFieldName, value);
+                }
             }
             else
             {

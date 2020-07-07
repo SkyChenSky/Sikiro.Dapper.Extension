@@ -13,7 +13,7 @@
     <FileVersion>2.0.1.0</FileVersion>
     <PackageReleaseNotes>Porting to.Net standard Dapper lambda sql</PackageReleaseNotes>
     <PackageTags>Sikiro Extension dapper orm lambda</PackageTags>
-    <Version>2.0.1.0</Version>
+    <Version>2.0.1.1</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Dapper" Version="1.50.4" />
