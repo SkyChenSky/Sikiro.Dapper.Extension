@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -27,8 +28,25 @@ namespace Sikiro.Dapper.Extension.MsSql
 
             var orderByList = orderbyExpressionDic.Select(a =>
             {
-                var columnName = ((MemberExpression)a.Value.Body).Member.GetColumnAttributeName();
-                return ProviderOption.CombineFieldName(columnName) + (a.Key == EOrderBy.Asc ? " ASC " : " DESC ");
+                string propertyName = null;
+                if (a.Value.Body is MemberExpression)
+                {
+                    propertyName = ((MemberExpression)a.Value.Body).Member.Name;
+                }
+                else if (a.Value.Body is UnaryExpression)
+                {
+                    propertyName = ((MemberExpression)((UnaryExpression)a.Value.Body).Operand).Member.Name;
+                }
+                else if (a.Value.Body is ParameterExpression)
+                {
+                    propertyName = ((ParameterExpression)a.Value.Body).Type.Name;
+                }
+                else if (a.Value.Body is NewExpression)
+                {
+                    propertyName = string.Join(",", ((NewExpression)a.Value.Body).Members.Select(x => x.Name).ToArray());
+                }
+                propertyName += a.Key == EOrderBy.Desc ? " DESC" : " ASC ";
+                return propertyName;
             }).ToList();
 
             if (!orderByList.Any())
@@ -61,6 +79,11 @@ namespace Sikiro.Dapper.Extension.MsSql
                 var propertyBuilder = new StringBuilder();
                 foreach (var propertyInfo in propertyInfos)
                 {
+                    NotMappedAttribute notMappedAttribute = propertyInfo.GetCustomAttribute(typeof(NotMappedAttribute)) as NotMappedAttribute;
+                    if (notMappedAttribute != null)
+                    {
+                        continue;
+                    }
                     if (propertyBuilder.Length > 0)
                         propertyBuilder.Append(",");
                     propertyBuilder.AppendFormat($"{ProviderOption.CombineFieldName(propertyInfo.GetColumnAttributeName()) } AS {  ProviderOption.CombineFieldName(propertyInfo.Name)}");
@@ -79,6 +102,11 @@ namespace Sikiro.Dapper.Extension.MsSql
                 {
                     var memberInitExpression = (MemberInitExpression)selector.Body;
                     selectSql = string.Format(selectFormat, string.Join(",", memberInitExpression.Bindings.Select(a => ProviderOption.CombineFieldName(a.Member.GetColumnAttributeName()))), $" TOP {topNum} ");
+                }
+                else if (nodeType == ExpressionType.New)
+                {
+                    var exp = (NewExpression)selector.Body;
+                    selectSql = string.Format(selectFormat, string.Join(",", exp.Members.Select(a => a.GetColumnAttributeName())), $" TOP {topNum} ");
                 }
             }
 
